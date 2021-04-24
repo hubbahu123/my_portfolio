@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if name %}
+        <h1>Hello {{ name }}!</h1>
+    {% else %}
+        <h1>Hello, World!</h1>
+    {% endif %}
+    <p>Heres a static file ↓</p>
+    <img src="{{ url_for('static', filename='images/test.jpg') }}" alt="test img">
+{% endblock content %}

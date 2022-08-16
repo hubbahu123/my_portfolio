@@ -1,10 +1,415 @@
-{% extends "layout.html" %}
-{% block content %}
-    {% if name %}
-        <h1>Hello {{ name }}!</h1>
-    {% else %}
-        <h1>Hello, World!</h1>
-    {% endif %}
-    <p>Heres a static file ↓</p>
-    <img src="{{ url_for('static', filename='images/test.jpg') }}" alt="test img">
+{% extends "layout.html" %} {% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+<script
+	type="module"
+	src="{{ url_for('static', filename='scripts/desktop/background.js') }}"
+></script>
+<script src="{{ url_for('static', filename='scripts/desktop/desktop.js') }}" defer></script>
+<script defer>
+	'use strict';
+	
+	//Api Stuff
+	//List of custom windows to create on load
+	const customWindows = [
+	{%- for window in custom_windows %}
+		{ bounds: "{{ window.bounds }}", name: "{{ window.name }}", content: "{{ window.content }}" },
+	{%- endfor %}
+	];
+</script>
+{% endblock %} {% block content %}
+<section id="preloader">
+	<img
+		id="preloader-logo"
+		class="spritesheet"
+		src="{{ url_for('static', filename='images/logo/logo_large_animated.png') }}"
+		alt="RedaOS"
+	/>
+	<div class="watermark">
+		<div class="grid"></div>
+		<div class="grid right"></div>
+	</div>
+	<h5>
+		Loading Version {{ version }}<br />Copyright (c) 1985-2021. All
+		Rights Reserved.
+	</h5>
+</section>
+<!--The preloader script is declared early so there is no time wasted to begin the script-->
+<script src="{{ url_for('static', filename='scripts/preloader.js') }}"></script>
+<nav>
+	<ul>
+		<li id="start-btn" class="dropdown-container">
+			<button type="button">
+				<img
+					src="{{ url_for('static', filename='images/logo/logo_plain.png') }}"
+					alt="start button"
+				/>
+			</button>
+			<ul class="dropdown">
+				<li><button id="shutdown">Shutdown</button></li>
+				<li><button id="restart">Restart</button></li>
+			</ul>
+		</li>
+		<li>
+			<button type="button" id="vfx-btn">
+				<h3>Effects</h3>
+			</button>
+		</li>
+		<li>
+			<button type="button" id="audio-btn">
+				<h3>Audio</h3>
+				<audio loop src="{{ url_for('static', filename='audio/synthwave.mp3') }}"></audio>
+			</button>
+		</li>
+		<li>
+			<button type="button">
+				<h3 id="clock">Clock</h3>
+			</button>
+		</li>
+	</ul>
+</nav>
+<main>
+	<canvas id="background"></canvas>
+	<section id="app-area" class="exclude-nav">
+		<ul class="app-list">
+			<li>
+				<button type="button" class="app">
+					<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>MyWorks</h4>
+				</button>
+				<template data-window-defaults="5 5 50 45" data-window-symbol="2" data-window-id="w"
+					{% if "w" in windows %}
+						data-window-on-load
+						{% if windows["w"].bounds %}
+							data-window-bounds="{{ windows['w'].bounds }}"
+						{% endif %}
+					{% endif %}
+				>
+					<section class="active" id="file-explorer">
+						<div class="watermark">
+							<img id="circle-1" src="{{ url_for('static', filename='images/circle.png') }}">
+						</div>
+						<header class="dir-nav">
+							<div class="dir-nav-arrows">
+								<button type="button" disabled><img src="{{ url_for('static', filename='images/arrow_up.png') }}" class="arrow-left" alt="left arrow"></button>
+								<button type="button" disabled><img src="{{ url_for('static', filename='images/arrow_up.png') }}" class="arrow-right" alt="right arrow"></button>
+							</div>
+							<div class="dir-nav-current">
+								<h4>
+									<span>OS (C:)</span><span>User</span><span>Desktop</span><span class="active">MyWorks</span><span></span>
+								</h4>
+							</div>
+						</header>
+						<ul data-dir-name="OS (C:)" class="dir-area app-list">
+							<li>
+								<button type="button" class="app">
+									<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>User</h4>
+								</button>
+								<ul data-dir-name="User" class="app-list">
+									<li>
+										<button type="button" class="app">
+											<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>Desktop</h4>
+										</button>
+										<ul data-dir-name="Desktop" class="app-list">
+											<li>
+												<button type="button" class="app">
+													<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>MyWorks</h4>
+												</button>
+												<ul data-dir-name="MyWorks" class="app-list active">
+													<li>
+														<button type="button" class="app">
+															<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>Websites</h4>
+														</button>
+														<ul data-dir-name="Websites" class="app-list">
+															<li>
+																<button type="button" class="app" data-app-project="artistry_machine">
+																	<img src="{{ url_for('static', filename='images/artistry_machine/logo.png') }}" alt="folder icon"><h4>ArtistryMachine.png</h4>
+																</button>
+															</li>
+														</ul>
+													</li>
+													<li>
+														<button type="button" class="app">
+															<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>Apps</h4>
+														</button>
+														<ul data-dir-name="Apps" class="app-list"></ul>
+													</li>
+													<li>
+														<button type="button" class="app">
+															<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>Mechanical</h4>
+														</button>
+														<ul data-dir-name="Mechanical" class="app-list"></ul>
+													</li>
+													<li>
+														<button type="button" class="app">
+															<img src="{{ url_for('static', filename='images/folder.png') }}" alt="folder icon"><h4>Miscellaneous</h4>
+														</button>
+														<ul data-dir-name="Miscellaneous" class="app-list"></ul>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<button type="button" class="app">
+													<img src="{{ url_for('static', filename='images/phone.png') }}" alt="phone icon"><h4>Contact</h4>
+												</button>
+											</li>
+											<li>
+												<button type="button" class="app">
+													<img src="{{ url_for('static', filename='images/avatar.png') }}" alt="avatar icon"><h4>Reda.exe</h4>
+												</button>
+											</li>
+											<li>
+												<button type="button" class="app">
+													<img src="{{ url_for('static', filename='images/pdf.png') }}" alt="pdf file icon"><h4>Resume.pdf</h4>
+												</button>
+											</li>
+											<li>
+												<button type="button" class="app">
+													<img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash icon"><h4>Trash</h4>
+												</button>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="dir-info">
+							<h4>4 items</h4>
+							<h4>21.5MB available</h4>
+							<h4>222MB total</h4>
+						</footer>
+					</section>
+					<section id="loading-section">
+						<img src="{{ url_for('static', filename='images/throbber.gif') }}" class="throbber" alt="throbber">
+						<h2>Loading...</h2>
+					</section>
+					<section id="img-viewer">
+						<section id="img-data">
+							<div class="watermark">
+								<div class="grid"></div>
+							</div>
+							<img src="{{ url_for('static', filename='images/artistry_machine/logo.png') }}" alt="logo" id="img-logo">
+							<h2 class="section-heading">ProjectTitle.png</h2>
+							<aside>
+								<div><h3>Date Taken: </h3><p>0000</p></div>
+								<div><h3>Location Taken: </h3><p><a href="#" class="inline-link">https:/www.link.com</a></p></div>
+								<div><h3>Description: </h3><p>Lorem ipsum dolor sit amet, consectetur 
+									adipiscing elit. Ultricies egestas sapien, sit lorem a 
+									purus orci sit diam. Tempus aliquam integer nunc non. 
+									Duis risus, lacus sit sed. Ullamcorper pharetra quis 
+									diam neque, nulla duis tristique diam.</p></div>
+								<div><h3>Tags: </h3><p>[Tag 1]</p></div>
+							</aside>
+							<img alt="thumbnail" id="img">
+						</section>
+						<section id="related-imgs">
+							<div class="watermark">
+								<div class="grid"></div>
+							</div>
+							<h2 class="section-heading">Related Images</h2>
+							<div id="related-viewer">
+								<div class="carousel">
+									<button type="button" class="carousel-prev"></button>
+									<ul class="carousel-options">
+										<li><img alt="mockup"></li>
+										<li><img alt="mockup"></li>
+										<li><img alt="mockup"></li>
+									</ul>
+									<button type="button" class="carousel-next"></button>
+								</div>
+								<h2>NA/NA</h2>
+							</div>
+						</section>
+						<footer>
+							<div></div>
+							<button type="button" id="back"><h3>Back ></h3></button>
+						</footer>
+					</section>
+				</template>
+			</li>
+			<li>
+				<button type="button" class="app">
+					<img src="{{ url_for('static', filename='images/phone.png') }}" alt="phone icon"><h4>Contact</h4>
+				</button>
+				<template data-window-defaults="10 10 50 50" data-window-symbol="1" data-window-id="c"
+					{% if "c" in windows %}
+						data-window-on-load
+						{% if windows["c"].bounds %}
+							data-window-bounds="{{ windows['c'].bounds }}"
+						{% endif %}
+					{% endif %}
+				>
+					<div id="mail">
+						<ul id="mail-sidebar">
+							<li>
+								<a href="mailto:redaelmountassir0@gmail.com">
+									<img src="{{ url_for('static', filename='images/inbox.png') }}" alt="inbox icon">
+									<h3>Inbox</h3>
+								</a>
+							</li>
+							<li>
+								<a href="www.linkedin.com/in/reda-elmountassir" target="_blank">
+									<img src="{{ url_for('static', filename='images/linkedIn.png') }}" alt="LinkedIn logo">
+									<h3>LinkedIn</h3>
+								</a>
+							</li>
+							<li>
+								<a href="https://github.com/redaelmountassir" target="_blank">
+									<img src="{{ url_for('static', filename='images/github.png') }}" alt="Github logo">
+									<h3>Github</h3>
+								</a>
+							</li>
+						</ul>
+						<section id="mail-area">
+							<div class="watermark">
+								<img id="triangle-1" src="{{ url_for('static', filename='images/triangle.png') }}" alt="background triangle">
+								<img id="triangle-2" src="{{ url_for('static', filename='images/triangle_outline.png') }}" alt="background triangle">
+							</div>
+							<h2>Contact Me:</h2>
+							<a href="mailto:redaelmountassir0@gmail.com" class="a-btn"><h3>redaelmountassir0@gmail.com</h3><img id="plane" src="{{ url_for('static', filename='images/send_message.png') }}" alt="message icon"></a>
+						</section>
+					</div>
+				</template>
+			</li>
+			<li>
+				<button type="button" class="app">
+					<img src="{{ url_for('static', filename='images/avatar.png') }}" alt="avatar icon"><h4>Reda.exe</h4>
+				</button>
+				<template data-window-defaults="10 10 60 80" data-window-symbol="0" data-window-id="r"
+					{% if "r" in windows %}
+						data-window-on-load
+						{% if windows["r"].bounds %}
+							data-window-bounds="{{ windows['r'].bounds }}"
+						{% endif %}
+					{% endif %}
+				>
+					<section class="bg-outrun">
+						<img id="triangle-3" src="{{ url_for('static', filename='images/triangle_outline_blue.png') }}" alt="triangle">
+						<img
+							id="me"
+							src="{{ url_for('static', filename='images/me.png') }}"
+							alt="my picture"
+						/>
+						<img
+							id="full-logo"
+							class="spritesheet"
+							src="{{ url_for('static', filename='images/logo/logo_xlarge_animated.png') }}"
+							alt="Reda Elmountassir"
+						/>
+					</section>
+					<section class="text-container about bg-dark">
+						<div class="watermark">
+							<p>Hackerman</p>
+							<div class="grid right"></div>
+						</div>
+						<div id="me-again">
+							<img
+								src="{{ url_for('static', filename='images/temp.jpg') }}"
+								alt="my picture"
+							/>
+						</div>
+						<h2>About Hackerman</h2>
+						<p>Id eget ut blandit consectetur nam mauris. Accumsan nulla turpis sed in nec. Vivamus elit amet, enim mauris tincidunt. Sit lectus elit diam amet, nunc orci, faucibus. Penatibus nibh magna libero, aliquet volutpat odio nulla scelerisque. Blandit ut amet, in porttitor nulla tempus malesuada nisi. Maecenas sagittis in neque et quis. Elit feugiat erat congue amet elit. Dignissim dui, eu, viverra lobortis nisi, mauris id lobortis. Consequat at ante amet, consequat. Nunc pretium arcu vitae, enim amet. Tellus pellentesque fermentum volutpat tincidunt feugiat turpis. Arcu, vel quam nunc a maecenas nec tristique hac porttitor. Mattis arcu consectetur tristique ut consectetur morbi non. Mattis amet turpis nunc id.
+							Feugiat vel laoreet arcu mattis hendrerit consequat vitae a. Ultricies etiam et, ac feugiat magna aliquam viverra mattis. Interdum sed pellentesque nisi, amet ac sem semper sed. Velit aliquet mattis maecenas et nunc, volutpat ut. Vestibulum a etiam vulputate phasellus egestas ut diam. Vitae enim, sem orci ultricies eget. Magna egestas pulvinar euismod erat id lobortis morbi egestas sit.</p>
+					</section>
+					<section>
+						<div id="terminal">
+							<output>Reda’s Skills Terminal [Version 1.0.0]<br>(C) Copyrighted. All rights reserved.<br>Type "help" for a list of all available commands</output>
+							<div class="terminal-line"><label>C:/RedaOS/Skills></label><input autocomplete="off" spellcheck="false"></div>
+						</div>
+					</section>
+					<section class="text-container bg-dark">
+						<div class="watermark">
+							<p>Photos</p>
+							<div class="grid"></div>
+						</div>
+						<h2>Outside the Firewall</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis vitae risus dui quam pellentesque in. Ut et varius eget lectus tellus ultricies aenean. Justo, tempus, est fames auctor sed dui. Massa cursus donec lectus commodo faucibus. Etiam turpis risus, semper porta a. Est velit auctor in lobortis senectus mollis elementum urna. Nam ullamcorper non diam ridiculus nunc tellus ultricies. At non lacus pellentesque viverra ac nulla mauris sagittis id. Laoreet arcu amet tincidunt enim.</p>
+						<button type="button" class="grad-btn"><h3>Show Images</h3></button>
+						<div class="img-container">
+							<div class="img-header">
+								<h3>France.png</h3>
+								<button type="button"><img src="{{ url_for('static', filename='images/close.png') }}" alt="close"></button>
+							</div>
+							<img src="{{ url_for('static', filename='images/temp.jpg') }}" alt="">
+						</div>
+						<div class="img-container">
+							<div class="img-header">
+								<h3>Morocco.png</h3>
+								<button type="button"><img src="{{ url_for('static', filename='images/close.png') }}" alt="close"></button>
+							</div>
+							<img src="{{ url_for('static', filename='images/temp.jpg') }}" alt="">
+						</div>
+						<div class="img-container">
+							<div class="img-header">
+								<h3>Italy.png</h3>
+								<button type="button"><img src="{{ url_for('static', filename='images/close.png') }}" alt="close"></button>
+							</div>
+							<img src="{{ url_for('static', filename='images/temp.jpg') }}" alt="">
+						</div>
+					</section>
+				</template>
+			</li>
+			<li>
+				<button type="button" class="app">
+					<img src="{{ url_for('static', filename='images/pdf.png') }}" alt="pdf file icon"><h4>Resume.pdf</h4>
+				</button>
+				<template data-window-defaults="10 10 50 50" data-window-symbol="4" data-window-id="p"
+					{% if "p" in windows %}
+						data-window-on-load
+						{% if windows["p"].bounds %}
+							data-window-bounds="{{ windows['p'].bounds }}"
+						{% endif %}
+					{% endif %}
+				>
+					<div class="watermark">
+						<img id="circle-2" src="{{ url_for('static', filename='images/circle_outline.png') }}" alt="circle">
+					</div>
+					<h1 id="dbl-text">My Resume</h1>
+					<img id="david" src="{{ url_for('static', filename='images/david.png') }}" alt="statue head">
+					<a href="{{ url_for('static', filename='resume.pdf') }}" download="my_resume" class="a-btn">Check Out My Resume</a>
+				</template>
+			</li>
+			<li>
+				<button type="button" class="app">
+					<img src="{{ url_for('static', filename='images/trash.png') }}" alt="trash icon"><h4>Trash</h4>
+				</button>
+				<template data-window-defaults="5 55 40 40" data-window-symbol="5" data-window-id="t"
+					{% if "t" in windows %}
+						data-window-on-load
+						{% if windows["t"].bounds %}
+							data-window-bounds="{{ windows['t'].bounds }}"
+						{% endif %}
+					{% endif %}
+				>
+					<h4>You have no trash at the moment</h4>
+				</template>
+			</li>
+		</ul>
+	</section>
+	<section id="window-area" class="no-pointer exclude-nav">
+		<template id="window-template">
+			<div class="window ghost">
+				<div class="window-header">
+					<button type="button"><img src="{{ url_for('static', filename='images/close.png') }}" alt="close"></button>
+					<h3>Window Title</h3>
+					<button type="button"><img src="{{ url_for('static', filename='images/minimize.png') }}" alt="minimize"></button>
+					<button type="button" class="maximize-btn">
+						<img src="{{ url_for('static', filename='images/maximize.png') }}" alt="maximize">
+						<img src="{{ url_for('static', filename='images/restore_down.png') }}" alt="restore down">
+					</button>
+				</div>
+				<div class="window-body"></div>
+				<div class="window-resizers">
+					<div class="n"></div>
+					<div class="ne"></div>
+					<div class="e"></div>
+					<div class="se"></div>
+					<div class="s"></div>
+					<div class="sw"></div>
+					<div class="w"></div>
+					<div class="nw"></div>
+				</div>
+			</div>
+		</template>
+	</section>
+</main>
 {% endblock content %}

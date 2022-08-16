@@ -1,0 +1,69 @@
+{
+	"categories": ["backend", "frontend", "gamedev"],
+	"skills": [
+		{
+			"skill": "Javascript",
+			"categories": ["frontend", "backend"]
+		},
+		{
+			"skill": "C++",
+			"categories": []
+		},
+		{
+			"skill": "Python",
+			"categories": ["backend"]
+		},
+		{
+			"skill": "HTML",
+			"categories": ["frontend"]
+		},
+		{
+			"skill": "C#",
+			"categories": ["gamedev"]
+		},
+		{
+			"skill": "Unity",
+			"categories": ["gamedev"]
+		},
+		{
+			"skill": "HLSL",
+			"categories": ["gamedev"]
+		},
+		{
+			"skill": "Github",
+			"categories": ["All"]
+		},
+		{
+			"skill": "CSS",
+			"categories": ["frontend"]
+		},
+		{
+			"skill": "GLSL",
+			"categories": ["frontend", "gamedev"]
+		},
+		{
+			"skill": "NodeJS",
+			"categories": ["backend"]
+		},
+		{
+			"skill": "Docker",
+			"categories": ["backend"]
+		},
+		{
+			"skill": "Kubernetes",
+			"categories": ["backend"]
+		},
+		{
+			"skill": "React",
+			"categories": ["frontend"]
+		},
+		{
+			"skill": "ThreeJS",
+			"categories": ["frontend"]
+		},
+		{
+			"skill": "jQuery",
+			"categories": ["frontend"]
+		}
+	]
+}

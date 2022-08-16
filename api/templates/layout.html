@@ -1,16 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-        <title>My app - {{ title }}</title>
-    {% else %}
-        <title>My app</title>
-    {% endif %}
-</head>
-<body>
-    {% block content %}{% endblock %}
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#920075" />
+		<meta name="msapplication-navbutton-color" content="#920075" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="title" content="RedaOS - The portfolio of Reda Elmountassir" />
+		<meta
+			name="description"
+			content="Reda Elmountassir is a developer and this is his portfolio"
+		/>
+		<meta name="keywords" content="portfolio" />
+		<title>RedaOS v{{ version }}{% if title %} | {{ title }}{% endif %}</title>
+		<link
+			rel="alternate icon"
+			href="{{ url_for('static', filename='images/logo/logo.ico') }}"
+		/>
+		<link
+			rel="icon"
+			href="{{ url_for('static', filename='images/logo/logo.png') }}"
+			type="image/icon png"
+		/>
+		<link
+			rel="mask-icon"
+			href="{{ url_for('static', filename='images/logo/logo.png') }}"
+			color="#920075"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="16x16"
+			href="{{ url_for('static', filename='images/logo/logo.png') }}"
+		/>
+		<link
+			rel="shortcut icon"
+			href="{{ url_for('static', filename='images/logo/logo.png') }}"
+			type="image/icon png"
+		/>
+		<link
+			rel="manifest"
+			href="{{ url_for('static', filename='jsons/manifest.json') }}"
+		/>
+		<style>
+			/*These styles allow for css access to files through the api*/
+			@font-face {
+				font-family: RetroFont;
+				font-style: normal;
+				font-weight: normal;
+				src: url("{{ url_for('static', filename='fonts/retro_font.woff2') }}")
+						format('woff2'),
+					url("{{ url_for('static', filename='fonts/retro_font.woff') }}")
+						format('woff'),
+					url("{{ url_for('static', filename='fonts/retro_font.ttf') }}")
+						format('truetype');
+			}
+
+			@font-face {
+				font-family: RetroFont;
+				font-style: normal;
+				font-weight: bold;
+				src: url("{{ url_for('static', filename='fonts/retro_font_bold.woff2') }}")
+						format('woff2'),
+					url("{{ url_for('static', filename='fonts/retro_font_bold.woff') }}")
+						format('woff'),
+					url("{{ url_for('static', filename='fonts/retro_font_bold.ttf') }}")
+						format('truetype');
+			}
+
+			:root {
+				--arrow-down: url("{{ url_for('static', filename='images/arrow_down.png') }}");
+				--arrow-up: url("{{ url_for('static', filename='images/arrow_up.png') }}");
+				--arrow-down-active: url("{{ url_for('static', filename='images/arrow_down_active.png') }}");
+				--arrow-up-active: url("{{ url_for('static', filename='images/arrow_up_active.png') }}");
+				--grid: url("{{ url_for('static', filename='images/grid.png') }}");
+				--space: url("{{ url_for('static', filename='images/space.png')}}");
+				background: center / cover
+					url("{{ url_for('static', filename='images/computer_cutout.jpg') }}");
+			}
+
+			noscript {
+				z-index: 3;
+				background: center / cover
+					url("{{ url_for('static', filename='images/noscript.jpg') }}");
+			}
+		</style>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles/main.css') }}"
+		/>
+		<script>
+			'use strict';
+			const staticPath = "{{ url_for('static', filename='') }}";
+		</script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"
+			integrity="sha512-eP6ippJojIKXKO8EPLtsUMS+/sAGHGo1UN/38swqZa1ypfcD4I0V/ac5G3VzaHfDaklFmQLEs51lhkkVaqg60Q=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+		<div id="vfx">
+			<video
+				src="{{ url_for('static', filename='videos/vhs_distortions.mp4') }}"
+				autoplay
+				muted
+				loop
+			></video>
+		</div>
+		<noscript></noscript>
+		{% block content %}{% endblock %}
+	</body>
 </html>

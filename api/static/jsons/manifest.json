@@ -1,0 +1,17 @@
+{
+    "name": "RedaOS",
+    "short_name": "RedaOS",
+    "icons": [{
+        "src": "/static/images/logo/logo_192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }, {
+        "src": "/static/images/logo/logo_512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }],
+    "background_color": "#1F0728",
+    "theme_color": "#920075",
+    "display": "standalone",
+    "description": "Reda Elmountassir is a developer and this is his portfolio"
+}

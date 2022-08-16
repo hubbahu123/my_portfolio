@@ -1,6 +1,8 @@
+import os
 from flask import Flask
 
+OS_VERSION = "1.0.0"
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "01e172be9750bad2ea28908d50d8a337"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 from api import routes

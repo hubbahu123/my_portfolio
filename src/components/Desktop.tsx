@@ -1,31 +1,40 @@
 import * as React from 'react';
-import Shortcut from './Shortcut';
+import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import ShortcutsArea from './ShortcutsArea';
 import Window from './Window';
 
 const Desktop: React.FC = () => {
+	const desktopAreaRef = useRef(null!);
+	const highestIndex = useRef<number>(5);
+	const [windows, setWindows] = useState([{ id: 1, zIndex: 1 }]);
+
+	const bringToFrontRequest = (id: number) => {
+		const windowsCopy = [...windows];
+		const requestedWindowIndex = windowsCopy.findIndex(
+			window => window.id === id
+		);
+
+		if (requestedWindowIndex == -1) return;
+		if (windowsCopy[requestedWindowIndex].zIndex == highestIndex.current)
+			return;
+		windowsCopy[requestedWindowIndex].zIndex = ++highestIndex.current;
+
+		setWindows(windowsCopy);
+	};
+
 	return (
-		<main className='w-full h-full relative'>
-			<ul className='max-h-full grid grid-cols-4 gap-8 p-8'>
-				<li>
-					<Shortcut name='App 1' />
-				</li>
-				<li>
-					<Shortcut name='Another App' />
-				</li>
-				<li>
-					<Shortcut name='App 3' />
-				</li>
-				<li>
-					<Shortcut name='Not App 4' />
-				</li>
-				<li>
-					<Shortcut name='App Five' />
-				</li>
-			</ul>
-			<div className='w-full h-full absolute top-0'>
-				<Window />
-			</div>
-		</main>
+		<motion.main ref={desktopAreaRef} className='w-full h-full relative'>
+			<ShortcutsArea area={desktopAreaRef} />
+			{/* {windows.map(({ id, zIndex }) => (
+				<Window
+					key={id}
+					area={desktopAreaRef}
+					bringToFrontRequest={() => bringToFrontRequest(id)}
+					zIndex={zIndex}
+				/>
+			))} */}
+		</motion.main>
 	);
 };
 

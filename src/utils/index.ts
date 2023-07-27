@@ -22,3 +22,5 @@ export const useBreakpointMD = () => useMediaQuery('(min-width: 768px)');
 export const useBreakpointLG = () => useMediaQuery('(min-width: 1024px)');
 export const useBreakpointXL = () => useMediaQuery('(min-width: 1280px)');
 export const useBreakpoint2XL = () => useMediaQuery('(min-width: 1536px)');
+
+// export const mod = (x: number, y: number) => ((x % y) + y) % y;

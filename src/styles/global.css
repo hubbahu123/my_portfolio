@@ -4,10 +4,27 @@
 
 body {
 	@apply bg-gray-900;
+	image-rendering: pixelated;
 }
 
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+@font-face {
+	font-family: 'Retro';
+	font-weight: normal;
+	font-display: swap;
+	font-style: normal;
+	font-named-instance: 'Regular';
+	src: url(/fonts/retro_font.woff2) format('woff2'),
+		url(/fonts/retro_font.woff) format('woff'),
+		url(/fonts/retro_font.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Retro';
+	font-weight: bold;
+	font-display: swap;
+	font-style: normal;
+	font-named-instance: 'Regular';
+	src: url(/fonts/retro_font_bold.woff2) format('woff2'),
+		url(/fonts/retro_font_bold.woff) format('woff'),
+		url(/fonts/retro_font_bold.ttf) format('truetype');
 }

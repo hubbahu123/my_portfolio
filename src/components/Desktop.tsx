@@ -1,39 +1,25 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import ShortcutsArea from './ShortcutsArea';
 import Window from './Window';
+import { useBoundStore } from '../store';
 
 const Desktop: React.FC = () => {
 	const desktopAreaRef = useRef(null!);
-	const highestIndex = useRef<number>(5);
-	const [windows, setWindows] = useState([{ id: 1, zIndex: 1 }]);
-
-	const bringToFrontRequest = (id: number) => {
-		const windowsCopy = [...windows];
-		const requestedWindowIndex = windowsCopy.findIndex(
-			window => window.id === id
-		);
-
-		if (requestedWindowIndex == -1) return;
-		if (windowsCopy[requestedWindowIndex].zIndex == highestIndex.current)
-			return;
-		windowsCopy[requestedWindowIndex].zIndex = ++highestIndex.current;
-
-		setWindows(windowsCopy);
-	};
+	const windows = useBoundStore(state => state.windows);
+	const bringToFrontReq = useBoundStore(state => state.bringToFront);
 
 	return (
 		<motion.main ref={desktopAreaRef} className='w-full h-full relative'>
 			<ShortcutsArea area={desktopAreaRef} />
-			{/* {windows.map(({ id, zIndex }) => (
+			{windows.map(({ id }) => (
 				<Window
 					key={id}
 					area={desktopAreaRef}
-					bringToFrontRequest={() => bringToFrontRequest(id)}
-					zIndex={zIndex}
+					bringToFrontReq={() => bringToFrontReq(id)}
 				/>
-			))} */}
+			))}
 		</motion.main>
 	);
 };

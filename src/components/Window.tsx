@@ -11,8 +11,7 @@ interface Dimensions {
 
 interface WindowProps {
 	area: React.RefObject<Element>;
-	bringToFrontRequest: React.PointerEventHandler;
-	zIndex: number;
+	bringToFrontReq: React.PointerEventHandler;
 	initialLocation?: Point;
 	initialDimensions?: Dimensions;
 	minDimensions?: Dimensions;
@@ -20,8 +19,7 @@ interface WindowProps {
 
 const Window: React.FC<WindowProps> = ({
 	area,
-	bringToFrontRequest,
-	zIndex = 1,
+	bringToFrontReq,
 	initialLocation = { x: 0, y: 0 },
 	initialDimensions = { w: 500, h: 300 },
 	minDimensions = { w: 200, h: 100 },
@@ -52,9 +50,9 @@ const Window: React.FC<WindowProps> = ({
 				document.documentElement.classList.remove('cursor-grab');
 				document.body.classList.remove('pointer-events-none');
 			}}
-			onPointerDown={bringToFrontRequest}
+			onPointerDown={bringToFrontReq}
 			ref={windowRef}
-			className={`absolute outline outline-white flex flex-col max-w-full max-h-full top-0 ${
+			className={`absolute outline outline-2 outline-white-primary flex flex-col max-w-full max-h-full top-0 ${
 				isMoving && 'invisible'
 			}`}
 			style={{
@@ -64,7 +62,6 @@ const Window: React.FC<WindowProps> = ({
 				y,
 				width,
 				height,
-				zIndex,
 			}}
 		>
 			<WindowHeader onGrab={e => controls.start(e)} />

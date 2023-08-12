@@ -154,7 +154,7 @@ a {
 	align-items: center;
 	justify-content: center;
 	transition: all 0.2s steps(5, end);
-	transition-property: background, color, filter, outline, outline-offset;
+	transition-property: background, color, filter, outline outline-2, outline outline-2-offset;
 	cursor: pointer;
 }
 
@@ -243,8 +243,8 @@ nav {
 	padding: 0;
 	min-width: calc(2.5 * var(--square-size));
 	height: auto;
-	outline: solid transparent var(--border-width);
-	outline-offset: 10px;
+	outline outline-2: solid transparent var(--border-width);
+	outline outline-2-offset: 10px;
 }
 
 .app img {
@@ -262,8 +262,8 @@ nav {
 
 .app:hover,
 .app:focus {
-	outline-offset: 0;
-	outline-color: var(--white-primary);
+	outline outline-2-offset: 0;
+	outline outline-2-color: var(--white-primary);
 }
 
 .app:active {
@@ -278,7 +278,7 @@ nav {
 #window-area {
 	margin-top: calc(
 		-1 * var(--border-width)
-	); /*This is done to prevent weird outline stacking when window maximized*/
+	); /*This is done to prevent weird outline outline-2 stacking when window maximized*/
 	z-index: 0;
 }
 
@@ -1156,9 +1156,9 @@ section.about {
 	height: 100%;
 	top: 0;
 	visibility: visible;
-	outline: var(--border);
-	outline-style: dashed;
-	outline-width: var(--border-width);
+	outline outline-2: var(--border);
+	outline outline-2-style: dashed;
+	outline outline-2-width: var(--border-width);
 }
 
 .spritesheet {

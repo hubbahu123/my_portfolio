@@ -80,7 +80,7 @@ const Resizers: React.FC<ResizableProps> = ({
 	onResizeEnd,
 }) => {
 	return (
-		<div className='absolute w-full h-full -z-10 visible outline-dashed outline-white'>
+		<div className='absolute w-full h-full -z-10 visible outline-dashed outline-white-primary'>
 			{HANDLES.map(({ dir, cursor, pos, fullSide, drag }) => (
 				<motion.div
 					key={dir}

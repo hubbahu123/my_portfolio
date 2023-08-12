@@ -29,6 +29,9 @@ export const theme = {
 			'white-primary': '#f5f9ff',
 			'purple-watermark': '#291632',
 		},
+		transitionTimingFunction: {
+			steps: 'steps(2, end)',
+		},
 	},
 };
 

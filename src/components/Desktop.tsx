@@ -2,24 +2,34 @@ import * as React from 'react';
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import ShortcutsArea from './ShortcutsArea';
-import Window from './Window';
-import { useBoundStore } from '../store';
+import Background from './Background';
+import Taskbar from './Taskbar';
+import Intro from './Intro';
+import { usePersistent } from '../utils';
+import Loader from './Loader';
+import WindowsArea from './WindowsArea';
 
 const Desktop: React.FC = () => {
 	const desktopAreaRef = useRef(null!);
-	const windows = useBoundStore(state => state.windows);
-	const bringToFrontReq = useBoundStore(state => state.bringToFront);
+
+	const [introDone, setIntroDone] = usePersistent(
+		'introDone',
+		false,
+		str => str === 'true'
+	);
 
 	return (
 		<motion.main ref={desktopAreaRef} className='w-full h-full relative'>
-			<ShortcutsArea area={desktopAreaRef} />
-			{windows.map(({ id }) => (
-				<Window
-					key={id}
-					area={desktopAreaRef}
-					bringToFrontReq={() => bringToFrontReq(id)}
-				/>
-			))}
+			{introDone ? (
+				<Loader>
+					<Background />
+					<Taskbar />
+					<ShortcutsArea area={desktopAreaRef} />
+					<WindowsArea />
+				</Loader>
+			) : (
+				<Intro onFinish={() => setIntroDone(true)} />
+			)}
 		</motion.main>
 	);
 };

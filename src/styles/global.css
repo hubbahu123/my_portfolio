@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 body {
-	@apply bg-gray-900;
+	@apply bg-black;
 	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
 }
 
 @font-face {
@@ -27,4 +29,70 @@ body {
 	src: url(/fonts/retro_font_bold.woff2) format('woff2'),
 		url(/fonts/retro_font_bold.woff) format('woff'),
 		url(/fonts/retro_font_bold.ttf) format('truetype');
+}
+
+@layer base {
+	::-webkit-scrollbar {
+		@apply w-10;
+	}
+
+	::-webkit-scrollbar-track,
+	::-webkit-scrollbar-button {
+		@apply border-solid border-0 border-white-primary block;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply border-l-2;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-white-primary;
+	}
+
+	::-webkit-scrollbar-thumb:active {
+		@apply bg-opacity-50;
+	}
+
+	::-webkit-scrollbar-button:decrement {
+		@apply border-b-2 border-l-2 border-white-primary h-10 transition-colors ease-steps;
+		background: no-repeat center / 70% var(--arrow-up);
+	}
+
+	::-webkit-scrollbar-button:decrement:active {
+		@apply bg-white-primary;
+		background: no-repeat center / 70% var(--arrow-up-active);
+	}
+
+	::-webkit-scrollbar-button:increment {
+		@apply border-t-2 border-l-2 border-white-primary h-10 transition-colors ease-steps;
+		background: no-repeat center / 70% var(--arrow-down);
+	}
+
+	::-webkit-scrollbar-button:increment:active {
+		@apply bg-white-primary;
+		background: no-repeat center / 70% var(--arrow-down-active);
+	}
+
+	::-webkit-scrollbar-button:vertical:start:increment,
+	::-webkit-scrollbar-button:vertical:end:decrement,
+	::-webkit-scrollbar-button:horizontal:start:increment,
+	::-webkit-scrollbar-button:horizontal:end:decrement,
+	::-webkit-scrollbar-track:horizontal {
+		@apply hidden;
+	}
+
+	::selection {
+		@apply bg-yellow-accent text-black-primary;
+	}
+}
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 }

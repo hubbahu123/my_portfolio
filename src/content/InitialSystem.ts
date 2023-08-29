@@ -9,17 +9,17 @@ const InitialSystem: Directory = {
 				{
 					name: 'Desktop',
 					children: [
-						{ name: 'App4', extension: 'exe' },
-						{ name: 'App2', extension: 'exe' },
+						{ name: 'App4', ext: 'pdf' },
+						{ name: 'App2', ext: 'pdf' },
 						{ name: 'Empty', children: [] },
 					],
 				},
 				{
 					name: 'Apps',
 					children: [
-						{ name: 'App1', extension: 'exe' },
-						{ name: 'App2', extension: 'exe' },
-						{ name: 'App3', extension: 'exe' },
+						{ name: 'App1', ext: 'pdf' },
+						{ name: 'App2', ext: 'pdf' },
+						{ name: 'App3', ext: 'pdf' },
 					],
 				},
 			],

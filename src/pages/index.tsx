@@ -9,7 +9,6 @@ const IndexPage: React.FC<PageProps> = () => {
 	return (
 		<OS>
 			<Desktop />
-			<Taskbar />
 		</OS>
 	);
 };

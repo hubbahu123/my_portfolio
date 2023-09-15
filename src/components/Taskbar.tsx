@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { MobileContext } from './OS';
 import GlitchText from './GlitchText';
 import { useMobileStore } from '../store';
+import Dropdown from './Dropdown';
 
 const Taskbar: React.FC = () => {
 	const [time, setTime] = useState('');
@@ -25,7 +26,11 @@ const Taskbar: React.FC = () => {
 	}, []);
 
 	const isMobile = useContext(MobileContext);
-	const [toggleMenu] = useMobileStore(state => [state.toggleMenu]);
+	const [toggleMenu, home, back] = useMobileStore(state => [
+		state.toggleMenu,
+		state.home,
+		state.back,
+	]);
 
 	return (
 		<nav className='fixed bottom-0 w-full p-4 font-bold md:top-0 md:bottom-auto md:p-0 z-40'>
@@ -48,6 +53,7 @@ const Taskbar: React.FC = () => {
 						<button
 							className='grow flex justify-center py-2 select-none'
 							type='button'
+							onClick={() => home()}
 						>
 							<StaticImage
 								src='../images/home.png'
@@ -60,6 +66,7 @@ const Taskbar: React.FC = () => {
 						<button
 							className='grow flex justify-center py-2 select-none'
 							type='button'
+							onClick={() => back()}
 						>
 							<StaticImage
 								src='../images/back.png'
@@ -80,7 +87,7 @@ const Taskbar: React.FC = () => {
 								src='../images/logo/logo_plain.png'
 								alt='Start Button'
 								width={28}
-								className='group-hover:invert'
+								className='group-hover:invert group-active:glitch'
 							/>
 						</button>
 						<span className='grow' />
@@ -102,15 +109,16 @@ const Taskbar: React.FC = () => {
 						>
 							<GlitchText animated={audioSelected}>Audio</GlitchText>
 						</button>
-						<button
+						<Dropdown
 							className='p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary'
 							type='button'
 							onPointerDown={() => setTimeSelected(true)}
 							onPointerOut={() => timeSelected && setTimeSelected(false)}
 							onPointerUp={() => setTimeSelected(false)}
+							dContent={<h1>Hey!!!!</h1>}
 						>
 							<GlitchText animated={timeSelected}>{time}</GlitchText>
-						</button>
+						</Dropdown>
 					</>
 				)}
 			</div>

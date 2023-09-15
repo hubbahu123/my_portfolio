@@ -4,6 +4,8 @@ import Resizers from './Resizers';
 import { useRef, useState, useEffect, useContext } from 'react';
 import WindowHeader from './WindowHeader';
 import { MobileContext } from './OS';
+import Outline from './Outline';
+import Mask from './Mask';
 
 interface Dimensions {
 	w: number;
@@ -55,14 +57,16 @@ const Window: React.FC<WindowProps> = ({
 				document.documentElement.classList.remove('cursor-grab');
 				document.body.classList.remove('pointer-events-none');
 			}}
-			initial={isMobile ? {} : { scale: 0 }}
-			animate={isMobile ? {} : { scale: 1 }}
-			exit={isMobile ? {} : { scale: 0 }}
-			onPointerDown={bringToFrontReq}
+			initial={isMobile ? { opacity: 0 } : { scale: 0 }}
+			animate={isMobile ? { opacity: 1 } : { scale: 1 }}
+			exit={isMobile ? { opacity: 0 } : { scale: 0 }}
+			transition={{ duration: 0.3 }}
+			onPointerDown={!isMobile ? bringToFrontReq : undefined}
+			onPointerUp={isMobile ? bringToFrontReq : undefined}
 			ref={windowRef}
 			className={`${
 				(isMobile || maximized) && '!w-full !h-full !transform-none'
-			} pointer-events-auto absolute outline backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% outline-2 outline-white-primary flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
+			} pointer-events-auto absolute backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
 				isMoving && 'invisible backdrop-blur-none'
 			}`}
 			style={{
@@ -140,9 +144,9 @@ const Window: React.FC<WindowProps> = ({
 								break;
 						}
 					}}
-					showOutline={isMoving}
 				/>
 			)}
+			<Outline ghost={isMoving} />
 		</motion.section>
 	);
 };

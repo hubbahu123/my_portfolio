@@ -46,7 +46,6 @@ float calcNoise(vec2 samplePos, vec3 pos) {
     float noise = (octave1 + octave2 * .25) / 1.25;
     float heightGrad = smoothstep(gridDepth, 0.0, abs(pos.x));
     heightGrad *= heightGrad;
-    //float animate = 1.0 - pow((smoothstep(1.0, 2.0, time) - 1.0), 4.0);
     return noise * NOISE_MAGNITUDE * (1.0 -heightGrad);
 }
 

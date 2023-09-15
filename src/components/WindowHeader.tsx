@@ -1,6 +1,6 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
-import GlitchText from './GlitchText';
+import { motion } from 'framer-motion';
 
 interface WindowHeaderProps {
 	onGrab: React.PointerEventHandler<Element>;
@@ -16,68 +16,71 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 	maximized,
 }) => {
 	return (
-		<div
-			onPointerDown={onGrab}
-			className='touch-none text-white select-none cursor-grab w-full h-10 flex items-center outline outline-2 outline-white-primary'
-		>
-			<h3 className='grow px-1 text-center text-lg overflow-hidden whitespace-nowrap overflow-ellipsis'>
-				<GlitchText onLoad decayRate={0.5}>
+		<div className='overflow-hidden pb-0.5'>
+			<motion.div
+				initial={{ y: '-105%' }}
+				animate={{ y: 0 }}
+				transition={{ delay: 1.25, ease: 'easeOut', type: 'tween' }}
+				onPointerDown={onGrab}
+				className='touch-none text-white select-none cursor-grab w-full h-10 flex items-center outline outline-2 outline-white-primary'
+			>
+				<h3 className='grow px-1 text-center text-lg overflow-hidden whitespace-nowrap overflow-ellipsis'>
 					Window Name
-				</GlitchText>
-			</h3>
-			<button
-				type='button'
-				className='p-1 border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
-				onClick={onMaximize}
-			>
-				{maximized ? (
+				</h3>
+				<button
+					type='button'
+					className='p-1 border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
+					onClick={onMaximize}
+				>
+					{maximized ? (
+						<StaticImage
+							src='../images/restore_down.png'
+							alt='restore down'
+							placeholder='none'
+							draggable={false}
+							width={36}
+							className='group-hover:invert'
+						/>
+					) : (
+						<StaticImage
+							src='../images/maximize.png'
+							alt='maximize'
+							placeholder='none'
+							draggable={false}
+							width={36}
+							className='group-hover:invert'
+						/>
+					)}
+				</button>
+				<button
+					type='button'
+					className='p-1 border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
+					onClick={onClose}
+				>
 					<StaticImage
-						src='../images/restore_down.png'
-						alt='restore down'
+						src='../images/minimize.png'
+						alt='minimize'
 						placeholder='none'
 						draggable={false}
 						width={36}
 						className='group-hover:invert'
 					/>
-				) : (
+				</button>
+				<button
+					type='button'
+					className='p-[.2rem] border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
+					onClick={onClose}
+				>
 					<StaticImage
-						src='../images/maximize.png'
-						alt='maximize'
+						src='../images/close.png'
+						alt='close'
 						placeholder='none'
 						draggable={false}
 						width={36}
 						className='group-hover:invert'
 					/>
-				)}
-			</button>
-			<button
-				type='button'
-				className='p-1 border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
-				onClick={onClose}
-			>
-				<StaticImage
-					src='../images/minimize.png'
-					alt='minimize'
-					placeholder='none'
-					draggable={false}
-					width={36}
-					className='group-hover:invert'
-				/>
-			</button>
-			<button
-				type='button'
-				className='p-[.2rem] border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white'
-				onClick={onClose}
-			>
-				<StaticImage
-					src='../images/close.png'
-					alt='close'
-					placeholder='none'
-					draggable={false}
-					width={36}
-					className='group-hover:invert'
-				/>
-			</button>
+				</button>
+			</motion.div>
 		</div>
 	);
 };

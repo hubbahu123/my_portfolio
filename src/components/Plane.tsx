@@ -59,6 +59,7 @@ const Plane: React.FC<PlaneProps> = ({ seed }) => {
 					drawBuffers: false,
 					shaderTextureLOD: false,
 				}}
+				transparent
 				toneMapped={false}
 			/>
 		</mesh>

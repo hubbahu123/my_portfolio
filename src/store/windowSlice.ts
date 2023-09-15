@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
 import type { WindowSlice, DirectorySlice, WindowType } from './types';
+import { useMobileStore } from '.';
 
 // function FileToWindow(): [string, WindowType] {
 // }
@@ -16,6 +17,8 @@ export const createWindowSlice: StateCreator<
 			? windows.findIndex(window => window.id === ref)
 			: windows.indexOf(ref),
 	addWindow(sysObj) {
+		useMobileStore.getState().showWindow();
+
 		set(state => ({
 			windows: [
 				...state.windows,
@@ -46,6 +49,8 @@ export const createWindowSlice: StateCreator<
 		set(_ => ({ windows: [] }));
 	},
 	bringToFront(ref) {
+		useMobileStore.getState().showWindow();
+
 		const windows = [...get().windows];
 		const index = get().findWindow(windows, ref);
 		if (index === windows.length - 1) return; //Already in front

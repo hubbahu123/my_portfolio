@@ -15,6 +15,8 @@ varying vec2 vUv;
 varying vec3 vNormal;
 
 void main() {
+    float falloff = smoothstep(gridDepth, gridDepth * .75, length(vec2(vWorldPos.x, vWorldPos.z) - OFFSET));
+
     vec2 gridUv = vUv;
     gridUv.x *= 2.0;
     gridUv *= gridDepth;
@@ -27,5 +29,5 @@ void main() {
     light += smoothstep(gridDepth * 0.75, gridDepth * 0.25, distance(vWorldPos.xz, vec2(0.0, -gridDepth)));
     light = min(light, 1.0);
 
-    gl_FragColor = vec4(mix(color, mix(lineColor, lightColor, light), grid), 1.0);
+    gl_FragColor = vec4(mix(color, mix(lineColor, lightColor, light), grid), falloff);
 }

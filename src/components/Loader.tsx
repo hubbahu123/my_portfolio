@@ -1,6 +1,7 @@
 import { motion, useAnimate } from 'framer-motion';
 import { StaticImage } from 'gatsby-plugin-image';
 import React, { createContext, useEffect, useRef, useState } from 'react';
+import GlitchWall from './GlitchWall';
 
 export const LoadedContext = createContext(false);
 
@@ -25,9 +26,6 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 			await animate(0, 100, {
 				duration: 6,
 				ease: 'circOut',
-				onUpdate: latest =>
-					percentage.current &&
-					(percentage.current.textContent = latest.toFixed()),
 			});
 			animate(scope.current, {
 				opacity: 0,
@@ -37,7 +35,7 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 		};
 
 		playAnim();
-	}, [logo]);
+	}, []);
 
 	return (
 		<div className='h-full'>
@@ -52,7 +50,7 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					animate={{ filter: 'drop-shadow(0px 0px 16px #f6019d)' }}
 					transition={{
 						delay: 4,
-						repeat: Infinity,
+						repeat: 10,
 						repeatType: 'mirror',
 						ease: 'linear',
 						duration: 2,
@@ -72,9 +70,7 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					/>
 				</motion.div>
 				<p className='text-light-primary'>Booting...</p>
-				<p className='text-purple-watermark text-9xl md:text-8xl absolute bottom-2 md:right-2'>
-					<span ref={percentage}>0</span>%
-				</p>
+				<GlitchWall />
 			</section>
 			<LoadedContext.Provider value={loaded}>{children}</LoadedContext.Provider>
 		</div>

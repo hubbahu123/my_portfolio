@@ -1,4 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+export const mod = (x: number, y: number) => ((x % y) + y) % y;
+
+export const gcd = (x: number, y: number) => {
+	x = Math.abs(x);
+	y = Math.abs(y);
+	while (y) {
+		var t = y;
+		y = x % y;
+		x = t;
+	}
+	return x;
+};
+
+const CHARS =
+	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!';
+export const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
 
 export const useMediaQuery = (query: string) => {
 	const [matches, setMatches] = useState(false);
@@ -23,8 +40,6 @@ export const useBreakpointLG = () => useMediaQuery('(min-width: 1024px)');
 export const useBreakpointXL = () => useMediaQuery('(min-width: 1280px)');
 export const useBreakpoint2XL = () => useMediaQuery('(min-width: 1536px)');
 
-export const mod = (x: number, y: number) => ((x % y) + y) % y;
-
 export function usePersistent<type extends Object>(
 	key: string,
 	initialState: type,
@@ -39,6 +54,23 @@ export function usePersistent<type extends Object>(
 	const clear = () => localStorage.removeItem(key);
 
 	return [value, setVal, clear];
+}
+
+export function useDebounce<type>(
+	initialState: type,
+	delay = 3000
+): [type, React.Dispatch<React.SetStateAction<type>>] {
+	const [state, dispatch] = useState(initialState);
+	const timeout = useRef<NodeJS.Timeout>();
+	const debouncedDispatch: React.Dispatch<React.SetStateAction<type>> = (
+		...props
+	) => {
+		clearTimeout(timeout.current);
+		timeout.current = setTimeout(() => {
+			dispatch(...props);
+		}, delay);
+	};
+	return [state, debouncedDispatch];
 }
 
 export const colors = {

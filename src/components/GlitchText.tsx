@@ -1,19 +1,18 @@
 import React, { useEffect, useRef } from 'react';
+import { randomChar } from '../utils';
 
 interface GlitchTextProps {
 	children: string;
 	animated?: boolean;
-	onLoad?: boolean;
+	onLoad?: boolean | number;
 	decay?: boolean;
 	decayRate?: number;
 }
 
-const CHARS =
-	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!';
 const GlitchText: React.FC<GlitchTextProps> = ({
 	children,
 	animated,
-	onLoad,
+	onLoad = false,
 	decay = true,
 	decayRate = 1,
 }) => {
@@ -24,8 +23,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 	useEffect(
 		() => {
 			clearInterval(interval.current);
-
-			if (animated || onLoad) {
+			const begin = () => {
 				interval.current = setInterval(() => {
 					if (!text.current) return;
 
@@ -37,13 +35,16 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 					text.current.textContent = children
 						.split('')
 						.map((_, i) =>
-							decay && i < iterations.current
-								? children[i]
-								: CHARS[Math.floor(Math.random() * CHARS.length)]
+							decay && i < iterations.current ? children[i] : randomChar()
 						)
 						.join('');
 					iterations.current += decayRate;
 				}, 30);
+			};
+
+			if (animated || onLoad) {
+				if (typeof onLoad === 'number') setTimeout(begin, onLoad);
+				else begin();
 			} else if (text.current) {
 				text.current.textContent = children;
 				iterations.current = 0;
@@ -54,7 +55,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 		onLoad ? [] : [animated]
 	);
 
-	return <span ref={text}></span>;
+	return <span ref={text}>{children}</span>;
 };
 
 export default GlitchText;

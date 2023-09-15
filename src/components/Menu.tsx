@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import { Window } from '../store/types';
 import WindowJSX from './Window';
+import Icon from './Icon';
 
 interface MenuProps {
 	windows: Window[];
@@ -17,10 +18,11 @@ const Menu: React.FC<MenuProps> = ({
 	toggleMenu,
 }) => {
 	const windowsArea = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		if (!windowsArea.current) return;
 		windowsArea.current.scrollTo(windowsArea.current.scrollWidth, 0);
-	}, [windowsArea]);
+	}, []);
 
 	return (
 		<motion.div
@@ -33,10 +35,11 @@ const Menu: React.FC<MenuProps> = ({
 				WebkitBackdropFilter: 'blur(0px)',
 				opacity: 0,
 			}}
-			className='w-full h-full flex flex-col pb-24 items-center pointer-events-auto'
+			className='w-full h-full flex flex-col pb-24 items-center pointer-events-auto select-none'
 		>
 			<div
-				className='w-full h-5/6 overflow-x-auto pt-8 pb-6 flex gap-6 no-scrollbar snap-x snap-mandatory'
+				className='w-full h-5/6 overflow-x-auto pt-20 pb-6 flex gap-4 no-scrollbar snap-x snap-mandatory'
+				style={{ perspective: '1000' }}
 				ref={windowsArea}
 			>
 				<AnimatePresence>
@@ -46,34 +49,51 @@ const Menu: React.FC<MenuProps> = ({
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.5 }}
 							key='no-active'
-							className='text-xl font-bold w-full text-center mt-[60%]'
+							className='text-xl font-bold w-full text-center mt-[50%]'
 						>
 							No Active Apps
 						</motion.p>
 					) : (
-						windows.map(({ id }, i) => (
-							<motion.div
-								exit={{ y: -100, opacity: 0 }}
-								key={id}
-								className={`${i === 0 && 'ml-[25%]'} ${
-									i === windows.length - 1 && 'mr-[25%]'
-								} w-1/2 h-full relative shrink-0 snap-center`}
-							>
-								<WindowJSX
-									bringToFrontReq={() => {
-										toggleMenu();
-										bringToFrontReq(id);
-									}}
-								/>
-							</motion.div>
-						))
+						windows.map(({ id, sysObj }, i) => {
+							return (
+								<motion.div
+									key={id}
+									exit={{ y: -100, opacity: 0 }}
+									className={`${i === 0 && 'ml-[25%]'} ${
+										i === windows.length - 1 && 'mr-[25%]'
+									} w-3/5 h-full relative shrink-0 snap-center`}
+								>
+									<motion.div
+										className='w-full h-full'
+										initial={{ scale: 0.75 }}
+										whileInView={{ scale: 1 }}
+										viewport={{
+											root: windowsArea,
+											amount: 'all',
+											margin: '10px',
+										}}
+									>
+										<Icon
+											sysObj={sysObj}
+											className='absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16'
+										/>
+										<WindowJSX
+											bringToFrontReq={() => {
+												toggleMenu();
+												bringToFrontReq(id);
+											}}
+										/>
+									</motion.div>
+								</motion.div>
+							);
+						})
 					)}
 				</AnimatePresence>
 			</div>
 			<button
 				type='button'
 				className={`${
-					windows.length === 0 && 'opacity-50'
+					windows.length === 0 && 'opacity-50 cursor-not-allowed'
 				} p-2 outline outline-black-primary text-black-primary transition-opacity ease-steps`}
 				onClick={() => deleteWindows()}
 			>

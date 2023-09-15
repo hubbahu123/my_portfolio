@@ -38,5 +38,9 @@ export interface DirectorySlice {
 
 export interface MobileStore {
 	menuOpen: boolean;
+	windowOpen: boolean;
 	toggleMenu: Function;
+	home: Function;
+	showWindow: Function;
+	back: Function;
 }

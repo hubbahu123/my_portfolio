@@ -17,8 +17,9 @@ const WindowsArea = () => {
 	);
 
 	const isMobile = useContext(MobileContext);
-	const [menuOpen, toggleMenu] = useMobileStore(state => [
+	const [menuOpen, windowOpen, toggleMenu] = useMobileStore(state => [
 		state.menuOpen,
+		state.windowOpen,
 		state.toggleMenu,
 	]);
 
@@ -39,13 +40,15 @@ const WindowsArea = () => {
 				{(isMobile
 					? menuOpen || windows.length === 0
 						? []
-						: [windows[windows.length - 1]]
+						: windowOpen
+						? [windows[windows.length - 1]]
+						: []
 					: windows
 				).map(({ id }) => (
 					<Window
 						key={id}
 						area={windowsAreaRef}
-						initialLocation={{ x: 0, y: 100 }}
+						initialLocation={{ x: 100, y: 100 }}
 						bringToFrontReq={() => bringToFrontReq(id)}
 						deleteReq={() => deleteReq(id)}
 					/>

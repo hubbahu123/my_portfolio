@@ -95,4 +95,44 @@ body {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
+
+	.group:active .group-active\:glitch {
+		animation: glitch 0.15s steps(10) 2;
+	}
+}
+
+@keyframes glitch {
+	from {
+		transform: translate(44%, -16%);
+	}
+	10% {
+		transform: translate(30%, 13%);
+	}
+	20% {
+		transform: translate(-9%, -28%);
+	}
+	30% {
+		transform: translate(-28%, -45%) scaleX(-1);
+	}
+	40% {
+		transform: translate(-36%, 8%) scaleX(-1);
+	}
+	50% {
+		transform: translate(6%, 28%);
+	}
+	60% {
+		transform: translate(6%, -10%);
+	}
+	70% {
+		transform: translate(14%, 35%) scaleY(2);
+	}
+	80% {
+		transform: translate(26%, 4%);
+	}
+	90% {
+		transform: translate(-19%, 38%);
+	}
+	to {
+		transform: translate(8%, 38%) scale(1.2);
+	}
 }

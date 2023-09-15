@@ -8,7 +8,6 @@ interface ResizableProps {
 	onResizeStart?(info: PanInfo, cardinal: Cardinal): void;
 	onResize?(info: PanInfo, cardinal: Cardinal): void;
 	onResizeEnd?(info: PanInfo, cardinal: Cardinal): void;
-	showOutline: boolean;
 }
 
 interface Handle {
@@ -79,14 +78,9 @@ const Resizers: React.FC<ResizableProps> = ({
 	onResizeStart,
 	onResize,
 	onResizeEnd,
-	showOutline,
 }) => {
 	return (
-		<div
-			className={`absolute w-full h-full -z-10 visible ${
-				showOutline && 'outline-dashed outline-white-primary'
-			}`}
-		>
+		<div className='absolute w-full h-full -z-10'>
 			{HANDLES.map(({ dir, cursor, pos, fullSide, drag }) => (
 				<motion.div
 					key={dir}

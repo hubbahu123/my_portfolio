@@ -1,11 +1,13 @@
-# Portfolio
+## To Setup:
+1. python3 -m venv env 
+2. source env/bin/activate
+3. pip install -r requirements.txt
+4. deactivate
 
-To run on Mac, install the pip package `virtualenv`. Then, run `virtualenv env` to create a virtual environment in the folder. Lastly, run `source env/bin/activate` to activate the virtual environment (if done correctly, the terminal should indicate that the env is activated by prefixing each line with (env)). With it activated, you can safely install all the nescessary pip packages with the `pip install -r requirements.txt` and finally run `run.py`.
+## To Run:
+1. source run / bash run /
 
-Alternatively, run `source run` to start the project.
-
-My Computer Specific Commands:
-
-- `python3 -m pip install virtualenv`
-- `python3 -m pip install -r requirements.txt`
-- `python3 run.py`
+## Adding packages:
+1. source env/bin/activate
+2. pip install *<Package Name Here>*
+3. deactivate

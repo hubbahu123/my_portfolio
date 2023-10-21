@@ -1,23 +1,20 @@
-import { Canvas, Props, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import * as React from 'react';
 import { colors } from '../utils';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { BakeShadows } from '@react-three/drei';
-import { Desk } from './Desk';
-import { PerspectiveCamera } from '@react-three/drei';
-import { motion } from 'framer-motion-3d';
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Symbols } from './Symbols';
 import Plane from './Plane';
 import Sky from './Sky';
 import Effects from './Effects';
 import MouseControls from './MouseControls';
+import { DoubleSide, Color } from 'three';
 
 const SEED = Math.round((Math.random() * 2 - 1) * 1000);
-
+const TRIANGLE_COLOR = new Color(colors.blueAccent).multiplyScalar(20);
 const Background: React.FC = () => {
 	return (
 		<Canvas
-			dpr={window.devicePixelRatio / 4}
+			dpr={.3}
 			gl={{ powerPreference: 'high-performance' }}
 		>
 			<directionalLight
@@ -32,6 +29,10 @@ const Background: React.FC = () => {
 			<Sky seed={SEED} />
 			<Plane seed={SEED} />
 			<Symbols />
+			<mesh position={[0, -.2, .2]} rotation={[.2, .2, 0]}>
+				<ringGeometry args={[3, 3.25, 3]} />
+				<meshBasicMaterial color={TRIANGLE_COLOR} side={DoubleSide} />
+			</mesh>
 		</Canvas>
 	);
 };

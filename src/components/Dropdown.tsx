@@ -26,7 +26,7 @@ const dropdownVariants: Variants = {
 type Alignment = 'left' | 'center' | 'right';
 
 const Dropdown: React.FC<DropdownProps> = props => {
-	const { children, dContent, forcedAlignment } = props;
+	const { children, dContent, forcedAlignment, ...rest } = props;
 
 	const [open, setOpen] = useState(false);
 	const button = useRef<HTMLButtonElement>(null);
@@ -78,7 +78,7 @@ const Dropdown: React.FC<DropdownProps> = props => {
 	return (
 		<div className='relative' ref={dropdown}>
 			<button
-				{...props}
+				{...rest}
 				ref={button}
 				type='button'
 				onClick={e => {

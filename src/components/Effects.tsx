@@ -4,10 +4,8 @@ import {
 	ChromaticAberration,
 	EffectComposer,
 	Noise,
-	Glitch,
+	Sepia,
 } from '@react-three/postprocessing';
-import { Vector2 } from 'three';
-import { GlitchMode } from 'postprocessing';
 
 const Effects: React.FC = () => {
 	return (

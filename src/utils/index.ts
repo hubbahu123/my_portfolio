@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 
 export const mod = (x: number, y: number) => ((x % y) + y) % y;
 
+export const randRange = (min: number, max: number) =>
+	Math.random() * (max - min) + min;
+
 export const gcd = (x: number, y: number) => {
 	x = Math.abs(x);
 	y = Math.abs(y);

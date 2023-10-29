@@ -3,7 +3,7 @@ import { useGLTF, useTexture } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 import { colors } from '../utils';
 import * as THREE from 'three';
-import { useFrame, useLoader } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion-3d';
 import introImg from '../images/intro.jpg';
 

@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 import * as React from 'react';
-import { Bvh, Float, useGLTF } from '@react-three/drei';
+import { Bvh, Float, useGLTF, useTexture } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 import { useBoundStore } from '../store';
-import { colors } from '../utils';
 import { Throbber } from './Throbber';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Window } from '../store/types';
 import { useFrame } from '@react-three/fiber';
+import { createGlitchMat } from '../shaders/glitchMat';
+import { randRange } from '../utils';
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -19,114 +20,88 @@ type GLTFResult = GLTF & {
 	};
 };
 
-function checkVisibility(
-	window: Window | undefined,
-	prevWindow: Window | undefined,
-	node: string
-): boolean {
-	if (!window) return node === 'bust';
+function checkVisibility(window: Window | undefined): string {
+	if (!window) return 'bust';
 	switch (window.type) {
 		case 'FileExplorer':
-			if (node === 'computer') return true;
-			break;
+			return 'computer';
 		case 'Console':
-			if (node === 'pen') return true;
-			break;
+			return 'pen';
 		default:
-			break;
+			return 'bust';
 	}
-	return prevWindow ? checkVisibility(prevWindow, undefined, node) : false;
 }
-
-const mat = new THREE.MeshLambertMaterial({
-	color: colors.whitePrimary,
-	reflectivity: 0
-});
-mat.onBeforeCompile = shader => {
-	shader.uniforms.time = { value: 0 };
-	shader.uniforms.size = { value: .1 }
-	shader.uniforms.rot = { value: 15 }
-
-	shader.vertexShader = `
-		uniform float time;
-		uniform float size;
-		uniform float rot;
-		varying float vGlitch;
-		varying vec3 pos;
-		float rand(float n) {
-			return fract(sin(n) * 43758.5453);
-		}
-		vec2 rotate(vec2 v, float a) {
-			float s = sin(a);
-			float c = cos(a);
-			mat2 m = mat2(c, s, -s, c);
-			return m * v;
-		}
-		${shader.vertexShader}
-	`;
-	shader.vertexShader = shader.vertexShader.replace(
-		'#include <begin_vertex>',
-		`pos = position;
-		float val = (rotate(pos.xy, rot).y + 1.0) / 2.0;
-		float current = time * (1.0 + size * 2.0) - size;
-		vGlitch = smoothstep(current - size, current, val) * smoothstep(current + size, current, val);
-		vGlitch *= vGlitch;
-		vec3 transformed = pos + vGlitch * vec3(rand(val - floor(time * .25)) * 2.0 - 1.0, 0.0, 0.0);`
-	);
-
-	shader.fragmentShader = `
-		uniform float time;
-		varying float vGlitch;
-		varying vec3 pos;
-		float rand3D(vec3 x) {
-			return fract(sin(dot(x.xyz ,vec3(12.9898,78.233,144.7272))) * 43758.5453);
-		}
-		${shader.fragmentShader}
-	`;
-	shader.fragmentShader = shader.fragmentShader.replace(
-		'#include <color_fragment>',
-		`diffuseColor = mix(diffuseColor, vec4(rand3D(pos + time)), vGlitch);`
-	);
-
-	mat.userData.shader = shader;
-};
 
 export const Symbols: React.FC<
 	React.JSX.IntrinsicElements['group']
 > = props => {
 	const { nodes } = useGLTF('/models/symbols.glb') as GLTFResult;
+	const transitionStatus = useRef({
+		prevNode: '',
+		currentNode: '',
+		timeout: null as null | NodeJS.Timeout,
+		glitching: false,
+	});
+	const [nodesVisibility, setVisibility] = useState<{
+		[key: string]: boolean;
+	}>({});
+	const symbolMat = useMemo(() => createGlitchMat(), []);
 
-	const [currentWindow, prevWindow] = useBoundStore(({ windows }) => [
-		windows[0],
-		windows[1],
-	]);
-	
+	const currentWindow = useBoundStore(({ windows }) => windows[0]);
+
+	useEffect(() => {
+		const shouldBeVisible = checkVisibility(currentWindow);
+		if (nodesVisibility[shouldBeVisible]) return;
+		transitionStatus.current.glitching = true;
+		transitionStatus.current.prevNode =
+			transitionStatus.current.currentNode;
+		transitionStatus.current.currentNode = shouldBeVisible;
+		if (transitionStatus.current.timeout) return;
+		transitionStatus.current.timeout = setTimeout(() => {
+			transitionStatus.current.glitching = false;
+			transitionStatus.current.timeout = null;
+			setVisibility(prev => ({
+				...prev,
+				[transitionStatus.current.prevNode]: false,
+			}));
+			setVisibility(prev => ({ ...prev, [shouldBeVisible]: true }));
+		}, randRange(500, 1250));
+	}, [currentWindow]);
+
 	useFrame(state => {
-		if (!mat.userData.shader || !mat.userData.shader.uniforms) return;
+		if (!symbolMat.userData.shader || !symbolMat.userData.shader.uniforms)
+			return;
+		if (!transitionStatus.current.glitching) {
+			if (symbolMat.userData.shader.uniforms.glitching.value)
+				symbolMat.userData.shader.uniforms.glitching.value = 0;
+			return;
+		}
 
+		symbolMat.userData.shader.uniforms.time.value =
+			state.clock.getElapsedTime();
+		if (!symbolMat.userData.shader.uniforms.glitching.value)
+			symbolMat.userData.shader.uniforms.glitching.value = 1;
 	});
 
-	useEffect(() => () => mat.dispose(), []);
-	
+	useEffect(() => () => symbolMat.dispose(), []);
+
 	return (
 		<React.Suspense fallback={<Throbber />}>
 			<Float rotationIntensity={2}>
-				<Bvh firstHitOnly>
-					<group {...props} dispose={null}
-								onPointerOver={e => console.log(e)}>
-						{Object.keys(nodes).map(node => 
-							//@ts-ignore
-							nodes[node].geometry == undefined ? null :
+				<group {...props} dispose={null}>
+					{Object.keys(nodes).map(node =>
+						//@ts-ignore
+						nodes[node].geometry == undefined ? null : (
 							<mesh
 								//@ts-ignore
 								geometry={nodes[node].geometry}
 								key={node}
-								visible={checkVisibility(currentWindow, prevWindow, node)}
-								material={mat}
+								visible={nodesVisibility[node] ?? false}
+								material={symbolMat}
 							/>
-						)}
-					</group>
-				</Bvh>
+						)
+					)}
+				</group>
 			</Float>
 		</React.Suspense>
 	);

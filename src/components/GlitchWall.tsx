@@ -6,7 +6,7 @@ const GlitchWall: React.FC<{ duration?: number }> = ({ duration = 6000 }) => {
 	const textRef = useRef<HTMLParagraphElement>(null);
 
 	//Doesn't create a new array every frame now
-	const array = useMemo(() => Array.from(Array(2000)), []);
+	const array = useMemo(() => Array.from(Array(4000)), []);
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (!textRef.current) return;
@@ -25,7 +25,7 @@ const GlitchWall: React.FC<{ duration?: number }> = ({ duration = 6000 }) => {
 
 	return (
 		<p
-			className='pointer-events-none w-full top-1/2 -translate-y-1/2 absolute -z-10 break-all text-center text-3xl text-purple-watermark opacity-40'
+			className="pointer-events-none w-full top-1/2 -translate-y-1/2 absolute -z-10 break-all text-center text-3xl text-purple-watermark opacity-40"
 			style={{ mask, WebkitMask: mask }}
 			ref={textRef}
 		/>

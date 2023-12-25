@@ -66,7 +66,7 @@ const Window: React.FC<WindowProps> = ({
 			ref={windowRef}
 			className={`${
 				(isMobile || maximized) && '!w-full !h-full !transform-none'
-			} pointer-events-auto absolute backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
+			} touch-none pointer-events-auto absolute backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
 				isMoving && 'invisible backdrop-blur-none'
 			}`}
 			style={{

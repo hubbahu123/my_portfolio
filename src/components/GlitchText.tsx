@@ -17,7 +17,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 	decayRate = 1,
 }) => {
 	const text = useRef<HTMLSpanElement>(null);
-	const interval = useRef<NodeJS.Timer>();
+	const interval = useRef<number | undefined | NodeJS.Timeout>();
 	const iterations = useRef(0);
 
 	useEffect(
@@ -35,7 +35,9 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 					text.current.textContent = children
 						.split('')
 						.map((_, i) =>
-							decay && i < iterations.current ? children[i] : randomChar()
+							decay && i < iterations.current
+								? children[i]
+								: randomChar()
 						)
 						.join('');
 					iterations.current += decayRate;

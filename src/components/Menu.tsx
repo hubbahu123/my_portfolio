@@ -35,10 +35,10 @@ const Menu: React.FC<MenuProps> = ({
 				WebkitBackdropFilter: 'blur(0px)',
 				opacity: 0,
 			}}
-			className='w-full h-full flex flex-col pb-24 items-center pointer-events-auto select-none'
+			className="w-full h-full flex flex-col pb-24 items-center pointer-events-auto select-none"
 		>
 			<div
-				className='w-full h-5/6 overflow-x-auto pt-20 pb-6 flex gap-4 no-scrollbar snap-x snap-mandatory'
+				className="w-full h-5/6 overflow-x-auto pt-20 pb-6 flex gap-4 no-scrollbar snap-x snap-mandatory"
 				style={{ perspective: '1000' }}
 				ref={windowsArea}
 			>
@@ -48,8 +48,8 @@ const Menu: React.FC<MenuProps> = ({
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.5 }}
-							key='no-active'
-							className='text-xl font-bold w-full text-center mt-[50%]'
+							key="no-active"
+							className="text-xl font-bold w-full text-center mt-[50%]"
 						>
 							No Active Apps
 						</motion.p>
@@ -64,7 +64,7 @@ const Menu: React.FC<MenuProps> = ({
 									} w-3/5 h-full relative shrink-0 snap-center`}
 								>
 									<motion.div
-										className='w-full h-full'
+										className="w-full h-full"
 										initial={{ scale: 0.75 }}
 										whileInView={{ scale: 1 }}
 										viewport={{
@@ -75,7 +75,7 @@ const Menu: React.FC<MenuProps> = ({
 									>
 										<Icon
 											sysObj={sysObj}
-											className='absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16'
+											className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
 										/>
 										<WindowJSX
 											bringToFrontReq={() => {
@@ -91,10 +91,10 @@ const Menu: React.FC<MenuProps> = ({
 				</AnimatePresence>
 			</div>
 			<button
-				type='button'
+				type="button"
 				className={`${
 					windows.length === 0 && 'opacity-50 cursor-not-allowed'
-				} p-2 outline outline-black-primary text-black-primary transition-opacity ease-steps`}
+				} p-2 outline outline-black-primary outline-2 text-black-primary transition-opacity ease-steps`}
 				onClick={() => deleteWindows()}
 			>
 				Close All

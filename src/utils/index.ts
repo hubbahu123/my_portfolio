@@ -5,6 +5,14 @@ export const mod = (x: number, y: number) => ((x % y) + y) % y;
 export const randRange = (min: number, max: number) =>
 	Math.random() * (max - min) + min;
 
+export const map = (
+	x: number,
+	min1: number = 0,
+	max1: number = 1,
+	min2: number,
+	max2: number
+) => min2 + ((x - min1) * (max2 - min2)) / (max1 - min1);
+
 export const gcd = (x: number, y: number) => {
 	x = Math.abs(x);
 	y = Math.abs(y);
@@ -74,6 +82,13 @@ export function useDebounce<type>(
 		}, delay);
 	};
 	return [state, debouncedDispatch];
+}
+
+export function useInterval(callback: Function, delay: number) {
+	useEffect(() => {
+		const interval = setInterval(callback, delay);
+		return () => clearInterval(interval);
+	}, []);
 }
 
 export const colors = {

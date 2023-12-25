@@ -4,7 +4,6 @@ import {
 	ChromaticAberration,
 	EffectComposer,
 	Noise,
-	Sepia,
 } from '@react-three/postprocessing';
 
 const Effects: React.FC = () => {
@@ -17,7 +16,10 @@ const Effects: React.FC = () => {
 				height={512}
 			/>
 			<Noise opacity={0.02} />
-			<ChromaticAberration radialModulation={false} modulationOffset={0} />
+			<ChromaticAberration
+				radialModulation={false}
+				modulationOffset={0}
+			/>
 		</EffectComposer>
 	);
 };

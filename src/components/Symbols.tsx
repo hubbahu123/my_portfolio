@@ -51,7 +51,16 @@ export const Symbols: React.FC<
 
 	useEffect(() => {
 		const shouldBeVisible = checkVisibility(currentWindow);
-		if (nodesVisibility[shouldBeVisible]) return;
+		if (nodesVisibility[shouldBeVisible]) {
+			if (transitionStatus.current.timeout) {
+				clearTimeout(transitionStatus.current.timeout);
+				transitionStatus.current.timeout = setTimeout(() => {
+					transitionStatus.current.glitching = false;
+					transitionStatus.current.timeout = null;
+				}, randRange(500, 1250));
+			}
+			return;
+		}
 		transitionStatus.current.glitching = true;
 		transitionStatus.current.prevNode =
 			transitionStatus.current.currentNode;

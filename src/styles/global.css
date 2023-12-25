@@ -99,6 +99,23 @@ body {
 	.group:active .group-active\:glitch {
 		animation: glitch 0.15s steps(10) 2;
 	}
+
+	.slider {
+		@apply appearance-none cursor-pointer flex-grow p-1 ml-4 my-2 outline outline-2 outline-white-primary bg-gradient-to-r bg-[length:200%] from-pink-accent via-50% via-blue-accent to-50% bg-transparent;
+	}
+
+	.slider::-webkit-slider-thumb {
+		@apply appearance-none relative w-6 h-4 bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary z-40;
+	}
+
+	.slider::-moz-range-thumb {
+		@apply w-6 h-4 bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary cursor-pointer;
+	}
+
+	.backdrop-blur-parent::before {
+		content: '';
+		@apply backdrop-blur absolute w-full h-full -z-10;
+	}
 }
 
 @keyframes glitch {

@@ -86,7 +86,7 @@ const Window: React.FC<WindowProps> = ({
 					maximized={maximized}
 				/>
 			)}
-			<div className='grow overflow-y-auto'></div>
+			<div className="grow overflow-y-auto"></div>
 			{!isMobile && (
 				<Resizers
 					onResizeStart={() => setIsMoving(true)}

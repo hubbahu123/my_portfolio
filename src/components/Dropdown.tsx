@@ -10,6 +10,7 @@ interface DropdownProps
 	children: React.ReactElement;
 	dContent: React.ReactElement;
 	forcedAlignment?: Alignment;
+	noPadding: boolean;
 }
 
 const dropdownVariants: Variants = {
@@ -26,7 +27,7 @@ const dropdownVariants: Variants = {
 type Alignment = 'left' | 'center' | 'right';
 
 const Dropdown: React.FC<DropdownProps> = props => {
-	const { children, dContent, forcedAlignment, ...rest } = props;
+	const { children, dContent, forcedAlignment, noPadding, ...rest } = props;
 
 	const [open, setOpen] = useState(false);
 	const button = useRef<HTMLButtonElement>(null);
@@ -59,7 +60,6 @@ const Dropdown: React.FC<DropdownProps> = props => {
 				dropdown.current.contains(e.target)
 			)
 				return;
-			e.preventDefault();
 			setOpen(false);
 		};
 
@@ -76,11 +76,11 @@ const Dropdown: React.FC<DropdownProps> = props => {
 	}
 
 	return (
-		<div className='relative' ref={dropdown}>
+		<div className="relative" ref={dropdown}>
 			<button
 				{...rest}
 				ref={button}
-				type='button'
+				type="button"
 				onClick={e => {
 					e.preventDefault();
 					setOpen(open => !open);
@@ -88,9 +88,16 @@ const Dropdown: React.FC<DropdownProps> = props => {
 			>
 				{children}
 			</button>
-			<div className='absolute overflow-hidden pb-96' style={alignmentStyle}>
+			<div
+				className={`absolute overflow-hidden pb-4 ${
+					!open && 'pointer-events-none'
+				}`}
+				style={alignmentStyle}
+			>
 				<motion.div
-					className='m-0.5 p-2 outline outline-2 outline-white-primary backdrop-blur bg-gradient-to-r from-black-primary/75 to-dark-primary/75 from-25% to-70%'
+					className={`m-0.5 outline outline-2 outline-white-primary backdrop-blur bg-gradient-to-r from-black-primary/75 to-dark-primary/75 from-25% to-70% ${
+						!noPadding && 'p-4'
+					}`}
 					animate={open ? 'open' : 'closed'}
 					variants={dropdownVariants}
 				>

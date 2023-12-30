@@ -26,7 +26,7 @@ const WindowsArea = () => {
 	return (
 		<div
 			ref={windowsAreaRef}
-			className='absolute w-full h-full md:mt-14 top-0 pointer-events-none'
+			className="absolute w-full h-full md:mt-14 top-0 pointer-events-none"
 		>
 			<AnimatePresence>
 				{isMobile && menuOpen && (
@@ -44,13 +44,14 @@ const WindowsArea = () => {
 						? [windows[windows.length - 1]]
 						: []
 					: windows
-				).map(({ id }) => (
+				).map(({ id, sysObj }) => (
 					<Window
 						key={id}
 						area={windowsAreaRef}
 						initialLocation={{ x: 100, y: 100 }}
 						bringToFrontReq={() => bringToFrontReq(id)}
 						deleteReq={() => deleteReq(id)}
+						originElement={sysObj.htmlElement}
 					/>
 				))}
 			</AnimatePresence>

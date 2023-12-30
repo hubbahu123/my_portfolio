@@ -5,7 +5,6 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import WindowHeader from './WindowHeader';
 import { MobileContext } from './OS';
 import Outline from './Outline';
-import Mask from './Mask';
 
 interface Dimensions {
 	w: number;
@@ -19,7 +18,18 @@ interface WindowProps {
 	initialLocation?: Point;
 	initialDimensions?: Dimensions;
 	minDimensions?: Dimensions;
+	originElement?: HTMLElement;
 }
+
+const calcOrigin = (window: HTMLElement, windowOrigin: HTMLElement) => {
+	const windowBounds = window.getBoundingClientRect();
+	const windowOriginsBounds = windowOrigin.getBoundingClientRect();
+	return `${
+		windowOriginsBounds.x + windowOriginsBounds.width / 2 - windowBounds.x
+	}px ${
+		windowOriginsBounds.y + windowOriginsBounds.height / 2 - windowBounds.y
+	}px`;
+};
 
 const Window: React.FC<WindowProps> = ({
 	area,
@@ -28,6 +38,7 @@ const Window: React.FC<WindowProps> = ({
 	initialLocation = { x: 0, y: 0 },
 	initialDimensions = { w: 500, h: 300 },
 	minDimensions = { w: 200, h: 100 },
+	originElement,
 }) => {
 	const [isMoving, setIsMoving] = useState(false);
 	const [maximized, setMaximized] = useState(false);
@@ -76,6 +87,10 @@ const Window: React.FC<WindowProps> = ({
 				y,
 				width,
 				height,
+				transformOrigin:
+					originElement && windowRef.current
+						? calcOrigin(windowRef.current, originElement)
+						: '',
 			}}
 		>
 			{!isMobile && (

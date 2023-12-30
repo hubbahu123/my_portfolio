@@ -10,7 +10,7 @@ interface DropdownProps
 	children: React.ReactElement;
 	dContent: React.ReactElement;
 	forcedAlignment?: Alignment;
-	noPadding: boolean;
+	noPadding?: boolean;
 }
 
 const dropdownVariants: Variants = {

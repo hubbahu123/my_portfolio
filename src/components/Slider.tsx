@@ -3,7 +3,9 @@ import { map } from '../utils';
 
 interface SliderProps {
 	state: number;
-	setter: React.Dispatch<React.SetStateAction<number>>;
+	setter:
+		| React.Dispatch<React.SetStateAction<number>>
+		| ((value: number) => void);
 	children: React.ReactNode;
 }
 

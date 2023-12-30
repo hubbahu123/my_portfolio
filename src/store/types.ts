@@ -6,13 +6,16 @@ export type Path = string[] | string;
 export interface Directory {
 	name: string;
 	children: SystemObject[];
+	htmlElement?: HTMLElement;
 }
 
 export interface File {
 	name: string;
 	ext: FileExtension;
 	value?: object;
+	htmlElement?: HTMLElement;
 }
+
 export interface Window {
 	sysObj: SystemObject;
 	name: string;
@@ -43,4 +46,19 @@ export interface MobileStore {
 	home: Function;
 	showWindow: Function;
 	back: Function;
+}
+
+export interface SettingsStore {
+	brightness: number;
+	use3D: boolean;
+	useStatic: boolean;
+	scanlines: boolean;
+	volume: number;
+	setBrightness(val: number): void;
+	set3D(val: boolean): void;
+	setStatic(val: boolean): void;
+	setScanlines(val: boolean): void;
+	setVolume(val: number): void;
+	restart: Function;
+	shutdown: Function;
 }

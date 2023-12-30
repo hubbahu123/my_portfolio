@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { Vector2, MathUtils } from 'three';
 import * as React from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useSettingsStore } from '../store';
 
 const MIN = new Vector2(-1, -1);
 const MAX = new Vector2(1, 1);
@@ -21,18 +22,18 @@ const MouseControls = () => {
 
 		window.addEventListener('pointermove', updateTarget);
 
-		return () => window.removeEventListener('pointermove', updateTarget);;
+		return () => window.removeEventListener('pointermove', updateTarget);
 	}, []);
 
-	useFrame((state, delta) => {
-		state.camera.rotation.x = MathUtils.damp(
-			state.camera.rotation.x,
+	useFrame(({ camera }, delta) => {
+		camera.rotation.x = MathUtils.damp(
+			camera.rotation.x,
 			targetPos.y * Math.PI * 0.05,
 			6,
 			delta
 		);
-		state.camera.rotation.y = MathUtils.damp(
-			state.camera.rotation.y,
+		camera.rotation.y = MathUtils.damp(
+			camera.rotation.y,
 			targetPos.x * Math.PI * 0.05,
 			6,
 			delta

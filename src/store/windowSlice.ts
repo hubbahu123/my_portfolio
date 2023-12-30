@@ -1,9 +1,6 @@
 import { StateCreator } from 'zustand';
-import type { WindowSlice, DirectorySlice, WindowType } from './types';
+import type { WindowSlice, DirectorySlice } from './types';
 import { useMobileStore } from '.';
-
-// function FileToWindow(): [string, WindowType] {
-// }
 
 export const createWindowSlice: StateCreator<
 	WindowSlice & DirectorySlice,

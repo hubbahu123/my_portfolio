@@ -40,6 +40,8 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 							draggable={false}
 							width={36}
 							className="group-hover:invert"
+							loading="eager"
+							imgClassName="!transition-none" //Loads in slowly and looks out of place
 						/>
 					) : (
 						<StaticImage
@@ -49,6 +51,8 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 							draggable={false}
 							width={36}
 							className="group-hover:invert"
+							loading="eager"
+							imgClassName="!transition-none"
 						/>
 					)}
 				</button>
@@ -64,6 +68,8 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 						draggable={false}
 						width={36}
 						className="group-hover:invert"
+						loading="eager"
+						imgClassName="!transition-none"
 					/>
 				</button>
 			</motion.div>

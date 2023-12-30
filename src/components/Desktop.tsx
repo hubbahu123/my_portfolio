@@ -8,6 +8,7 @@ import Intro from './Intro';
 import { usePersistent } from '../utils';
 import Loader from './Loader';
 import WindowsArea from './WindowsArea';
+import Modifiers from './Modifiers';
 
 const Desktop: React.FC = () => {
 	const desktopAreaRef = useRef(null!);
@@ -19,7 +20,7 @@ const Desktop: React.FC = () => {
 	);
 
 	return (
-		<motion.main ref={desktopAreaRef} className='w-full h-full relative'>
+		<motion.main ref={desktopAreaRef} className="w-full h-full relative">
 			{introDone ? (
 				<Loader>
 					<Background />
@@ -30,6 +31,7 @@ const Desktop: React.FC = () => {
 			) : (
 				<Intro onFinish={() => setIntroDone(true)} />
 			)}
+			<Modifiers />
 		</motion.main>
 	);
 };

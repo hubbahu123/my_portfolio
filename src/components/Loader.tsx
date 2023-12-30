@@ -38,13 +38,13 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	}, []);
 
 	return (
-		<div className='h-full'>
+		<div className="h-full">
 			<section
 				ref={scope}
-				className='z-50 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col'
+				className="z-40 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col"
 			>
 				<motion.div
-					className='overflow-hidden w-64 translate-x-12 transition-transform ease-out delay-1000 duration-1000'
+					className="overflow-hidden w-64 translate-x-12 transition-transform ease-out delay-1000 duration-1000"
 					ref={logo}
 					initial={{ filter: 'drop-shadow(0px 0px 0px #f6019d)' }}
 					animate={{ filter: 'drop-shadow(0px 0px 16px #f6019d)' }}
@@ -57,22 +57,24 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					}}
 				>
 					<StaticImage
-						src='../images/logo/logo_large_animated.png'
-						alt='Animated logo'
-						layout='fixed'
+						src="../images/logo/logo_large_animated.png"
+						alt="Animated logo"
+						layout="fixed"
 						height={128}
-						placeholder='none'
-						className='transition-transform delay-1000'
+						placeholder="none"
+						className="transition-transform delay-1000"
 						style={{
 							transitionTimingFunction: `steps(${FRAMES})`,
 							transitionDuration: `${ANIMATION_TIME}s`,
 						}}
 					/>
 				</motion.div>
-				<p className='text-light-primary'>Booting...</p>
+				<p className="text-light-primary">Booting...</p>
 				<GlitchWall />
 			</section>
-			<LoadedContext.Provider value={loaded}>{children}</LoadedContext.Provider>
+			<LoadedContext.Provider value={loaded}>
+				{children}
+			</LoadedContext.Provider>
 		</div>
 	);
 };

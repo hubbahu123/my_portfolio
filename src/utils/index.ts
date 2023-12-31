@@ -24,6 +24,9 @@ export const gcd = (x: number, y: number) => {
 	return x;
 };
 
+export const easeSteps = (steps: number) => (progress: number) =>
+	Math.floor(progress * steps) / steps;
+
 const CHARS =
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!';
 export const randomChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];

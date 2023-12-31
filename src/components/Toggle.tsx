@@ -11,7 +11,7 @@ interface ToggleProps {
 
 const Toggle: React.FC<ToggleProps> = ({ state, setter, children }) => {
 	return (
-		<label className="flex items-center justify-between my-2 cursor-pointer">
+		<label className="flex items-center justify-between my-2 cursor-pointer whitespace-nowrap">
 			{children}
 			<input
 				type="checkbox"

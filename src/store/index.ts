@@ -9,6 +9,7 @@ import {
 } from './types';
 import { clamp } from 'framer-motion';
 import { persist } from 'zustand/middleware';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export const useBoundStore = create<WindowSlice & DirectorySlice>()((...a) => ({
 	...createWindowSlice(...a),
@@ -38,10 +39,17 @@ export const useSettingsStore = create<
 			useStatic: false,
 			scanlines: false,
 			volume: 0,
+			fancyText: true,
 			setBrightness: val => set({ brightness: clamp(0, 100, val) }),
 			set3D: val => set({ use3D: val }),
 			setStatic: val => set({ useStatic: val }),
 			setScanlines: val => set({ scanlines: val }),
+			setFancyText: val => {
+				document.documentElement.style.fontFamily = val
+					? ''
+					: defaultTheme.fontFamily.sans.join(',');
+				set({ fancyText: val });
+			},
 			setVolume: val => set({ volume: clamp(0, 100, val) }),
 			restart() {},
 			shutdown() {},

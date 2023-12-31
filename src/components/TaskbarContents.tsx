@@ -22,6 +22,8 @@ const TaskbarContents = () => {
 		setScanlines,
 		volume,
 		setVolume,
+		fancyText,
+		setFancyText,
 	} = useSettingsStore(state => state);
 
 	const volumeRef = useRef(0);
@@ -138,6 +140,9 @@ const TaskbarContents = () => {
 						</Toggle>
 						<Toggle state={scanlines} setter={setScanlines}>
 							Scanlines
+						</Toggle>
+						<Toggle state={fancyText} setter={setFancyText}>
+							Fancy Text
 						</Toggle>
 					</>
 				}

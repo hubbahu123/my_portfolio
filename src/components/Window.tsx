@@ -1,10 +1,17 @@
-import { Point, motion, useDragControls, useMotionValue } from 'framer-motion';
+import {
+	Point,
+	motion,
+	steps,
+	useDragControls,
+	useMotionValue,
+} from 'framer-motion';
 import * as React from 'react';
 import Resizers from './Resizers';
 import { useRef, useState, useEffect, useContext } from 'react';
 import WindowHeader from './WindowHeader';
 import { MobileContext } from './OS';
 import Outline from './Outline';
+import { easeSteps } from '../utils';
 
 interface Dimensions {
 	w: number;
@@ -71,7 +78,7 @@ const Window: React.FC<WindowProps> = ({
 			initial={isMobile ? { opacity: 0 } : { scale: 0 }}
 			animate={isMobile ? { opacity: 1 } : { scale: 1 }}
 			exit={isMobile ? { opacity: 0 } : { scale: 0 }}
-			transition={{ duration: 0.3 }}
+			transition={{ duration: 0.3, type: 'tween', ease: easeSteps(7) }}
 			onPointerDown={!isMobile ? bringToFrontReq : undefined}
 			onPointerUp={isMobile ? bringToFrontReq : undefined}
 			ref={windowRef}

@@ -53,11 +53,13 @@ export interface SettingsStore {
 	use3D: boolean;
 	useStatic: boolean;
 	scanlines: boolean;
+	fancyText: boolean;
 	volume: number;
 	setBrightness(val: number): void;
 	set3D(val: boolean): void;
 	setStatic(val: boolean): void;
 	setScanlines(val: boolean): void;
+	setFancyText(val: boolean): void;
 	setVolume(val: number): void;
 	restart: Function;
 	shutdown: Function;

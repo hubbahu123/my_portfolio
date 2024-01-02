@@ -8,7 +8,7 @@ export const createDirectorySlice: StateCreator<
 	[],
 	DirectorySlice
 > = (_set, get) => ({
-	rootDir: { name: 'root', children: [InitialSystem] },
+	rootDir: { name: 'C:', children: [InitialSystem] },
 	navigateFrom(startDir, path) {
 		//Convert path to usuable list
 		path =
@@ -45,5 +45,20 @@ export const createDirectorySlice: StateCreator<
 	navigate: (path: Path) => get().navigateFrom(get().rootDir, path),
 	move(target, dir) {
 		return false;
+	},
+	traverse(target, startDir) {
+		//Start at rootDir
+		if (!startDir) startDir = get().rootDir;
+
+		const parents = [startDir];
+		const found = startDir.children.find(child => {
+			if (child.name === target.name) return true;
+			if (!('children' in child)) return false;
+			const potentialParents = get().traverse(target, child);
+			if (!potentialParents) return false;
+			parents.push(...potentialParents);
+			return true;
+		});
+		return found ? parents : null;
 	},
 });

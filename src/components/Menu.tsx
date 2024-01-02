@@ -49,15 +49,15 @@ const Menu: React.FC<MenuProps> = ({
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.5 }}
 							key="no-active"
-							className="text-xl font-bold w-full text-center mt-[50%]"
+							className="text-xl font-bold w-full text-center mt-[40%]"
 						>
 							No Active Apps
 						</motion.p>
 					) : (
-						windows.map(({ id, sysObj }, i) => {
+						windows.map((window, i) => {
 							return (
 								<motion.div
-									key={id}
+									key={window.id}
 									exit={{ y: -100, opacity: 0 }}
 									className={`${i === 0 && 'ml-[25%]'} ${
 										i === windows.length - 1 && 'mr-[25%]'
@@ -74,14 +74,15 @@ const Menu: React.FC<MenuProps> = ({
 										}}
 									>
 										<Icon
-											sysObj={sysObj}
+											sysObj={window.sysObj}
 											className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
 										/>
 										<WindowJSX
 											bringToFrontReq={() => {
 												toggleMenu();
-												bringToFrontReq(id);
+												bringToFrontReq(window.id);
 											}}
+											{...window}
 										/>
 									</motion.div>
 								</motion.div>

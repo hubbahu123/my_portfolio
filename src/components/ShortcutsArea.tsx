@@ -7,7 +7,7 @@ interface ShortcutsAreaProps {
 }
 
 const ShortcutsArea: React.FC<ShortcutsAreaProps> = ({ area }) => {
-	const [desktop, addWindow] = useBoundStore(state => [
+	const [desktop] = useBoundStore(state => [
 		state.navigate('users/@redaelmountassir/Desktop'),
 		state.addWindow,
 	]);
@@ -21,7 +21,7 @@ const ShortcutsArea: React.FC<ShortcutsAreaProps> = ({ area }) => {
 			>
 				{shortcuts.map(shortcut => (
 					<li key={shortcut.name} className="pointer-events-auto">
-						<Shortcut {...shortcut} />
+						<Shortcut sysObj={shortcut} />
 					</li>
 				))}
 			</ul>

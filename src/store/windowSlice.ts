@@ -1,6 +1,16 @@
 import { StateCreator } from 'zustand';
-import type { WindowSlice, DirectorySlice } from './types';
+import type {
+	WindowSlice,
+	DirectorySlice,
+	SystemObject,
+	WindowType,
+} from './types';
 import { useMobileStore } from '.';
+
+const pickWindowType = (sysObj: SystemObject): WindowType => {
+	if (!('ext' in sysObj)) return 'FileExplorer';
+	return 'Blank';
+};
 
 export const createWindowSlice: StateCreator<
 	WindowSlice & DirectorySlice,
@@ -15,22 +25,19 @@ export const createWindowSlice: StateCreator<
 			: windows.indexOf(ref),
 	addWindow(sysObj) {
 		useMobileStore.getState().showWindow();
+		const type = pickWindowType(sysObj);
 
 		set(state => ({
 			windows: [
 				...state.windows,
 				{
-					name:
-						!('ext' in sysObj) || sysObj.ext === 'exe'
-							? sysObj.name
-							: sysObj.name + sysObj.ext,
 					sysObj,
+					type,
 					id:
 						state.windows.reduce(
 							(prev, current) => Math.max(prev, current.id),
 							-1
 						) + 1, // Get the next open id value starting from 0
-					type: 'FileExplorer',
 				},
 			],
 		}));

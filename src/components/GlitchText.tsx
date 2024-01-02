@@ -7,6 +7,7 @@ interface GlitchTextProps {
 	onLoad?: boolean | number;
 	decay?: boolean;
 	decayRate?: number;
+	onComplete?: Function;
 }
 
 const GlitchText: React.FC<GlitchTextProps> = ({
@@ -15,6 +16,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 	onLoad = false,
 	decay = true,
 	decayRate = 1,
+	onComplete,
 }) => {
 	const text = useRef<HTMLSpanElement>(null);
 	const interval = useRef<number | undefined | NodeJS.Timeout>();
@@ -29,6 +31,7 @@ const GlitchText: React.FC<GlitchTextProps> = ({
 
 					if (iterations.current > children.length) {
 						clearInterval(interval.current);
+						onComplete && onComplete();
 						return;
 					}
 

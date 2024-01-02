@@ -143,6 +143,23 @@ body {
 	.mask-up {
 		mask: linear-gradient(to top, white, transparent);
 	}
+
+	.animate-pan {
+		animation: pan 3s linear infinite;
+	}
+
+	.animate-pause {
+		animation-play-state: paused;
+	}
+
+	@keyframes pan {
+		from {
+			transform: translateX(-100%);
+		}
+		to {
+			transform: translateX(100%);
+		}
+	}
 }
 
 @keyframes glitch {

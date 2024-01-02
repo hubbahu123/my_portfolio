@@ -1,6 +1,6 @@
 export type SystemObject = Directory | File;
 export type FileExtension = 'pdf' | 'txt' | 'png' | 'jpeg' | 'exe';
-export type WindowType = 'FileExplorer' | 'Console';
+export type WindowType = 'FileExplorer' | 'Console' | 'Blank';
 export type Path = string[] | string;
 
 export interface Directory {
@@ -17,9 +17,8 @@ export interface File {
 }
 
 export interface Window {
-	sysObj: SystemObject;
-	name: string;
 	id: number;
+	sysObj: SystemObject;
 	type: WindowType;
 }
 
@@ -37,6 +36,7 @@ export interface DirectorySlice {
 	navigateFrom(startDir: Directory, path: Path): SystemObject | undefined;
 	navigate(path: Path): SystemObject | undefined;
 	move(target: Path, dir: Directory | Path): boolean;
+	traverse(target: SystemObject, startDir?: Directory): Directory[] | null;
 }
 
 export interface MobileStore {

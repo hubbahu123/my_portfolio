@@ -7,6 +7,7 @@ interface WindowHeaderProps {
 	onClose: React.MouseEventHandler;
 	onMaximize: React.MouseEventHandler;
 	maximized: boolean;
+	title: string;
 }
 
 const WindowHeader: React.FC<WindowHeaderProps> = ({
@@ -14,6 +15,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 	onClose,
 	onMaximize,
 	maximized,
+	title,
 }) => {
 	return (
 		<div className="overflow-hidden pb-0.5">
@@ -25,7 +27,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 				className="touch-none text-white select-none cursor-grab w-full h-10 flex items-center outline outline-2 outline-white-primary"
 			>
 				<h3 className="grow px-1 text-center text-lg overflow-hidden whitespace-nowrap overflow-ellipsis">
-					Window Name
+					{title}
 				</h3>
 				<button
 					type="button"

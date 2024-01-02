@@ -44,14 +44,12 @@ const WindowsArea = () => {
 						? [windows[windows.length - 1]]
 						: []
 					: windows
-				).map(({ id, sysObj }) => (
+				).map(window => (
 					<Window
-						key={id}
+						key={window.id}
+						{...window}
 						area={windowsAreaRef}
 						initialLocation={{ x: 100, y: 100 }}
-						bringToFrontReq={() => bringToFrontReq(id)}
-						deleteReq={() => deleteReq(id)}
-						originElement={sysObj.htmlElement}
 					/>
 				))}
 			</AnimatePresence>

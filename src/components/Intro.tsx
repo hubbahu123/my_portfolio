@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import * as React from 'react';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import { BakeShadows } from '@react-three/drei';
 import { Desk } from './Desk';
 import { PerspectiveCamera } from '@react-three/drei';
@@ -15,7 +15,11 @@ const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 			gl={{ powerPreference: 'high-performance' }}
 		>
 			<React.Suspense fallback={null}>
-				<Desk position={[0, -1.5, 0]} scale={8} rotation-y={Math.PI / 6} />
+				<Desk
+					position={[0, -1.5, 0]}
+					scale={8}
+					rotation-y={Math.PI / 6}
+				/>
 				<BakeShadows />
 				<motion.group
 					//@ts-ignore
@@ -44,10 +48,10 @@ const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 					<MouseControls />
 				</motion.group>
 			</React.Suspense>
-			<ambientLight intensity={0.75} color={colors.whitePrimary} />
+			<ambientLight intensity={0.75} color={Colors.whitePrimary} />
 			<spotLight
 				position={[0, 2, 0]}
-				color={colors.pinkAccent}
+				color={Colors.pinkAccent}
 				intensity={1}
 				angle={10}
 				penumbra={0.5}
@@ -55,7 +59,7 @@ const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 				shadow-mapSize-height={512}
 				shadow-mapSize-width={512}
 			/>
-			<fog attach='fog' color='black' near={5} far={15} />
+			<fog attach="fog" color="black" near={5} far={15} />
 		</Canvas>
 	);
 };

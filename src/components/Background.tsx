@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import * as React from 'react';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Symbols } from './Symbols';
 import Plane from './Plane';
@@ -17,7 +17,7 @@ import palmImg from '../images/palm.png';
 import { motion } from 'framer-motion';
 
 const SEED = Math.round((Math.random() * 2 - 1) * 1000);
-const TRIANGLE_COLOR = new Color(colors.blueAccent).multiplyScalar(20);
+const TRIANGLE_COLOR = new Color(Colors.blueAccent).multiplyScalar(20);
 const Background: React.FC = () => {
 	const use3D = useSettingsStore(state => state.use3D);
 
@@ -27,7 +27,7 @@ const Background: React.FC = () => {
 				<Canvas dpr={0.3} gl={{ powerPreference: 'high-performance' }}>
 					<directionalLight
 						position={[0, 50, 50]}
-						color={colors.whitePrimary}
+						color={Colors.whitePrimary}
 						intensity={0.3}
 					/>
 					<ambientLight color="grey" intensity={0.4} />

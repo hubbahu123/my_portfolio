@@ -2,7 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as React from 'react';
 import fragmentShader from '../shaders/grid.frag';
 import vertexShader from '../shaders/grid.vert';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import { Color, ShaderMaterial } from 'three';
 import { useContext, useMemo, useRef } from 'react';
 import { MobileContext } from './OS';
@@ -12,9 +12,9 @@ interface PlaneProps {
 }
 
 const DIVISIONS = 25;
-const COLOR = new Color(colors.blackPrimary);
-const LINE_COLOR = new Color(colors.blueAccent).multiplyScalar(25);
-const LIGHT_COLOR = new Color(colors.pinkAccent).multiplyScalar(10);
+const COLOR = new Color(Colors.blackPrimary);
+const LINE_COLOR = new Color(Colors.blueAccent).multiplyScalar(25);
+const LIGHT_COLOR = new Color(Colors.pinkAccent).multiplyScalar(10);
 const Plane: React.FC<PlaneProps> = ({ seed }) => {
 	const { camera } = useThree();
 	const isMobile = useContext(MobileContext);

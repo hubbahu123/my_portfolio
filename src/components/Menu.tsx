@@ -8,15 +8,9 @@ interface MenuProps {
 	windows: Window[];
 	bringToFrontReq: Function;
 	deleteWindows: Function;
-	toggleMenu: Function;
 }
 
-const Menu: React.FC<MenuProps> = ({
-	windows,
-	bringToFrontReq,
-	deleteWindows,
-	toggleMenu,
-}) => {
+const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 	const windowsArea = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -78,11 +72,8 @@ const Menu: React.FC<MenuProps> = ({
 											className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
 										/>
 										<WindowJSX
-											bringToFrontReq={() => {
-												toggleMenu();
-												bringToFrontReq(window.id);
-											}}
 											{...window}
+											disableInteraction
 										/>
 									</motion.div>
 								</motion.div>

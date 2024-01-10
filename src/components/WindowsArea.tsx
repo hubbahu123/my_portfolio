@@ -7,52 +7,48 @@ import Menu from './Menu';
 
 const WindowsArea = () => {
 	const windowsAreaRef = useRef(null);
-	const [windows, bringToFrontReq, deleteReq, deleteWindows] = useBoundStore(
-		state => [
-			state.windows,
-			state.bringToFront,
-			state.deleteWindow,
-			state.deleteWindows,
-		]
-	);
-
-	const isMobile = useContext(MobileContext);
-	const [menuOpen, windowOpen, toggleMenu] = useMobileStore(state => [
-		state.menuOpen,
-		state.windowOpen,
-		state.toggleMenu,
+	const [windows, bringToFrontReq, deleteWindows] = useBoundStore(state => [
+		state.windows,
+		state.bringToFront,
+		state.deleteWindow,
+		state.deleteWindows,
 	]);
 
+	const isMobile = useContext(MobileContext);
+	const [menuOpen, windowOpen] = useMobileStore(state => [
+		state.menuOpen,
+		state.windowOpen,
+	]);
+
+	// The extra div is only there to prevent overlap with the taskbar
 	return (
-		<div
-			ref={windowsAreaRef}
-			className="absolute w-full h-full md:mt-14 top-0 pointer-events-none"
-		>
-			<AnimatePresence>
-				{isMobile && menuOpen && (
-					<Menu
-						windows={windows}
-						bringToFrontReq={bringToFrontReq}
-						deleteWindows={deleteWindows}
-						toggleMenu={toggleMenu}
-					/>
-				)}
-				{(isMobile
-					? menuOpen || windows.length === 0
-						? []
-						: windowOpen
-						? [windows[windows.length - 1]]
-						: []
-					: windows
-				).map(window => (
-					<Window
-						key={window.id}
-						{...window}
-						area={windowsAreaRef}
-						initialLocation={{ x: 100, y: 100 }}
-					/>
-				))}
-			</AnimatePresence>
+		<div className="absolute w-full h-full md:pt-14 top-0 pointer-events-none">
+			<div ref={windowsAreaRef} className="h-full relative">
+				<AnimatePresence>
+					{isMobile && menuOpen && (
+						<Menu
+							windows={windows}
+							bringToFrontReq={bringToFrontReq}
+							deleteWindows={deleteWindows}
+						/>
+					)}
+					{(isMobile
+						? menuOpen || windows.length === 0
+							? []
+							: windowOpen
+							? [windows[windows.length - 1]]
+							: []
+						: windows
+					).map(window => (
+						<Window
+							key={window.id}
+							{...window}
+							area={windowsAreaRef}
+							initialLocation={{ x: 100, y: 100 }}
+						/>
+					))}
+				</AnimatePresence>
+			</div>
 		</div>
 	);
 };

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 
 export const createGlitchMat = () => {
 	const mat = new THREE.MeshLambertMaterial({
-		color: colors.whitePrimary,
+		color: Colors.whitePrimary,
 		reflectivity: 0,
 	});
 

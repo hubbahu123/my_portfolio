@@ -23,8 +23,10 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 				initial={{ y: '-105%' }}
 				animate={{ y: 0 }}
 				transition={{ delay: 1.25, ease: 'easeOut', type: 'tween' }}
-				onPointerDown={onGrab}
-				className="touch-none text-white select-none cursor-grab w-full h-10 flex items-center outline outline-2 outline-white-primary"
+				onPointerDown={maximized ? undefined : onGrab}
+				className={`touch-none text-white select-none w-full h-10 flex items-center outline outline-2 outline-white-primary ${
+					!maximized && 'cursor-grab'
+				}`}
 			>
 				<h3 className="grow px-1 text-center text-lg overflow-hidden whitespace-nowrap overflow-ellipsis">
 					{title}
@@ -61,7 +63,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 				<button
 					type="button"
 					className="p-[.2rem] border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white"
-					onClick={onClose}
+					onPointerUp={onClose}
 				>
 					<StaticImage
 						src="../images/close.png"

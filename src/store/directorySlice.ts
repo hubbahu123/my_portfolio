@@ -1,20 +1,22 @@
 import { StateCreator } from 'zustand';
 import InitialSystem from '../content/InitialSystem';
-import type { Path, WindowSlice, DirectorySlice } from './types';
+import type { WindowSlice, DirectorySlice, SystemObject } from './types';
 
 export const createDirectorySlice: StateCreator<
 	WindowSlice & DirectorySlice,
 	[],
 	[],
 	DirectorySlice
-> = (_set, get) => ({
+> = (set, get) => ({
 	rootDir: { name: 'C:', children: [InitialSystem] },
+	toPath(path) {
+		return typeof path === 'string'
+			? path.split('/')
+			: path.flatMap(place => place.split('/'));
+	},
 	navigateFrom(startDir, path) {
 		//Convert path to usuable list
-		path =
-			typeof path === 'string'
-				? path.split('/')
-				: path.flatMap(place => place.split('/'));
+		path = get().toPath(path);
 
 		// Get extension for extra checks
 		let last = path[path.length - 1];
@@ -42,7 +44,11 @@ export const createDirectorySlice: StateCreator<
 			current = temp;
 		}
 	},
-	navigate: (path: Path) => get().navigateFrom(get().rootDir, path),
+	navigate: path => {
+		path = get().toPath(path);
+		if (path[0] === 'C:') path.shift();
+		return get().navigateFrom(get().rootDir, path);
+	},
 	move(target, dir) {
 		return false;
 	},
@@ -60,5 +66,21 @@ export const createDirectorySlice: StateCreator<
 			return true;
 		});
 		return found ? parents : null;
+	},
+	emptyDir(target) {
+		const path = get().toPath(target);
+		if (path[0] === get().rootDir.name) path.shift();
+
+		const modifiedSystem = { ...get().rootDir };
+		let currentDir: SystemObject | undefined = modifiedSystem;
+		for (let i = 0; i < path.length; i++) {
+			if (!('children' in currentDir)) return;
+			currentDir = currentDir.children.find(
+				child => child.name === path[i]
+			);
+			if (!currentDir || !('children' in currentDir)) return;
+		}
+		currentDir.children = [];
+		set({ rootDir: modifiedSystem });
 	},
 });

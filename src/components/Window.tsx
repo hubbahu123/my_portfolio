@@ -9,6 +9,7 @@ import { easeSteps } from '../utils';
 import WindowContent from './WindowContent';
 import { SystemObject, WindowType } from '../store/types';
 import { useBoundStore } from '../store';
+import { useMobileStore } from '../store';
 
 interface Dimensions {
 	w: number;
@@ -23,6 +24,7 @@ interface WindowProps {
 	initialLocation?: Point;
 	initialDimensions?: Dimensions;
 	minDimensions?: Dimensions;
+	disableInteraction?: boolean;
 }
 
 const calcOrigin = (window: HTMLElement, windowOrigin: HTMLElement) => {
@@ -53,6 +55,7 @@ export const Window: React.FC<WindowProps> = ({
 	initialLocation = { x: 0, y: 0 },
 	initialDimensions = { w: 500, h: 300 },
 	minDimensions = { w: 200, h: 100 },
+	disableInteraction = false,
 }) => {
 	const [isMoving, setIsMoving] = useState(false);
 	const [maximized, setMaximized] = useState(false);
@@ -62,13 +65,18 @@ export const Window: React.FC<WindowProps> = ({
 	const y = useMotionValue(initialLocation.y);
 	const controls = useDragControls();
 	const windowRef = useRef<HTMLDivElement>(null);
-	const isMobile = useContext(MobileContext);
 
 	const [bringToFrontReq, deleteReq] = useBoundStore(state => [
 		state.bringToFront,
 		state.deleteWindow,
 	]);
-	const [windowTitle, setTitle] = useState('Default Title');
+	const [windowTitle, setTitle] = useState(sysObj.name);
+
+	const isMobile = useContext(MobileContext);
+	const [menuOpen, toggleMenu] = useMobileStore(state => [
+		state.menuOpen,
+		state.toggleMenu,
+	]);
 
 	return (
 		<WindowDataContext.Provider
@@ -102,12 +110,19 @@ export const Window: React.FC<WindowProps> = ({
 				onPointerDown={
 					!isMobile ? () => bringToFrontReq(id) : undefined
 				}
-				onPointerUp={isMobile ? () => bringToFrontReq(id) : undefined}
+				onPointerUp={
+					isMobile
+						? () => {
+								if (menuOpen) toggleMenu();
+								bringToFrontReq(id);
+						  }
+						: undefined
+				}
 				ref={windowRef}
-				className={`${
+				className={`touch-none pointer-events-auto absolute backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
 					(isMobile || maximized) && '!w-full !h-full !transform-none'
-				} touch-none pointer-events-auto absolute backdrop-blur bg-black-primary from-black-primary/75 to-dark-primary/75 from-25% to-70% flex flex-col max-w-full max-h-full top-0 shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-gradient-to-r md:bg-transparent ${
-					isMoving && 'invisible backdrop-blur-none'
+				} ${isMoving && 'invisible backdrop-blur-none'} ${
+					disableInteraction && 'disable-child-interaction'
 				}`}
 				style={{
 					minWidth: minDimensions.w,

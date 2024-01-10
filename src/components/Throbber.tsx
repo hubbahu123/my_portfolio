@@ -1,6 +1,6 @@
 import { Sphere } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import * as React from 'react';
 
 interface ThrobberProps {
@@ -37,9 +37,9 @@ export const Throbber: React.FC<ThrobberProps> = props => {
 							]}
 						>
 							<motion.meshBasicMaterial
-								color={colors.whitePrimary}
+								color={Colors.whitePrimary}
 								animate={{
-									color: colors.blackPrimary,
+									color: Colors.blackPrimary,
 								}}
 								transition={{
 									repeat: Infinity,

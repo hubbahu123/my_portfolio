@@ -8,6 +8,19 @@ export const content = [
 
 export const theme = {
 	extend: {
+		keyframes: {
+			pan: {
+				from: { transform: 'translateX(-100%)' },
+				to: { transform: 'translateX(100%)' },
+			},
+			blink: {
+				to: { visibility: 'hidden' },
+			},
+		},
+		animation: {
+			pan: 'pan 3s linear infinite',
+			blink: 'blink 1s steps(5, start) infinite',
+		},
 		fontFamily: {
 			sans: ['"Retro"', ...defaultTheme.fontFamily.sans],
 		},
@@ -31,6 +44,9 @@ export const theme = {
 		},
 		transitionTimingFunction: {
 			steps: 'steps(2, end)',
+		},
+		backgroundSize: {
+			double: '200%',
 		},
 	},
 };

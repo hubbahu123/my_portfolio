@@ -5,11 +5,14 @@ import { motion } from 'framer-motion';
 import staticVideo from '../videos/static.mp4';
 
 const Modifiers = () => {
-	const [brightness, scanlines, useStatic] = useSettingsStore(state => [
-		state.brightness,
-		state.scanlines,
-		state.useStatic,
-	]);
+	const [brightness, scanlines, useStatic, useFlicker] = useSettingsStore(
+		state => [
+			state.brightness,
+			state.scanlines,
+			state.useStatic,
+			state.useFlicker,
+		]
+	);
 	return (
 		<>
 			<div
@@ -37,6 +40,9 @@ const Modifiers = () => {
 						ease: 'linear',
 					}}
 				/>
+			)}
+			{useFlicker && (
+				<div className="fixed w-full h-full pointer-events-none z-50 top-0 animate-[flicker_0.12s_infinite] bg-black bg-opacity-20" />
 			)}
 		</>
 	);

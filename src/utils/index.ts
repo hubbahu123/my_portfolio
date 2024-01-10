@@ -94,15 +94,15 @@ export function useInterval(callback: Function, delay: number) {
 	}, []);
 }
 
-export const colors = {
-	blueAccent: '#023788',
-	purpleAccent: '#650d89',
-	burgundyAccent: '#920075',
-	pinkAccent: '#f6019d',
-	yellowAccent: '#f9c80e',
-	blackPrimary: '#1f0728',
-	darkPrimary: '#353c45',
-	lightPrimary: '#6e83a1',
-	whitePrimary: '#f5f9ff',
-	purpleWatermark: '#291632',
-};
+export enum Colors {
+	blueAccent = '#023788',
+	purpleAccent = '#650d89',
+	burgundyAccent = '#920075',
+	pinkAccent = '#f6019d',
+	yellowAccent = '#f9c80e',
+	blackPrimary = '#1f0728',
+	darkPrimary = '#353c45',
+	lightPrimary = '#6e83a1',
+	whitePrimary = '#f5f9ff',
+	purpleWatermark = '#291632',
+}

@@ -11,25 +11,29 @@ export const FileExplorer = () => {
 
 	if (sysObj === null || 'ext' in sysObj) return <></>;
 
+	useEffect(() => setTitle(`File Explorer - ${sysObj.name}`), [sysObj]);
+	const isTrash = sysObj.name === 'Trash';
+
+	const [traverse, addWindow, deleteWindow, emptyDir] = useBoundStore(
+		state => [
+			state.traverse,
+			state.addWindow,
+			state.deleteWindow,
+			state.emptyDir,
+		]
+	);
+	const parentFolders = useMemo(() => traverse(sysObj), [sysObj]);
+	const [selected, setSelected] = useState(-1);
+	//sysObj itself will not react to updates, requires state. This solution is both criminal and poorly designed
+	const [children, setChildren] = useState(sysObj.children);
+	useEffect(() => setChildren(sysObj.children), [sysObj.children]);
+
+	//Marquee
 	const duration = (maximized ? window.innerWidth : width) / 15;
 	const durationStr = `${duration}s`;
 	const delayStr = `-${duration / 2}s`;
-
 	const stored =
-		sysObj.children.reduce(
-			(prev, current) => prev + current.name.length,
-			0
-		) * 12; //Produces a suitably unspecific enough number
-
-	const [traverse, addWindow, deleteWindow] = useBoundStore(state => [
-		state.traverse,
-		state.addWindow,
-		state.deleteWindow,
-	]);
-	const parentFolders = useMemo(() => traverse(sysObj), [sysObj]);
-	const [selected, setSelected] = useState(-1);
-
-	useEffect(() => setTitle(`File Explorer - ${sysObj.name}`), [sysObj]);
+		children.reduce((prev, current) => prev + current.name.length, 0) * 12; //Produces a suitably unspecific enough number
 
 	return (
 		<>
@@ -42,7 +46,7 @@ export const FileExplorer = () => {
 						WebkitAnimationDuration: durationStr,
 					}}
 				>
-					<h3 className="inline">{sysObj.children.length} Items</h3>
+					<h3 className="inline">{children.length} Items</h3>
 					<h3 className="inline">
 						{stored}KB in {sysObj.name}
 					</h3>
@@ -59,7 +63,7 @@ export const FileExplorer = () => {
 						WebkitAnimationDelay: delayStr,
 					}}
 				>
-					<h3 className="inline">{sysObj.children.length} Items</h3>
+					<h3 className="inline">{children.length} Items</h3>
 					<h3 className="inline">
 						{stored}KB in {sysObj.name}
 					</h3>
@@ -74,9 +78,7 @@ export const FileExplorer = () => {
 								<button
 									type="button"
 									className="text-left p-4 w-full text-md transition-colors ease-steps relative group hover:bg-white-primary hover:text-black-primary"
-									onPointerDown={() => {
-										setSelected(i);
-									}}
+									onPointerDown={() => setSelected(i)}
 									onClick={() => {
 										//Replaces current window (I have 0 clue why this works)
 										deleteWindow(id);
@@ -105,17 +107,21 @@ export const FileExplorer = () => {
 					</li>
 				</ul>
 				<ul className="flex justify-around p-4 col-span-2 flex-wrap gap-4">
-					{sysObj.children.length === 0 ? (
+					{children.length === 0 ? (
 						<p className="text-md font-bold text-white-primary text-center my-auto">
-							This Folder is Empty
+							{isTrash
+								? 'Your Trashcan is empty'
+								: 'This Folder is Empty'}
 						</p>
 					) : (
-						sysObj.children.map(child => (
+						children.map(child => (
 							<li key={child.name}>
 								<Shortcut
 									sysObj={child}
 									overrideClick={
-										'ext' in child
+										isTrash
+											? () => {}
+											: 'ext' in child
 											? undefined
 											: () => {
 													//Replaces current window (I have 0 clue why this works)
@@ -128,6 +134,21 @@ export const FileExplorer = () => {
 						))
 					)}
 				</ul>
+				{isTrash && parentFolders && (
+					<button
+						type="button"
+						className="fixed m-4 px-4 py-2 text-white-primary right-10 bottom-0 bg-gradient-to-r bg-double bg-left from-blue-accent to-pink-accent outline outline-2 outline-white-primary transition-all ease-step hover:bg-right active:scale-95"
+						onClick={() => {
+							emptyDir([
+								...parentFolders.map(dir => dir.name),
+								sysObj.name,
+							]);
+							setChildren([]);
+						}}
+					>
+						Empty Trash
+					</button>
+				)}
 			</div>
 		</>
 	);

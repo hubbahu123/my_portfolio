@@ -10,7 +10,10 @@ const GlitchWall: React.FC<{ duration?: number }> = ({ duration = 6000 }) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (!textRef.current) return;
-			textRef.current.textContent = array.map(randomChar).join('');
+			textRef.current.textContent = array
+				.map(randomChar)
+				.join('')
+				.replaceAll('f', ' full-stack developer ');
 		}, 60);
 
 		let timeout: NodeJS.Timeout;
@@ -25,7 +28,7 @@ const GlitchWall: React.FC<{ duration?: number }> = ({ duration = 6000 }) => {
 
 	return (
 		<p
-			className="pointer-events-none w-full top-1/2 -translate-y-1/2 absolute -z-10 break-all text-center text-3xl text-purple-watermark opacity-40"
+			className="pointer-events-none w-full top-1/2 h-full -translate-y-1/2 absolute -z-10 break-all text-center text-3xl text-purple-watermark opacity-40"
 			style={{ mask, WebkitMask: mask }}
 			ref={textRef}
 		/>

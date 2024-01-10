@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion-3d';
@@ -23,7 +23,7 @@ type ContextType = Record<
 >;
 
 const mat = new THREE.MeshStandardMaterial({
-	color: colors.blackPrimary,
+	color: Colors.blackPrimary,
 });
 export function Desk(props: JSX.IntrinsicElements['group']) {
 	const { nodes } = useGLTF('/models/desk.glb') as GLTFResult;
@@ -40,7 +40,8 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 		screen.current.emissive = screen.current.color;
 		const emission = Math.random();
 		const addedBrightness = Math.max(0, state.clock.elapsedTime - 9.75) * 2;
-		screen.current.emissiveIntensity = emission * 0.05 + 0.1 + addedBrightness;
+		screen.current.emissiveIntensity =
+			emission * 0.05 + 0.1 + addedBrightness;
 		light.current.intensity = emission * 100 + 100;
 	});
 
@@ -53,15 +54,23 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 				rotation={[-0.1, -0.16 + Math.PI, 0]}
 				ref={light}
 			/>
-			<mesh receiveShadow position={[0, 0.02, 0]} rotation-x={Math.PI / -2}>
-				<meshLambertMaterial color={colors.blackPrimary} />
+			<mesh
+				receiveShadow
+				position={[0, 0.02, 0]}
+				rotation-x={Math.PI / -2}
+			>
+				<meshLambertMaterial color={Colors.blackPrimary} />
 				<planeGeometry args={[100, 100, 1, 1]} />
 			</mesh>
 			<group position={[-0.179, 0.02, 0.01]}>
 				<mesh geometry={nodes.plant.geometry} castShadow>
-					<meshPhongMaterial color={colors.blackPrimary} />
+					<meshPhongMaterial color={Colors.blackPrimary} />
 				</mesh>
-				<mesh geometry={nodes.vase.geometry} material={mat} castShadow />
+				<mesh
+					geometry={nodes.vase.geometry}
+					material={mat}
+					castShadow
+				/>
 			</group>
 			<mesh
 				geometry={nodes.headphones.geometry}
@@ -84,7 +93,7 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 				>
 					<motion.meshPhongMaterial
 						shininess={100}
-						color='black'
+						color="black"
 						map={screenTex}
 						ref={screen}
 						animate={{ color: '#a590ad' }}

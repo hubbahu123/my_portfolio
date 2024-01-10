@@ -4,18 +4,18 @@ import vertexShader from '../shaders/sky.vert';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Color, Vector3, ShaderMaterial, Mesh } from 'three';
 import * as THREE from 'three';
-import { colors } from '../utils';
+import { Colors } from '../utils';
 import { MobileContext } from './OS';
 
 interface SkyProps {
 	seed: number;
 }
 
-const SUN_COLOR = new Color(colors.pinkAccent).multiplyScalar(2);
-const SUN_COLOR_2 = new Color(colors.yellowAccent);
-const SKY_COLOR = new Color(colors.blueAccent).multiplyScalar(0.6);
-const NEBULA_COLOR = new Color(colors.blueAccent);
-const GROUND_COLOR = new Color(colors.blackPrimary);
+const SUN_COLOR = new Color(Colors.pinkAccent).multiplyScalar(2);
+const SUN_COLOR_2 = new Color(Colors.yellowAccent);
+const SKY_COLOR = new Color(Colors.blueAccent).multiplyScalar(0.6);
+const NEBULA_COLOR = new Color(Colors.blueAccent);
+const GROUND_COLOR = new Color(Colors.blackPrimary);
 const Sky: React.FC<SkyProps> = ({ seed }) => {
 	const { camera } = useThree();
 	const isMobile = useContext(MobileContext);

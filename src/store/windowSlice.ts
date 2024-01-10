@@ -9,6 +9,9 @@ import { useMobileStore } from '.';
 
 const pickWindowType = (sysObj: SystemObject): WindowType => {
 	if (!('ext' in sysObj)) return 'FileExplorer';
+	if (sysObj.ext === 'exe') {
+		if (sysObj.name === 'Console') return 'Console';
+	}
 	return 'Blank';
 };
 

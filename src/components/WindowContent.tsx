@@ -2,6 +2,8 @@ import React from 'react';
 import { WindowType } from '../store/types';
 import { Console } from './windows/Console';
 import { FileExplorer } from './windows/FileExplorer';
+import Mail from './windows/Mail';
+import PDFReader from './windows/PDFReader';
 
 interface WindowContentProps {
 	type: WindowType;
@@ -13,6 +15,10 @@ const pickContentComponent = (type: WindowType): React.ReactNode => {
 			return <FileExplorer />;
 		case 'Console':
 			return <Console />;
+		case 'Contact':
+			return <Mail />;
+		case 'PDFReader':
+			return <PDFReader />;
 		case 'Blank':
 		default:
 			return <></>;

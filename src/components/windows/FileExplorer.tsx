@@ -5,7 +5,7 @@ import { useBoundStore } from '../../store';
 import GlitchText from '../GlitchText';
 
 export const FileExplorer = () => {
-	const { width, maximized, sysObj, setTitle, id } = useContext(
+	const { sysObj, id, setTitle, getWidth } = useContext(
 		WindowDataContext
 	) ?? { sysObj: null };
 
@@ -29,7 +29,7 @@ export const FileExplorer = () => {
 	useEffect(() => setChildren(sysObj.children), [sysObj.children]);
 
 	//Marquee
-	const duration = (maximized ? window.innerWidth : width) / 15;
+	const duration = getWidth() / 15;
 	const durationStr = `${duration}s`;
 	const delayStr = `-${duration / 2}s`;
 	const stored =
@@ -70,7 +70,7 @@ export const FileExplorer = () => {
 					<h3 className="inline">175KB Available</h3>
 				</div>
 			</div>
-			<div className="grid w-full grow grid-cols-3">
+			<div className="w-full grow grid-cols-3 pb-24 md:grid md:p-0">
 				<ul className="text-white-primary bg-black-primary overflow-x-hidden outline outline-2 outline-white-primary">
 					{parentFolders &&
 						parentFolders.map((folder, i) => (
@@ -106,7 +106,7 @@ export const FileExplorer = () => {
 						{sysObj.name}
 					</li>
 				</ul>
-				<ul className="flex justify-around p-4 col-span-2 flex-wrap gap-4">
+				<ul className="flex justify-around p-4 col-span-2 flex-wrap gap-4 content-start md:content-around">
 					{children.length === 0 ? (
 						<p className="text-md font-bold text-white-primary text-center my-auto">
 							{isTrash
@@ -115,7 +115,7 @@ export const FileExplorer = () => {
 						</p>
 					) : (
 						children.map(child => (
-							<li key={child.name}>
+							<li key={child.name} className="w-24">
 								<Shortcut
 									sysObj={child}
 									overrideClick={

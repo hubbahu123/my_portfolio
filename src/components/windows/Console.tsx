@@ -29,11 +29,10 @@ function reducePath(path: Path) {
 
 export const Console = () => {
 	const [history, setHistory] = useState<HistoryItem[]>([{ text: INTRO }]);
-	const [navigate, toPath, addWindow, deleteWindow] = useBoundStore(state => [
+	const [navigate, toPath, addWindow] = useBoundStore(state => [
 		state.navigate,
 		state.toPath,
 		state.addWindow,
-		state.deleteWindow,
 	]);
 	const shutdown = useSettingsStore(state => state.shutdown);
 	const [location, setLocation] = useState<Path>([

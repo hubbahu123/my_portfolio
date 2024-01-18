@@ -9,6 +9,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { useState } from 'react';
 import Battery from './Battery';
 import { useSettingsStore } from '../store';
+import githubImg from '../images/github.png';
 import linkedInImg from '../images/linkedIn.png';
 
 const TaskbarContents = () => {
@@ -85,6 +86,18 @@ const TaskbarContents = () => {
 								className="inline-block mr-4 h-6"
 							/>
 							LinkedIn
+						</a>
+						<a
+							href="https://github.com/redaelmountassir"
+							target="_blank"
+							className="block w-full p-4 text-left whitespace-nowrap transition-colors ease-steps hover:bg-white-primary hover:text-black-primary outline outline-2 outline-white-primary"
+						>
+							<img
+								src={githubImg}
+								alt="Github Logo"
+								className="inline-block mr-4 h-6"
+							/>
+							Github
 						</a>
 						<button
 							type="button"
@@ -188,6 +201,7 @@ const TaskbarContents = () => {
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 -0.5 16 16"
 							shapeRendering="crispEdges"
+							className="cursor-pointer"
 							onClick={() => {
 								if (volume === 0)
 									return setVolume(volumeRef.current);

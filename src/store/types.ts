@@ -1,6 +1,13 @@
 export type SystemObject = Directory | File;
 export type FileExtension = 'pdf' | 'txt' | 'png' | 'jpeg' | 'exe';
-export type WindowType = 'FileExplorer' | 'Console' | 'Blank';
+export type WindowType =
+	| 'FileExplorer'
+	| 'Console'
+	| 'Contact'
+	| 'PDFReader'
+	| 'Text Editor'
+	| 'Photos'
+	| 'Blank';
 export type Path = string[];
 
 export interface Directory {

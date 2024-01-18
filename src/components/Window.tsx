@@ -40,9 +40,8 @@ const calcOrigin = (window: HTMLElement, windowOrigin: HTMLElement) => {
 export interface WindowDataType {
 	sysObj: SystemObject;
 	id: number;
-	width: number;
-	maximized: boolean;
 	setTitle: React.Dispatch<React.SetStateAction<string>>;
+	getWidth: () => number;
 }
 
 export const WindowDataContext = createContext<WindowDataType | null>(null);
@@ -80,7 +79,12 @@ export const Window: React.FC<WindowProps> = ({
 
 	return (
 		<WindowDataContext.Provider
-			value={{ setTitle, sysObj, width: width.get(), maximized, id }}
+			value={{
+				sysObj,
+				id,
+				setTitle,
+				getWidth: () => (maximized ? window.innerWidth : width.get()),
+			}}
 		>
 			<motion.section
 				drag
@@ -140,7 +144,10 @@ export const Window: React.FC<WindowProps> = ({
 				{!isMobile && (
 					<WindowHeader
 						onGrab={e => controls.start(e)}
-						onClose={() => deleteReq(id)}
+						onClose={() => {
+							setMaximized(false);
+							deleteReq(id);
+						}}
 						onMaximize={() => setMaximized(maximized => !maximized)}
 						maximized={maximized}
 						title={windowTitle}

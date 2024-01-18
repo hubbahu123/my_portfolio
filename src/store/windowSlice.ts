@@ -9,10 +9,18 @@ import { useMobileStore } from '.';
 
 const pickWindowType = (sysObj: SystemObject): WindowType => {
 	if (!('ext' in sysObj)) return 'FileExplorer';
-	if (sysObj.ext === 'exe') {
-		if (sysObj.name === 'Console') return 'Console';
+	switch (sysObj.ext) {
+		case 'exe':
+			if (sysObj.name === 'Console') return 'Console';
+			if (sysObj.name === 'Contact') return 'Contact';
+		case 'pdf':
+			return 'PDFReader';
+		case 'png':
+		case 'jpeg':
+			return 'Photos';
+		default:
+			return 'Blank';
 	}
-	return 'Blank';
 };
 
 export const createWindowSlice: StateCreator<

@@ -9,13 +9,14 @@ import { usePersistent } from '../utils';
 import Loader from './Loader';
 import WindowsArea from './WindowsArea';
 import Modifiers from './Modifiers';
+import WebGL from 'three/examples/jsm/capabilities/WebGL';
 
 const Desktop: React.FC = () => {
 	const desktopAreaRef = useRef(null!);
 
 	const [introDone, setIntroDone] = usePersistent(
 		'introDone',
-		false,
+		!WebGL.isWebGLAvailable(),
 		str => str === 'true'
 	);
 

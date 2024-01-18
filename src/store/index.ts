@@ -10,6 +10,7 @@ import {
 import { clamp } from 'framer-motion';
 import { persist } from 'zustand/middleware';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import WebGL from 'three/examples/jsm/capabilities/WebGL';
 
 export const useBoundStore = create<WindowSlice & DirectorySlice>()((...a) => ({
 	...createWindowSlice(...a),
@@ -69,6 +70,7 @@ const LIGHT_MODE_TEXT = [
 	'Light Mode',
 ];
 
+const webGL = WebGL.isWebGLAvailable();
 export const useSettingsStore = create<
 	SettingsStore,
 	[['zustand/persist', SettingsStore]]
@@ -76,7 +78,7 @@ export const useSettingsStore = create<
 	persist(
 		(set, get) => ({
 			brightness: 100,
-			use3D: true,
+			use3D: webGL,
 			useStatic: false,
 			scanlines: false,
 			useFlicker: false,
@@ -102,7 +104,7 @@ export const useSettingsStore = create<
 					: '';
 			},
 			setBrightness: val => set({ brightness: clamp(0, 100, val) }),
-			set3D: val => set({ use3D: val }),
+			set3D: val => set({ use3D: val && webGL }),
 			setStatic: val => set({ useStatic: val }),
 			setScanlines: val => set({ scanlines: val }),
 			setFancyText: val => {

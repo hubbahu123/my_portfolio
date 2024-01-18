@@ -33,7 +33,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 				</h3>
 				<button
 					type="button"
-					className="p-1 border-l-2 w-10 h-full shrink-0 select-none group hover:bg-white"
+					className="p-1 border-l-2 border-white-primary w-10 h-full shrink-0 select-none group hover:bg-white"
 					onClick={onMaximize}
 				>
 					{maximized ? (

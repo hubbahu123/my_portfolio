@@ -31,6 +31,9 @@ const TaskbarContents = () => {
 		lightModeText,
 		lightMode,
 		setLightMode,
+		fullscreen,
+		setFullscreen,
+		initFullscreen,
 		restart,
 		shutdown,
 	} = useSettingsStore(state => state);
@@ -39,6 +42,8 @@ const TaskbarContents = () => {
 
 	const [battery, setBattery] = useState(1);
 	useEffect(() => {
+		initFullscreen();
+
 		if (!('getBattery' in navigator))
 			return setBattery(Math.max(Math.random(), 0.001));
 		let batteryRef: any, updateBattery: Function;
@@ -184,6 +189,9 @@ const TaskbarContents = () => {
 						</Toggle>
 						<Toggle state={lightMode} setter={setLightMode}>
 							{lightModeText}
+						</Toggle>
+						<Toggle state={fullscreen} setter={setFullscreen}>
+							Fullscreen
 						</Toggle>
 					</>
 				}

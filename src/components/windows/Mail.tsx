@@ -21,9 +21,9 @@ const Mail = () => {
 	return (
 		<div className="w-full flex h-full text-white-primary border-white-primary overflow-hidden flex-col pb-20 md:pb-0 md:flex-row">
 			<ul
-				className={`overflow-hidden transition-all ease-steps md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
+				className={`overflow-hidden transition-all ease-steps border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
 					width > 1200 && 'md:!max-w-60 md:!bg-black-primary'
-				}`}
+				} ${width < 400 && 'md:hidden'}`}
 			>
 				<li>
 					<a
@@ -145,15 +145,25 @@ const Mail = () => {
 							'redaelmountassir0@gmail.com'
 						)
 					}
-					className="group flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[50px] to-burgundy-accent/20 whitespace-nowrap transition-all ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
+					className="group relative flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[50px] to-burgundy-accent/20 whitespace-nowrap transition-all ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
 				>
 					<label className="inline-block">To:</label>
 					<span className="flex-grow text-left pl-4 overflow-hidden overflow-ellipsis">
 						redaelmountassir0@gmail.com
-						<span className="absolute pl-2 opacity-0 transition-opacity ease-steps group-hover:opacity-100 group-focus:opacity-0">
+						<span
+							className={`absolute pl-2 opacity-0 transition-opacity ease-steps group-hover:opacity-100 group-focus:opacity-0 ${
+								width < 350 &&
+								'top-0 p-2 right-0 h-full bg-white-primary text-black-primary'
+							}`}
+						>
 							(Copy)
 						</span>
-						<span className="pl-2 opacity-0 transition-opacity ease-steps group-focus:opacity-100">
+						<span
+							className={`pl-2 opacity-0 transition-opacity ease-steps group-focus:opacity-100 ${
+								width < 350 &&
+								'absolute top-0 p-2 right-0 h-full bg-white-primary text-black-primary'
+							}`}
+						>
 							(Copied!)
 						</span>
 					</span>
@@ -176,15 +186,15 @@ const Mail = () => {
 				<button
 					type="submit"
 					value="send"
-					className="text-black-primary bg-white-primary p-2 transition-all ease-steps shadow-[0px_2px] shadow-light-primary hover:translate-y-[2px] hover:shadow-[0_0]"
+					className="flex justify-center items-center text-black-primary bg-white-primary p-2 transition-all ease-steps shadow-[0px_2px] shadow-light-primary hover:translate-y-[2px] hover:shadow-[0_0]"
 				>
-					<span className="ml-auto font-bold pr-4 hidden md:inline">
+					<span className="text-left font-bold pr-4 hidden md:block">
 						Send Message
 					</span>
 					<img
 						src={sendMessageImg}
 						alt="Send Message"
-						className="mr-auto mix-blend-difference inline-block align-middle h-8"
+						className="mix-blend-difference h-8"
 						style={{
 							offsetPath,
 							offsetAnchor,

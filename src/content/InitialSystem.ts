@@ -14,7 +14,7 @@ const InitialSystem: Directory = {
 						{ name: 'resume', ext: 'pdf' },
 						{
 							name: 'Trash',
-							children: [{ name: 'SecretFile', ext: 'exe' }],
+							children: [{ name: 'SecretFile', ext: 'mys' }],
 						},
 					],
 				},

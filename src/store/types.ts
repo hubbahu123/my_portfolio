@@ -1,12 +1,19 @@
 export type SystemObject = Directory | File;
-export type FileExtension = 'pdf' | 'txt' | 'png' | 'jpeg' | 'exe';
+export type FileExtension =
+	| 'pdf'
+	| 'txt'
+	| 'png'
+	| 'jpeg'
+	| 'mp4'
+	| 'exe'
+	| 'mys';
 export type WindowType =
 	| 'FileExplorer'
 	| 'Console'
 	| 'Contact'
 	| 'PDFReader'
 	| 'Text Editor'
-	| 'Photos'
+	| 'Media'
 	| 'Blank';
 export type Path = string[];
 
@@ -70,6 +77,7 @@ export interface SettingsStore {
 	volume: number;
 	lightModeText: string;
 	lightMode: boolean;
+	fullscreen: boolean;
 	setBrightness(val: number): void;
 	set3D(val: boolean): void;
 	setStatic(val: boolean): void;
@@ -78,6 +86,8 @@ export interface SettingsStore {
 	setFlicker(val: boolean): void;
 	setVolume(val: number): void;
 	setLightMode(val: boolean): void;
+	setFullscreen(val: boolean): void;
+	initFullscreen: Function;
 	restart: Function;
 	shutdown: Function;
 }

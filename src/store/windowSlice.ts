@@ -17,7 +17,8 @@ const pickWindowType = (sysObj: SystemObject): WindowType => {
 			return 'PDFReader';
 		case 'png':
 		case 'jpeg':
-			return 'Photos';
+		case 'mp4':
+			return 'Media';
 		default:
 			return 'Blank';
 	}

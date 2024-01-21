@@ -16,7 +16,7 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 
 	return (
 		<button
-			className="group flex flex-col items-center p-2 w-full max-h-full outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:w-24 md:h-auto md:outline hover:outline-white-primary hover:outline-offset-0 md:active:shadow-[inset_0_0_70px] active:shadow-black-primary"
+			className="group flex flex-col items-center p-2 w-full max-h-full outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:w-24 md:h-auto md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px]"
 			type="button"
 			onDoubleClick={
 				overrideClick

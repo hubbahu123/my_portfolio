@@ -11,6 +11,7 @@ import { clamp } from 'framer-motion';
 import { persist } from 'zustand/middleware';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import WebGL from 'three/examples/jsm/capabilities/WebGL';
+import screenfull from 'screenfull';
 
 export const useBoundStore = create<WindowSlice & DirectorySlice>()((...a) => ({
 	...createWindowSlice(...a),
@@ -86,6 +87,7 @@ export const useSettingsStore = create<
 			fancyText: true,
 			lightModeText: LIGHT_MODE_TEXT[0],
 			lightMode: false,
+			fullscreen: false,
 			setLightMode(val) {
 				const nextIndex = Math.min(
 					LIGHT_MODE_TEXT.indexOf(get().lightModeText) + 1,
@@ -115,6 +117,24 @@ export const useSettingsStore = create<
 			},
 			setFlicker: val => set({ useFlicker: val }),
 			setVolume: val => set({ volume: clamp(0, 100, val) }),
+			setFullscreen: val => {
+				if (!screenfull.isEnabled) return;
+				val ? screenfull.request() : screenfull.exit();
+			},
+			initFullscreen() {
+				if (!screenfull.isEnabled) return;
+				set({ fullscreen: screenfull.isFullscreen });
+				screenfull.on('change', () =>
+					set({ fullscreen: screenfull.isFullscreen })
+				);
+
+				document.addEventListener('keydown', e => {
+					// Throws an error but works god knows y
+					if (e.key !== 'F11') return;
+					screenfull.toggle();
+					e.preventDefault();
+				});
+			},
 			restart: () => location.reload(),
 			shutdown() {
 				document.documentElement.style.animation =

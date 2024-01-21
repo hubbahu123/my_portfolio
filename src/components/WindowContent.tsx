@@ -19,6 +19,7 @@ const pickContentComponent = (type: WindowType): React.ReactNode => {
 			return <Mail />;
 		case 'PDFReader':
 			return <PDFReader />;
+		case 'Media':
 		case 'Blank':
 		default:
 			return <></>;

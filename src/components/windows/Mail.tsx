@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import phoneImg from '../../images/phone.png';
-import githubImg from '../../images/github.png';
+import gitHubImg from '../../images/github.png';
 import linkedInImg from '../../images/linkedIn.png';
 import { WindowDataContext } from '../Window';
 import sendMessageImg from '../../images/send_message.png';
@@ -60,11 +60,11 @@ const Mail = () => {
 						className="block border-b-2 whitespace-nowrap p-4 pr-0 group hover:bg-white-primary hover:text-black-primary"
 					>
 						<img
-							src={githubImg}
-							alt="Github Logo"
+							src={gitHubImg}
+							alt="GitHub Logo"
 							className="inline-block mr-4 h-6 transition-all ease-steps group-hover:invert"
 						/>
-						<span className="mr-4">Github</span>
+						<span className="mr-4">GitHub</span>
 					</a>
 				</li>
 			</ul>

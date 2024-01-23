@@ -9,7 +9,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { useState } from 'react';
 import Battery from './Battery';
 import { useSettingsStore } from '../store';
-import githubImg from '../images/github.png';
+import gitHubImg from '../images/github.png';
 import linkedInImg from '../images/linkedIn.png';
 
 const TaskbarContents = () => {
@@ -98,11 +98,11 @@ const TaskbarContents = () => {
 							className="block w-full p-4 text-left whitespace-nowrap transition-colors ease-steps hover:bg-white-primary hover:text-black-primary outline outline-2 outline-white-primary"
 						>
 							<img
-								src={githubImg}
-								alt="Github Logo"
+								src={gitHubImg}
+								alt="GitHub Logo"
 								className="inline-block mr-4 h-6"
 							/>
-							Github
+							GitHub
 						</a>
 						<button
 							type="button"

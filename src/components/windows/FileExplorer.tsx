@@ -9,7 +9,7 @@ export const FileExplorer = () => {
 		WindowDataContext
 	) ?? { sysObj: null };
 
-	if (sysObj === null || 'ext' in sysObj) return <></>;
+	if (sysObj === null || 'ext' in sysObj) return null;
 
 	useEffect(() => setTitle(`File Explorer - ${sysObj.name}`), [sysObj]);
 	const isTrash = sysObj.name === 'Trash';

@@ -1,12 +1,7 @@
+import { IGatsbyImageData } from 'gatsby-plugin-image';
+
 export type SystemObject = Directory | File;
-export type FileExtension =
-	| 'pdf'
-	| 'txt'
-	| 'png'
-	| 'jpeg'
-	| 'mp4'
-	| 'exe'
-	| 'mys';
+export type FileExtension = 'pdf' | 'txt' | 'png' | 'mp4' | 'exe' | 'mys';
 export type WindowType =
 	| 'FileExplorer'
 	| 'Console'
@@ -17,6 +12,22 @@ export type WindowType =
 	| 'Blank';
 export type Path = string[];
 
+export interface MediaFile {
+	loc?: {
+		text: string;
+		link: string;
+	};
+	org?: string;
+	role: string;
+	tags: string[];
+	description: string;
+	showcases: (string | IGatsbyImageData)[];
+	logo: IGatsbyImageData;
+	parent?: {
+		name?: string;
+	};
+}
+
 export interface Directory {
 	name: string;
 	children: SystemObject[];
@@ -26,7 +37,7 @@ export interface Directory {
 export interface File {
 	name: string;
 	ext: FileExtension;
-	value?: object;
+	value?: MediaFile;
 	htmlElement?: HTMLElement;
 }
 
@@ -55,7 +66,12 @@ export interface DirectorySlice {
 	navigate(path: Path | string): SystemObject | undefined;
 	move(target: Path | string, dir: Directory | Path): boolean;
 	traverse(target: SystemObject, startDir?: Directory): Directory[] | null;
+	modifySystem(
+		target: Path | string,
+		mod: (dir: Directory) => Directory
+	): void;
 	emptyDir(target: Path | string): void;
+	fillDir(target: Path | string, children?: SystemObject[]): void;
 }
 
 export interface MobileStore {

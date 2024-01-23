@@ -6,10 +6,7 @@ const config: GatsbyConfig = {
 		siteUrl: `https://www.yourdomain.tld`,
 		description: `This site is a 'desktop-like' experience describing the one (and only) Reda Elmountassir`,
 	},
-	// More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-	// If you use VSCode you can also use the GraphQL plugin
-	// Learn more at: https://gatsby.dev/graphql-typegen
-	graphqlTypegen: true,
+	graphqlTypegen: false,
 	plugins: [
 		`gatsby-plugin-glslify`,
 		'gatsby-plugin-postcss',
@@ -20,7 +17,6 @@ const config: GatsbyConfig = {
 				icon: 'src/images/icon.png',
 			},
 		},
-		'gatsby-transformer-remark',
 		'gatsby-plugin-sharp',
 		'gatsby-transformer-sharp',
 		{
@@ -31,13 +27,13 @@ const config: GatsbyConfig = {
 			},
 			__key: 'images',
 		},
+		`gatsby-transformer-json`,
 		{
-			resolve: 'gatsby-source-filesystem',
+			resolve: `gatsby-source-filesystem`,
 			options: {
-				name: 'pages',
-				path: './src/pages/',
+				name: 'projects',
+				path: `./src/content/projects`,
 			},
-			__key: 'pages',
 		},
 		{
 			resolve: 'gatsby-plugin-manifest',

@@ -4,6 +4,7 @@ import { Console } from './windows/Console';
 import { FileExplorer } from './windows/FileExplorer';
 import Mail from './windows/Mail';
 import PDFReader from './windows/PDFReader';
+import MediaViewer from './windows/MediaViewer';
 
 interface WindowContentProps {
 	type: WindowType;
@@ -20,9 +21,10 @@ const pickContentComponent = (type: WindowType): React.ReactNode => {
 		case 'PDFReader':
 			return <PDFReader />;
 		case 'Media':
+			return <MediaViewer />;
 		case 'Blank':
 		default:
-			return <></>;
+			return null;
 	}
 };
 

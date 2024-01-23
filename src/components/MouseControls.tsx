@@ -40,7 +40,7 @@ const MouseControls = () => {
 		);
 	});
 
-	return <></>;
+	return null;
 };
 
 export default MouseControls;

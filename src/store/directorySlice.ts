@@ -1,6 +1,12 @@
 import { StateCreator } from 'zustand';
 import InitialSystem from '../content/InitialSystem';
-import type { WindowSlice, DirectorySlice, SystemObject } from './types';
+import type {
+	WindowSlice,
+	DirectorySlice,
+	SystemObject,
+	Path,
+	Directory,
+} from './types';
 
 export const createDirectorySlice: StateCreator<
 	WindowSlice & DirectorySlice,
@@ -67,7 +73,7 @@ export const createDirectorySlice: StateCreator<
 		});
 		return found ? parents : null;
 	},
-	emptyDir(target) {
+	modifySystem(target, mod) {
 		const path = get().toPath(target);
 		if (path[0] === get().rootDir.name) path.shift();
 
@@ -80,7 +86,13 @@ export const createDirectorySlice: StateCreator<
 			);
 			if (!currentDir || !('children' in currentDir)) return;
 		}
-		currentDir.children = [];
+		currentDir = mod(currentDir);
 		set({ rootDir: modifiedSystem });
 	},
+	emptyDir: target => get().fillDir(target),
+	fillDir: (target, children = []) =>
+		get().modifySystem(target, dir => {
+			dir.children = children;
+			return dir;
+		}),
 });

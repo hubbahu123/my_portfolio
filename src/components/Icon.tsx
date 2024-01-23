@@ -1,5 +1,6 @@
 import React from 'react';
 import { SystemObject } from '../store/types';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 interface IconProps
 	extends React.DetailedHTMLProps<
@@ -21,15 +22,27 @@ const selectIcon = (sysObj: SystemObject) => {
 };
 
 const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
-	return (
-		<img
-			{...props}
-			draggable={false}
-			src={`/icons/${selectIcon(sysObj)}.png`}
+	if (!('value' in sysObj) || !sysObj.value)
+		return (
+			<img
+				{...props}
+				draggable={false}
+				src={`/icons/${selectIcon(sysObj)}.png`}
+				alt={sysObj.name}
+				loading="eager"
+			/>
+		);
+
+	const image = getImage(sysObj.value.logo);
+	return image ? (
+		<GatsbyImage
+			className={props.className}
+			imgClassName="transition-none"
 			alt={sysObj.name}
-			loading="eager"
+			draggable={false}
+			image={image}
 		/>
-	);
+	) : null;
 };
 
 export default Icon;

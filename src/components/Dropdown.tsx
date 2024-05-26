@@ -26,7 +26,7 @@ const dropdownVariants: Variants = {
 
 type Alignment = 'left' | 'center' | 'right';
 
-const Dropdown: React.FC<DropdownProps> = props => {
+export const Dropdown: React.FC<DropdownProps> = props => {
 	const { children, dContent, forcedAlignment, noPadding, ...rest } = props;
 
 	const [open, setOpen] = useState(false);

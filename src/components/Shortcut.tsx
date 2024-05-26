@@ -46,7 +46,7 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 			}
 		>
 			<Icon
-				className="w-full mb-2 select-none pointer-events-none md:mb-4"
+				className="w-full h-16 mb-2 select-none pointer-events-none md:mb-4"
 				sysObj={sysObj}
 			/>
 			<p className="p-2 text-center text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">

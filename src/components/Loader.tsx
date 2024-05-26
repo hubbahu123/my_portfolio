@@ -3,15 +3,12 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import GlitchWall from './GlitchWall';
 
-export const LoadedContext = createContext(false);
-
 const FRAMES = 36;
 const FRAME_WIDTH = 256;
 const ANIMATION_TIME = 3;
 const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [loaded, setLoaded] = useState(false);
 	const logo = useRef<HTMLDivElement>(null);
-	const percentage = useRef<HTMLSpanElement>(null);
 	const [scope, animate] = useAnimate();
 
 	useEffect(() => {
@@ -31,14 +28,14 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 				opacity: 0,
 				transitionEnd: { visibility: 'hidden' },
 			});
-			setTimeout(() => setLoaded(true), (ANIMATION_TIME + 1) * 1000);
+			setLoaded(true);
 		};
 
 		playAnim();
 	}, []);
 
 	return (
-		<div className="h-full">
+		<motion.div className="h-full" animate={loaded ? 'loaded' : 'unloaded'}>
 			<section
 				ref={scope}
 				className="z-40 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col"
@@ -69,13 +66,11 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 						}}
 					/>
 				</motion.div>
-				<p className="text-light-primary">Booting...</p>
+				<p className="text-light-primary">Definitely Loading...</p>
 				<GlitchWall />
 			</section>
-			<LoadedContext.Provider value={loaded}>
-				{children}
-			</LoadedContext.Provider>
-		</div>
+			{children}
+		</motion.div>
 	);
 };
 

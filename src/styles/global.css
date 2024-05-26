@@ -3,276 +3,399 @@
 @tailwind utilities;
 
 body {
-	@apply bg-black;
-	image-rendering: pixelated;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: crisp-edges;
-}
-
-/* 
-@font-face {
-	font-family: 'Retro';
-	font-weight: thin;
-	font-display: swap;
-	font-style: normal;
-	font-named-instance: 'Regular';
-	src: url(/fonts/retro_font_thin.woff2) format('woff2'),
-		url(/fonts/retro_font_thin.woff) format('woff'),
-		url(/fonts/retro_font_thin.ttf) format('truetype');
-} */
-
-@font-face {
-	font-family: 'Retro';
-	font-weight: normal;
-	font-display: swap;
-	font-style: normal;
-	font-named-instance: 'Regular';
-	src: url(/fonts/retro_font.woff2) format('woff2'),
-		url(/fonts/retro_font.woff) format('woff'),
-		url(/fonts/retro_font.ttf) format('truetype');
+  @apply bg-black;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 @font-face {
-	font-family: 'Retro';
-	font-weight: bold;
-	font-display: swap;
-	font-style: normal;
-	font-named-instance: 'Regular';
-	src: url(/fonts/retro_font_bold.woff2) format('woff2'),
-		url(/fonts/retro_font_bold.woff) format('woff'),
-		url(/fonts/retro_font_bold.ttf) format('truetype');
+  font-family: "Retro";
+  font-weight: normal;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src:
+    url(/fonts/retro_font.woff2) format("woff2"),
+    url(/fonts/retro_font.woff) format("woff"),
+    url(/fonts/retro_font.ttf) format("truetype");
 }
-/* 
+
 @font-face {
-	font-family: 'Retro';
-	font-weight: normal;
-	font-display: swap;
-	font-style: italic;
-	font-named-instance: 'Regular';
-	src: url(/fonts/retro_font_italics.woff2) format('woff2'),
-		url(/fonts/retro_font_italics.woff) format('woff'),
-		url(/fonts/retro_font_italics.ttf) format('truetype');
-} */
+  font-family: "Retro";
+  font-weight: bold;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src:
+    url(/fonts/retro_font_bold.woff2) format("woff2"),
+    url(/fonts/retro_font_bold.woff) format("woff"),
+    url(/fonts/retro_font_bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Retro Fancy";
+  font-weight: normal;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  /* Allows for use of font features! */
+  src:
+    url(/fonts/retro_font_fancy.otf) format("opentype"),
+    url(/fonts/retro_font_fancy.woff2) format("woff2"),
+    url(/fonts/retro_font_fancy.woff) format("woff"),
+    url(/fonts/retro_font_fancy.ttf) format("truetype");
+}
+
+:root {
+  --retro-fancy-dlig: "dlig" off;
+  --retro-fancy-ss01: "ss01" off;
+  --retro-fancy-ss02: "ss02" off;
+}
+
+.ss01 {
+  --retro-fancy-ss01: "ss01" on;
+}
+
+.ss02 {
+  --retro-fancy-ss02: "ss02" on;
+}
+
+.dlig {
+  --retro-fancy-dlig: "dlig" on;
+}
+
+@supports (font-variant-ligatures: discretionary-ligatures) {
+  .dlig {
+    --retro-fancy-dlig: "____";
+    font-variant-ligatures: discretionary-ligatures;
+  }
+}
+
+.dlig,
+.ss01,
+.ss02 {
+  --combined: var(--retro-fancy-dlig), var(--retro-fancy-ss01),
+    var(--retro-fancy-ss02);
+  font-feature-settings: var(--combined);
+  -moz-font-feature-settings: var(--combined);
+  -webkit-font-feature-settings: var(--combined);
+}
 
 @layer base {
-	::-webkit-scrollbar {
-		@apply w-10;
-	}
+  ::-webkit-scrollbar {
+    @apply w-10;
+  }
 
-	::-webkit-scrollbar-track,
-	::-webkit-scrollbar-button {
-		@apply border-solid border-0 border-white-primary block;
-	}
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-button {
+    @apply block border-0 border-solid border-white-primary;
+  }
 
-	::-webkit-scrollbar-track {
-		@apply border-l-2;
-	}
+  ::-webkit-scrollbar-track {
+    @apply border-l-2;
+  }
 
-	::-webkit-scrollbar-thumb {
-		@apply bg-white-primary;
-	}
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white-primary;
+  }
 
-	::-webkit-scrollbar-thumb:active {
-		@apply bg-opacity-50;
-	}
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-opacity-50;
+  }
 
-	::-webkit-scrollbar-button:decrement {
-		@apply border-b-2 border-l-2 border-white-primary h-10 transition-colors ease-steps;
-		background: no-repeat center / 70% var(--arrow-up);
-	}
+  ::-webkit-scrollbar-button:decrement {
+    @apply h-10 border-b-2 border-l-2 border-white-primary transition-colors ease-steps;
+    background: no-repeat center / 70% var(--arrow-up);
+  }
 
-	::-webkit-scrollbar-button:decrement:active {
-		@apply bg-white-primary;
-		background: no-repeat center / 70% var(--arrow-up-active);
-	}
+  ::-webkit-scrollbar-button:decrement:active {
+    @apply bg-white-primary;
+    background:
+      no-repeat center / 70% var(--arrow-up-active),
+      rgb(245 249 255 / var(--tw-bg-opacity));
+  }
 
-	::-webkit-scrollbar-button:increment {
-		@apply border-t-2 border-l-2 border-white-primary h-10 transition-colors ease-steps;
-		background: no-repeat center / 70% var(--arrow-down);
-	}
+  ::-webkit-scrollbar-button:increment {
+    @apply h-10 border-l-2 border-t-2 border-white-primary transition-colors ease-steps;
+    background: no-repeat center / 70% var(--arrow-down);
+  }
 
-	::-webkit-scrollbar-button:increment:active {
-		@apply bg-white-primary;
-		background: no-repeat center / 70% var(--arrow-down-active);
-	}
+  ::-webkit-scrollbar-button:increment:active {
+    background:
+      no-repeat center / 70% var(--arrow-down-active),
+      rgb(245 249 255 / var(--tw-bg-opacity));
+  }
 
-	::-webkit-scrollbar-button:vertical:start:increment,
-	::-webkit-scrollbar-button:vertical:end:decrement,
-	::-webkit-scrollbar-button:horizontal:start:increment,
-	::-webkit-scrollbar-button:horizontal:end:decrement,
-	::-webkit-scrollbar-track:horizontal {
-		@apply hidden;
-	}
+  ::-webkit-scrollbar-button:vertical:start:increment,
+  ::-webkit-scrollbar-button:vertical:end:decrement,
+  ::-webkit-scrollbar-button:horizontal:start:increment,
+  ::-webkit-scrollbar-button:horizontal:end:decrement,
+  ::-webkit-scrollbar-track:horizontal {
+    @apply hidden;
+  }
 
-	::selection {
-		@apply bg-yellow-accent text-black-primary;
-	}
+  ::selection {
+    @apply bg-yellow-accent text-black-primary;
+  }
 }
 
 @layer utilities {
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-	.no-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-	.group:active .group-active\:glitch {
-		animation: glitch 0.15s steps(10) 2;
-	}
+  .group:active .group-active\:glitch {
+    animation: glitch 0.15s steps(10) 2;
+  }
 
-	.slider {
-		@apply appearance-none cursor-pointer flex-grow p-1 ml-4 my-2 outline outline-2 outline-white-primary bg-gradient-to-r bg-double from-pink-accent via-50% via-blue-accent to-50% bg-transparent;
-	}
+  .slider {
+    @apply my-2 ml-4 flex-grow cursor-pointer appearance-none bg-transparent bg-gradient-to-r from-pink-accent via-blue-accent via-50% to-50% bg-double p-1 outline outline-2 outline-white-primary;
+  }
 
-	.slider::-webkit-slider-thumb {
-		@apply appearance-none relative w-6 h-4 bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary z-40;
-	}
+  .slider::-webkit-slider-thumb {
+    @apply relative z-40 h-4 w-6 appearance-none bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary;
+  }
 
-	.slider::-moz-range-thumb {
-		@apply w-6 h-4 bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary cursor-pointer;
-	}
+  .slider::-moz-range-thumb {
+    @apply h-4 w-6 cursor-pointer bg-white-primary shadow-[-2px_-2px_inset] shadow-light-primary;
+  }
 
-	.backdrop-blur-parent::before {
-		content: '';
-		@apply backdrop-blur absolute w-full h-full -z-10;
-	}
+  .backdrop-blur-parent::before {
+    content: "";
+    @apply absolute -z-10 h-full w-full backdrop-blur;
+  }
 
-	.mask-up {
-		mask: linear-gradient(to top, white, transparent);
-	}
+  .mask-up {
+    mask: linear-gradient(to top, white, transparent);
+  }
 
-	.animate-pause {
-		animation-play-state: paused;
-	}
+  .darken-bottom::after {
+    content: "";
+    @apply absolute top-0 h-full w-full bg-gradient-to-t from-black-primary to-40%;
+  }
 
-	.disable-child-interaction * {
-		animation-play-state: paused !important;
-		transition: none !important;
-	}
+  .animate-pause {
+    animation-play-state: paused;
+  }
 
-	.disable-child-interaction::after {
-		content: '';
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
+  .scale-by-height [aria-hidden="true"] {
+    @apply !hidden;
+  }
+
+  .disable-child-interaction * {
+    animation-play-state: paused !important;
+    @apply !transition-none;
+  }
+
+  .disable-child-interaction::after {
+    content: "";
+    @apply absolute h-full w-full;
+  }
+
+  .full-flicker {
+    @apply animate-[full-flicker_0.12s_infinite];
+  }
+
+  .flicker {
+    @apply animate-[flicker_0.12s_infinite];
+  }
+
+  .full-flicker > .flicker {
+    @apply animate-none;
+  }
+
+  .pixel-mask {
+    mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
+    mask-size: 100% 4700%;
+    -webkit-mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
+    -webkit-mask-size: 100% 2600%;
+  }
 }
 
 @keyframes glitch {
-	from {
-		transform: translate(44%, -16%);
-	}
-	10% {
-		transform: translate(30%, 13%);
-	}
-	20% {
-		transform: translate(-9%, -28%);
-	}
-	30% {
-		transform: translate(-28%, -45%) scaleX(-1);
-	}
-	40% {
-		transform: translate(-36%, 8%) scaleX(-1);
-	}
-	50% {
-		transform: translate(6%, 28%);
-	}
-	60% {
-		transform: translate(6%, -10%);
-	}
-	70% {
-		transform: translate(14%, 35%) scaleY(2);
-	}
-	80% {
-		transform: translate(26%, 4%);
-	}
-	90% {
-		transform: translate(-19%, 38%);
-	}
-	to {
-		transform: translate(8%, 38%) scale(1.2);
-	}
+  from {
+    transform: translate(44%, -16%);
+  }
+  10% {
+    transform: translate(30%, 13%);
+  }
+  20% {
+    transform: translate(-9%, -28%);
+  }
+  30% {
+    transform: translate(-28%, -45%) scaleX(-1);
+  }
+  40% {
+    transform: translate(-36%, 8%) scaleX(-1);
+  }
+  50% {
+    transform: translate(6%, 28%);
+  }
+  60% {
+    transform: translate(6%, -10%);
+  }
+  70% {
+    transform: translate(14%, 35%) scaleY(2);
+  }
+  80% {
+    transform: translate(26%, 4%);
+  }
+  90% {
+    transform: translate(-19%, 38%);
+  }
+  to {
+    transform: translate(8%, 38%) scale(1.2);
+  }
 }
 
 @keyframes shutdown {
-	from {
-		transform: scaleX(1) scaleY(1);
-	}
+  from {
+    transform: scaleX(1) scaleY(1);
+  }
 
-	90% {
-		transform: scaleX(0.95) scaleY(0.02);
-	}
+  90% {
+    transform: scaleX(0.95) scaleY(0.02);
+  }
 
-	to {
-		transform: scaleX(0) scaleY(0.02);
-	}
+  to {
+    transform: scaleX(0) scaleY(0.02);
+  }
+}
+
+@keyframes full-flicker {
+  0% {
+    opacity: 0.552;
+  }
+  5% {
+    opacity: 0.48287;
+  }
+  10% {
+    opacity: 0.59134;
+  }
+  15.0% {
+    opacity: 0.79543;
+  }
+  20% {
+    opacity: 0.75134;
+  }
+  25% {
+    opacity: 0.1956;
+  }
+  30.0% {
+    opacity: 0.90687;
+  }
+  35% {
+    opacity: 0.122;
+  }
+  40% {
+    opacity: 0.62254;
+  }
+  45% {
+    opacity: 0.56977;
+  }
+  50% {
+    opacity: 0.9925;
+  }
+  55.0% {
+    opacity: 0.55487;
+  }
+  60.0% {
+    opacity: 0.16607;
+  }
+  65% {
+    opacity: 0.12353;
+  }
+  70% {
+    opacity: 0.2214;
+  }
+  75% {
+    opacity: 0.67908;
+  }
+  80% {
+    opacity: 0.97163;
+  }
+  85.0% {
+    opacity: 0.1275;
+  }
+  90% {
+    opacity: 0.37186;
+  }
+  95% {
+    opacity: 0.24475;
+  }
+  100% {
+    opacity: 0.37221;
+  }
 }
 
 @keyframes flicker {
-	0% {
-		opacity: 0.552;
-	}
-	5% {
-		opacity: 0.48287;
-	}
-	10% {
-		opacity: 0.59134;
-	}
-	15.0% {
-		opacity: 0.79543;
-	}
-	20% {
-		opacity: 0.75134;
-	}
-	25% {
-		opacity: 0.1956;
-	}
-	30.0% {
-		opacity: 0.90687;
-	}
-	35% {
-		opacity: 0.122;
-	}
-	40% {
-		opacity: 0.62254;
-	}
-	45% {
-		opacity: 0.56977;
-	}
-	50% {
-		opacity: 0.9925;
-	}
-	55.0% {
-		opacity: 0.55487;
-	}
-	60.0% {
-		opacity: 0.16607;
-	}
-	65% {
-		opacity: 0.12353;
-	}
-	70% {
-		opacity: 0.2214;
-	}
-	75% {
-		opacity: 0.67908;
-	}
-	80% {
-		opacity: 0.97163;
-	}
-	85.0% {
-		opacity: 0.1275;
-	}
-	90% {
-		opacity: 0.37186;
-	}
-	95% {
-		opacity: 0.24475;
-	}
-	100% {
-		opacity: 0.37221;
-	}
+  0% {
+    filter: brightness(1.032);
+  }
+  5% {
+    filter: brightness(0.98287);
+  }
+  10% {
+    filter: brightness(1.02134);
+  }
+  15.0% {
+    filter: brightness(1.00543);
+  }
+  20% {
+    filter: brightness(0.97134);
+  }
+  25% {
+    filter: brightness(1.0356);
+  }
+  30.0% {
+    filter: brightness(0.97687);
+  }
+  35% {
+    filter: brightness(1.022);
+  }
+  40% {
+    filter: brightness(0.97254);
+  }
+  45% {
+    filter: brightness(1.02977);
+  }
+  50% {
+    filter: brightness(0.9825);
+  }
+  55.0% {
+    filter: brightness(1.03487);
+  }
+  60.0% {
+    filter: brightness(0.96607);
+  }
+  65% {
+    filter: brightness(1.02353);
+  }
+  70% {
+    filter: brightness(0.9914);
+  }
+  75% {
+    filter: brightness(0.96908);
+  }
+  80% {
+    filter: brightness(0.97163);
+  }
+  85.0% {
+    filter: brightness(1.0075);
+  }
+  90% {
+    filter: brightness(1.04186);
+  }
+  95% {
+    filter: brightness(0.97475);
+  }
+  100% {
+    filter: brightness(0.99221);
+  }
 }

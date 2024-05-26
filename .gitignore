@@ -132,3 +132,6 @@ node_modules/
 src/gatsby-types.d.ts
 .vscode/
 public
+
+# Prettier
+.prettierrc

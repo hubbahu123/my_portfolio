@@ -1,16 +1,20 @@
 {
-	"loc": {
-		"text": "redaelmountassir.github.io/ArtistryMachine",
-		"link": "https://redaelmountassir.github.io/ArtistryMachine"
-	},
-	"org": "CodedByKids",
-	"role": "Sole Developer",
-	"tags": ["Vanilla JS", "HTML", "CSS", "ThreeJS", "GitHub", "GSAP"],
-	"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed. Malesuada proin libero nunc consequat interdum. Bibendum est ultricies integer quis auctor elit sed vulputate. Tincidunt praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. In mollis nunc sed id semper risus in hendrerit. Sed cras ornare arcu dui vivamus arcu felis. Est placerat in egestas erat imperdiet. Amet cursus sit amet dictum sit. Amet cursus sit amet dictum. Id eu nisl nunc mi ipsum faucibus vitae. Nisi est sit amet facilisis magna etiam. Mauris pellentesque pulvinar pellentesque habitant. Sit amet luctus venenatis lectus magna fringilla. Sapien pellentesque habitant morbi tristique senectus et netus. Duis at tellus at urna condimentum mattis pellentesque id.",
-	"showcases": [
-		"../../images/artistry_machine/mockup_1.jpg",
-		"../../images/artistry_machine/mockup_2.jpg",
-		"../../images/artistry_machine/mockup_3.jpg"
-	],
-	"logo": "../../images/artistry_machine/logo.png"
+  "loc": {
+    "text": "redaelmountassir.github.io/ArtistryMachine",
+    "link": "https://redaelmountassir.github.io/ArtistryMachine"
+  },
+  "org": "CodedByKids",
+  "roles": ["Sole Developer"],
+  "date": "2021-01-05",
+  "categories": ["Web Development"],
+  "tags": ["Vanilla JS", "HTML", "CSS", "ThreeJS", "GitHub", "GSAP"],
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed. Malesuada proin libero nunc consequat interdum. Bibendum est ultricies integer quis auctor elit sed vulputate. Tincidunt praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. In mollis nunc sed id semper risus in hendrerit. Sed cras ornare arcu dui vivamus arcu felis. Est placerat in egestas erat imperdiet. Amet cursus sit amet dictum sit. Amet cursus sit amet dictum. Id eu nisl nunc mi ipsum faucibus vitae. Nisi est sit amet facilisis magna etiam. Mauris pellentesque pulvinar pellentesque habitant. Sit amet luctus venenatis lectus magna fringilla. Sapien pellentesque habitant morbi tristique senectus et netus. Duis at tellus at urna condimentum mattis pellentesque id.",
+  "showcases": [
+    "../../images/artistry_machine/mockup_1.jpg",
+    "../../images/artistry_machine/mockup_2.jpg",
+    "../../images/artistry_machine/mockup_3.jpg",
+    "../../images/artistry_machine/mockup_3.jpg",
+    "../../images/artistry_machine/mockup_3.jpg"
+  ],
+  "logo": "../../images/artistry_machine/logo.png"
 }

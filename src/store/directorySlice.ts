@@ -1,12 +1,6 @@
 import { StateCreator } from 'zustand';
 import InitialSystem from '../content/InitialSystem';
-import type {
-	WindowSlice,
-	DirectorySlice,
-	SystemObject,
-	Path,
-	Directory,
-} from './types';
+import type { WindowSlice, DirectorySlice, SystemObject } from './types';
 
 export const createDirectorySlice: StateCreator<
 	WindowSlice & DirectorySlice,

@@ -13,12 +13,13 @@ interface IconProps
 const selectIcon = (sysObj: SystemObject) => {
 	if (!('ext' in sysObj))
 		return sysObj.name === 'Trash'
-			? 'trash'
+			? 'trash.png'
 			: sysObj.children.length
-			? 'folder'
-			: 'folder_empty'; //Special folder
-	if (!(sysObj.ext === 'exe')) return sysObj.ext;
-	return sysObj.name.toLowerCase();
+			? 'folder.png'
+			: 'folder_empty.png'; //Special folder
+	if (sysObj.ext === 'mys') return 'mystery.gif';
+	if (!(sysObj.ext === 'exe')) return `${sysObj.ext}.png`;
+	return `${sysObj.name.toLowerCase()}.png`;
 };
 
 const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
@@ -27,7 +28,7 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 			<img
 				{...props}
 				draggable={false}
-				src={`/icons/${selectIcon(sysObj)}.png`}
+				src={`/icons/${selectIcon(sysObj)}`}
 				alt={sysObj.name}
 				loading="eager"
 			/>
@@ -38,6 +39,7 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 		<GatsbyImage
 			className={props.className}
 			imgClassName="transition-none"
+			style={{ width: '', height: '' }}
 			alt={sysObj.name}
 			draggable={false}
 			image={image}

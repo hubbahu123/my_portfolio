@@ -12,8 +12,6 @@ import Modifiers from './Modifiers';
 import WebGL from 'three/examples/jsm/capabilities/WebGL';
 
 const Desktop: React.FC = () => {
-	const desktopAreaRef = useRef(null!);
-
 	const [introDone, setIntroDone] = usePersistent(
 		'introDone',
 		!WebGL.isWebGLAvailable(),
@@ -21,12 +19,12 @@ const Desktop: React.FC = () => {
 	);
 
 	return (
-		<motion.main ref={desktopAreaRef} className="w-full h-full relative">
+		<motion.main className="w-full h-full relative">
 			{introDone ? (
 				<Loader>
 					<Background />
 					<Taskbar />
-					<ShortcutsArea area={desktopAreaRef} />
+					<ShortcutsArea />
 					<WindowsArea />
 				</Loader>
 			) : (

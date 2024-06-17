@@ -54,7 +54,7 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					}}
 				>
 					<StaticImage
-						src="../images/logo/logo_large_animated.png"
+						src="../images/logo/logo_lg_animated.png"
 						alt="Animated logo"
 						layout="fixed"
 						height={128}

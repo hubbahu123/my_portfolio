@@ -10,9 +10,12 @@ export const createDirectorySlice: StateCreator<
 > = (set, get) => ({
 	rootDir: { name: 'C:', children: [InitialSystem] },
 	toPath(path) {
-		return typeof path === 'string'
-			? path.split('/')
-			: path.flatMap(place => place.split('/'));
+		const newPath =
+			typeof path === 'string'
+				? path.split(/[\\/]/)
+				: path.flatMap(place => place.split(/[\\/]/));
+		if (newPath[newPath.length - 1] === '') newPath.pop();
+		return newPath;
 	},
 	navigateFrom(startDir, path) {
 		//Convert path to usuable list
@@ -47,6 +50,7 @@ export const createDirectorySlice: StateCreator<
 	navigate: path => {
 		path = get().toPath(path);
 		if (path[0] === 'C:') path.shift();
+		if (path.length === 0) return get().rootDir;
 		return get().navigateFrom(get().rootDir, path);
 	},
 	move(target, dir) {

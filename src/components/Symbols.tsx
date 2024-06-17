@@ -21,66 +21,41 @@ type GLTFResult = GLTF & {
 };
 
 function checkVisibility(window: Window | undefined): string {
-	if (!window) return 'bust';
+	if (!window) return 'logo';
 	switch (window.type) {
-		case 'FileExplorer':
-			return 'computer';
-		case 'Console':
+		case 'Contact':
+			return 'phone';
+		case 'PDFReader':
+		case 'TextEditor':
 			return 'pen';
-		default:
+		case 'MediaViewer':
 			return 'bust';
+		case 'Console':
+		case 'FileExplorer':
+		case 'Virus':
+			return 'computer';
+		default:
+			return 'logo';
 	}
 }
 
 export const Symbols: React.FC<
 	React.JSX.IntrinsicElements['group']
 > = props => {
-	const { nodes } = useGLTF('/models/symbols.glb') as GLTFResult;
-	const transitionStatus = useRef({
-		prevNode: '',
-		currentNode: '',
-		timeout: null as null | NodeJS.Timeout,
+	const { nodes } = useGLTF('/models/symbols.glb') as unknown as GLTFResult;
+
+	const data = useRef<{ timeout?: NodeJS.Timeout; glitching: boolean }>({
 		glitching: false,
 	});
-	const [nodesVisibility, setVisibility] = useState<{
-		[key: string]: boolean;
-	}>({});
+
+	// Create glitchy material
 	const symbolMat = useMemo(() => createGlitchMat(), []);
-
-	const currentWindow = useBoundStore(({ windows }) => windows[0]);
-
-	useEffect(() => {
-		const shouldBeVisible = checkVisibility(currentWindow);
-		if (nodesVisibility[shouldBeVisible]) {
-			if (transitionStatus.current.timeout) {
-				clearTimeout(transitionStatus.current.timeout);
-				transitionStatus.current.timeout = setTimeout(() => {
-					transitionStatus.current.glitching = false;
-					transitionStatus.current.timeout = null;
-				}, randRange(500, 1250));
-			}
-			return;
-		}
-		transitionStatus.current.glitching = true;
-		transitionStatus.current.prevNode =
-			transitionStatus.current.currentNode;
-		transitionStatus.current.currentNode = shouldBeVisible;
-		if (transitionStatus.current.timeout) return;
-		transitionStatus.current.timeout = setTimeout(() => {
-			transitionStatus.current.glitching = false;
-			transitionStatus.current.timeout = null;
-			setVisibility(prev => ({
-				...prev,
-				[transitionStatus.current.prevNode]: false,
-			}));
-			setVisibility(prev => ({ ...prev, [shouldBeVisible]: true }));
-		}, randRange(500, 1250));
-	}, [currentWindow]);
-
+	useEffect(() => () => symbolMat.dispose(), []);
 	useFrame(state => {
 		if (!symbolMat.userData.shader || !symbolMat.userData.shader.uniforms)
 			return;
-		if (!transitionStatus.current.glitching) {
+
+		if (!data.current.glitching) {
 			if (symbolMat.userData.shader.uniforms.glitching.value)
 				symbolMat.userData.shader.uniforms.glitching.value = 0;
 			return;
@@ -92,7 +67,43 @@ export const Symbols: React.FC<
 			symbolMat.userData.shader.uniforms.glitching.value = 1;
 	});
 
-	useEffect(() => () => symbolMat.dispose(), []);
+	// Tie symbols to current window
+	const [currentNode, setCurrentNode] = useState<string>(
+		checkVisibility(undefined)
+	);
+	const currentWindow = useBoundStore(
+		({ windows }) => windows[windows.length - 1]
+	);
+	useEffect(() => {
+		const shouldBeVisible = checkVisibility(currentWindow);
+		// If symbol is returned to the current one
+		if (currentNode === shouldBeVisible) {
+			if (data.current.timeout) {
+				clearTimeout(data.current.timeout);
+				data.current.timeout = setTimeout(
+					() => {
+						data.current.glitching = false;
+						data.current.timeout = undefined;
+					},
+					randRange(500, 1000)
+				);
+			}
+			return;
+		}
+
+		// New symbol! Start animating.
+		data.current.glitching = true;
+		// If existing switch exists, extend animation and change the change
+		if (data.current.timeout) clearTimeout(data.current.timeout);
+		data.current.timeout = setTimeout(
+			() => {
+				data.current.glitching = false;
+				data.current.timeout = undefined;
+				setCurrentNode(shouldBeVisible);
+			},
+			randRange(500, 1250)
+		);
+	}, [currentWindow]);
 
 	return (
 		<React.Suspense fallback={<Throbber />}>
@@ -105,7 +116,7 @@ export const Symbols: React.FC<
 								//@ts-ignore
 								geometry={nodes[node].geometry}
 								key={node}
-								visible={nodesVisibility[node] ?? false}
+								visible={currentNode === node}
 								material={symbolMat}
 							/>
 						)

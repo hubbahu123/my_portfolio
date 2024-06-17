@@ -15,15 +15,19 @@ const selectIcon = (sysObj: SystemObject) => {
 		return sysObj.name === 'Trash'
 			? 'trash.png'
 			: sysObj.children.length
-			? 'folder.png'
-			: 'folder_empty.png'; //Special folder
+				? 'folder.png'
+				: 'folder_empty.png'; //Special folder
 	if (sysObj.ext === 'mys') return 'mystery.gif';
 	if (!(sysObj.ext === 'exe')) return `${sysObj.ext}.png`;
 	return `${sysObj.name.toLowerCase()}.png`;
 };
 
 const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
-	if (!('value' in sysObj) || !sysObj.value)
+	if (
+		!('value' in sysObj) ||
+		!sysObj.value ||
+		typeof sysObj.value === 'string'
+	)
 		return (
 			<img
 				{...props}

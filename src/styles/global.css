@@ -83,6 +83,12 @@ body {
 }
 
 @layer base {
+	.use-scrollbar {
+		scrollbar-width: thin;
+		-ms-overflow-style: thin;
+		scrollbar-color: #291632 #f5f9ff;
+	}
+
 	::-webkit-scrollbar {
 		@apply w-10;
 	}
@@ -195,7 +201,9 @@ body {
 
 	.disable-child-interaction * {
 		animation-play-state: paused !important;
-		@apply !transition-none;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		@apply !transition-none !pointer-events-none;
 	}
 
 	.disable-child-interaction::after {

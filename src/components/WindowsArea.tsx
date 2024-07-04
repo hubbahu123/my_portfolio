@@ -17,7 +17,7 @@ const getInitialBounds = (type: WindowType): [Point, Dimensions] => {
 		case 'Console':
 			return [
 				{ x: 200, y: 10 },
-				{ w: 200, h: 150 },
+				{ w: 600, h: 400 },
 			];
 		case 'Contact':
 			return [
@@ -58,7 +58,6 @@ const WindowsArea = () => {
 	const [windows, bringToFrontReq, deleteWindows] = useBoundStore(state => [
 		state.windows,
 		state.bringToFront,
-		state.deleteWindow,
 		state.deleteWindows,
 	]);
 

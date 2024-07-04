@@ -24,56 +24,58 @@ const Mail = () => {
 	return (
 		<div className="w-full flex h-full text-white-primary border-white-primary overflow-hidden flex-col pb-20 md:pb-0 md:flex-row">
 			<ul
-				className={`overflow-hidden transition-all ease-steps border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
+				className={`overflow-hidden transition-all ease-steps flex md:block border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
 					width > 1200 && 'md:!max-w-60 md:!bg-black-primary'
 				} ${width < 400 && 'md:hidden'}`}
 			>
-				<li>
+				<li className="grow">
 					<a
 						href="tel:2672312928"
 						target="_blank"
-						className="block border-b-2 whitespace-nowrap p-4 pr-0 group hover:bg-white-primary hover:text-black-primary"
+						className="block border-b-2 text-center md:text-left whitespace-nowrap p-4 md:pr-0 group hover:bg-white-primary hover:text-black-primary"
 					>
 						<img
 							src={phoneImg}
 							alt="LinkedIn Logo"
-							className="inline-block mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
 						/>
-						<span className="mr-4">267-231-2928</span>
+						<span className="mr-4 hidden xs:inline">
+							267-231-2928
+						</span>
 					</a>
 				</li>
-				<li>
+				<li className="grow">
 					<a
 						href="https://www.linkedin.com/in/reda-elmountassir"
 						target="_blank"
-						className="block border-b-2 whitespace-nowrap p-4 pr-0 group hover:bg-white-primary hover:text-black-primary"
+						className="block border-b-2 text-center md:text-left whitespace-nowrap p-4 md:pr-0 group hover:bg-white-primary hover:text-black-primary"
 					>
 						<img
 							src={linkedInImg}
 							alt="LinkedIn Logo"
-							className="inline-block mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
 						/>
-						<span className="mr-4">LinkedIn</span>
+						<span className="mr-4 hidden xs:inline">LinkedIn</span>
 					</a>
 				</li>
-				<li>
+				<li className="grow">
 					<a
 						href="https://github.com/redaelmountassir"
 						target="_blank"
-						className="block border-b-2 whitespace-nowrap p-4 pr-0 group hover:bg-white-primary hover:text-black-primary"
+						className="block border-b-2 text-center md:text-left whitespace-nowrap p-4 md:pr-0 group hover:bg-white-primary hover:text-black-primary"
 					>
 						<img
 							src={gitHubImg}
 							alt="GitHub Logo"
-							className="inline-block mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
 						/>
-						<span className="mr-4">GitHub</span>
+						<span className="mr-4 hidden xs:inline">GitHub</span>
 					</a>
 				</li>
 			</ul>
 			{width >= 600 && (
-				<div className="flex-1 border-r-2 flex flex-col relative overflow-hidden">
-					<h3 className="text-center p-4 border-b-2 border-white-primary font-bold">
+				<div className="flex-1 border-r-2 md:flex flex-col relative overflow-hidden hidden">
+					<h3 className="text-center min-h-[59px] p-4 border-b-2 border-white-primary font-bold">
 						Inbox
 					</h3>
 					<ul className="flex-grow overflow-y-auto">
@@ -118,7 +120,7 @@ const Mail = () => {
 			)}
 			<form
 				ref={scope}
-				className={`w-full relative p-4 flex-[3] flex flex-col bg-black-primary gap-2 ${
+				className={`w-full relative overflow-hidden p-4 flex-[3] flex flex-col bg-black-primary gap-2 ${
 					width < 600 && 'text-sm'
 				}`}
 				onSubmit={e => {
@@ -173,8 +175,8 @@ const Mail = () => {
 							err => {
 								animate(
 									'#warning',
-									{ y: ['0%', '-100%'] },
-									{ duration: 2, times: [0.7, 1.0] }
+									{ y: ['-100%', '0%', '0%', '-100%'] },
+									{ duration: 3, times: [0, 0.01, 0.75, 1] }
 								);
 								console.log('FAILED...', err.text);
 							}

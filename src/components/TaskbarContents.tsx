@@ -43,9 +43,9 @@ const TaskbarContents = () => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const playBg = useBackgroundSound(bgMusic, 0.5);
-	const [playShutdown] = usePlaySound(exitSound, 0.3);
-	const volumeRef = useRef(0);
+	const [playBg, pauseBg] = useBackgroundSound(bgMusic, 0.5);
+	const [playShutdown] = usePlaySound(exitSound, 1);
+	const volumeRef = useRef(75);
 	const toggleMute = () => {
 		if (volume === 0) return setVolume(volumeRef.current);
 		volumeRef.current = volume;
@@ -54,8 +54,7 @@ const TaskbarContents = () => {
 
 	const [battery, setBattery] = useState(1);
 	useEffect(() => {
-		if (volume === 0) volumeRef.current = 75;
-		toggleMute();
+		if (volume !== 0) toggleMute();
 		initFullscreen();
 
 		if (!('getBattery' in navigator))
@@ -95,7 +94,7 @@ const TaskbarContents = () => {
 								RedaOS
 							</h1>
 							<h2 className="text-md whitespace-nowrap">
-								Software Version 1.0.0
+								Software Version 3.0.0
 							</h2>
 							<p className="text-md font-normal">
 								(c) Paradox Computers, Inc. 2022-2023
@@ -129,7 +128,8 @@ const TaskbarContents = () => {
 							type="button"
 							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 							onClick={() => {
-								restart();
+								// restart();
+								pauseBg();
 								playShutdown();
 							}}
 						>
@@ -145,6 +145,7 @@ const TaskbarContents = () => {
 							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 							onClick={() => {
 								shutdown();
+								pauseBg();
 								playShutdown();
 							}}
 						>

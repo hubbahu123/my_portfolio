@@ -1,8 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useAnimationFrame } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import { Window } from '../store/types';
 import WindowJSX from './Window';
 import Icon from './Icon';
+import { clamp } from 'three/src/math/MathUtils';
 
 interface MenuProps {
 	windows: Window[];
@@ -12,11 +13,26 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 	const windowsArea = useRef<HTMLDivElement>(null);
+	const scroll = useRef({ amount: 0, changed: false });
 
 	useEffect(() => {
 		if (!windowsArea.current) return;
 		windowsArea.current.scrollTo(windowsArea.current.scrollWidth, 0);
 	}, []);
+
+	useAnimationFrame(() => {
+		if (!scroll.current.changed) return;
+		if (!windowsArea.current) return;
+		scroll.current.changed = false;
+		if (windowsArea.current.children.length == 1) return;
+		const scrollPercent =
+			scroll.current.amount /
+			(windowsArea.current.scrollWidth - windowsArea.current.clientWidth);
+		Array.from(windowsArea.current.children).forEach((val, i, arr) => {
+			const element = val as HTMLDivElement;
+			element.style.transform = `scale(${clamp(1 - Math.abs(scrollPercent - i / (arr.length - 1)) * 0.5, 0.8, 1)})`;
+		});
+	});
 
 	return (
 		<motion.div
@@ -29,12 +45,17 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 				WebkitBackdropFilter: 'blur(0px)',
 				opacity: 0,
 			}}
-			className="w-full h-full flex flex-col pb-24 items-center pointer-events-auto select-none"
+			className="w-full h-full flex flex-col pb-28 gap-14 items-center pointer-events-auto select-none"
 		>
 			<div
-				className="w-full h-5/6 overflow-x-auto pt-20 pb-6 flex gap-4 no-scrollbar snap-x snap-mandatory"
-				style={{ perspective: '1000' }}
+				className="w-full grow overflow-x-auto pt-24 flex items-center gap-4 no-scrollbar snap-x snap-mandatory"
+				style={{ touchAction: 'pan-x', msTouchAction: 'pan-x' }}
 				ref={windowsArea}
+				onScroll={e => {
+					scroll.current.amount =
+						windowsArea.current?.scrollLeft ?? 0;
+					scroll.current.changed = true;
+				}}
 			>
 				<AnimatePresence>
 					{windows.length === 0 ? (
@@ -43,7 +64,7 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.5 }}
 							key="no-active"
-							className="text-xl font-bold w-full text-center mt-[40%]"
+							className="text-xl font-bold w-full text-center"
 						>
 							No Active Apps
 						</motion.p>
@@ -57,16 +78,7 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 										i === windows.length - 1 && 'mr-[25%]'
 									} w-3/5 h-full relative shrink-0 snap-center`}
 								>
-									<motion.div
-										className="w-full h-full"
-										initial={{ scale: 0.75 }}
-										whileInView={{ scale: 1 }}
-										viewport={{
-											root: windowsArea,
-											amount: 'all',
-											margin: '10px',
-										}}
-									>
+									<motion.div className="w-full h-full">
 										<Icon
 											sysObj={window.sysObj}
 											className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
@@ -74,6 +86,7 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 										<WindowJSX
 											{...window}
 											disableInteraction
+											disableNavCompensation
 										/>
 									</motion.div>
 								</motion.div>

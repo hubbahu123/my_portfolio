@@ -25,7 +25,10 @@ const OS: React.FC<OSProps> = ({ children }) => {
 		updateVH();
 
 		documentStyle.setProperty('--arrow-up', `url("${arrowUp}")`);
-		documentStyle.setProperty('--arrow-up-active', `url("${arrowUpActive}")`);
+		documentStyle.setProperty(
+			'--arrow-up-active',
+			`url("${arrowUpActive}")`
+		);
 		documentStyle.setProperty('--arrow-down', `url("${arrowDown}")`);
 		documentStyle.setProperty(
 			'--arrow-down-active',
@@ -42,7 +45,7 @@ const OS: React.FC<OSProps> = ({ children }) => {
 	return (
 		<MobileContext.Provider value={!notMobile}>
 			<div
-				className='w-screen h-screen overflow-hidden'
+				className={`w-screen h-screen overflow-hidden ${!notMobile && 'use-scrollbar'}`}
 				style={{ height: 'var(--vh-full, 100vh)' }}
 			>
 				{children}

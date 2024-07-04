@@ -26,8 +26,8 @@ const Float: React.FC<FloatProps> = ({
 		time *= speed;
 		let xNoise = (noiseX(time, 0) + noiseX(time, 100) * 0.5) / 1.5;
 		let yNoise = (noiseY(time, 0) + noiseY(time, 100) * 0.5) / 1.5;
-		xNoise = xNoise * 2 - 1;
-		yNoise = yNoise * 2 - 1;
+		// xNoise = xNoise * 2 - 1;
+		// yNoise = yNoise * 2 - 1;
 		x.set(xNoise * strength);
 		y.set(yNoise * strength);
 	});

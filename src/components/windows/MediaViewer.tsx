@@ -16,9 +16,11 @@ import mapImg from '../../images/map_watermark.png';
 import shapeGif from '../../images/icohedron.gif';
 import handsGif from '../../images/hands.gif';
 import throbber from '../../images/throbber.gif';
+import { MobileContext } from '../OS';
 
 export const MediaViewer = () => {
-	const { setTitle, sysObj, setBasicWindow, id, getWidth } =
+	const isMobile = useContext(MobileContext);
+	const { setTitle, sysObj, setBasicWindow, id } =
 		useContext(WindowDataContext) ?? {};
 	if (
 		!sysObj ||
@@ -43,6 +45,7 @@ export const MediaViewer = () => {
 		target: scrollTarget,
 		container: scrollContainer,
 	});
+	let onChange: (latestValue: number) => void;
 	useEffect(() => {
 		if (!scrollContainer.current) return;
 		let topHalf = true;
@@ -60,7 +63,7 @@ export const MediaViewer = () => {
 			}
 		);
 
-		async function onChange(val: number) {
+		onChange = async function (val: number) {
 			if (!scrollContainer.current) return;
 			if (!topHalf && val < 0.35) {
 				topHalf = true;
@@ -82,7 +85,7 @@ export const MediaViewer = () => {
 					{ delay: 0.375, type: 'tween' }
 				);
 			}
-		}
+		};
 		const unsub = scrollYProgress.on('change', onChange);
 
 		return unsub;
@@ -96,7 +99,9 @@ export const MediaViewer = () => {
 	const clipPath = useTransform(
 		scrollYProgress2,
 		[0, 1],
-		['inset(5rem 12rem)', 'inset(0rem 0rem)']
+		isMobile
+			? ['inset(5rem 5rem)', 'inset(0rem 0rem)']
+			: ['inset(5rem 12rem)', 'inset(0rem 0rem)']
 	);
 
 	// Title anim
@@ -171,6 +176,7 @@ export const MediaViewer = () => {
 			deleteWindow(id);
 			addWindow(nextProject);
 			scrollContainer.current.scrollTo(0, 0);
+			if (typeof onChange === 'function') onChange(0);
 		}, 2000);
 	};
 	useEffect(
@@ -195,11 +201,11 @@ export const MediaViewer = () => {
 				className="relative h-full overflow-y-auto overflow-x-hidden"
 			>
 				<div
-					className="mx-4 mt-12 h-[200%] min-h-[1500px] text-white-primary"
+					className="mx-4 md:mt-12 h-[200%] min-h-[1500px] text-white-primary"
 					ref={scrollTarget}
 				>
-					<div className="sticky top-12 mb-14 flex gap-4">
-						<div className="z-10 flex-1">
+					<div className="sticky top-0 md:top-12 mb-14 flex gap-4">
+						<div className="z-10 basis-0 md:flex-1 min-w-0">
 							<div
 								id="main-showcase"
 								className="pixel-mask darken-bottom group absolute h-full w-full cursor-none border-2 border-white-primary"
@@ -211,7 +217,7 @@ export const MediaViewer = () => {
 									project={title}
 								/>
 							</div>
-							<h3 className="dlig ss02 pointer-events-none absolute -bottom-12 left-7 overflow-visible whitespace-nowrap font-display text-7xl uppercase leading-[0.95] shadow-black-primary/25 [text-shadow:_-5px_5px_5px_var(--tw-shadow-color)]">
+							<h3 className="md:inline hidden dlig ss02 pointer-events-none absolute -bottom-12 left-7 overflow-visible whitespace-nowrap font-display text-7xl uppercase leading-[0.95] shadow-black-primary/25 [text-shadow:_-5px_5px_5px_var(--tw-shadow-color)]">
 								{titleAnimated}
 							</h3>
 						</div>
@@ -226,46 +232,46 @@ export const MediaViewer = () => {
 								</h3>
 
 								<ul className="mb-8 min-w-0 divide-y-2">
-									<li className="flex justify-between gap-2 py-4">
+									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 										<h4>Categories</h4>
-										<div className="text-right text-light-primary">
+										<div className="md:text-right text-light-primary">
 											{projectData.categories.map(cat => (
 												<p key={cat}>{cat}</p>
 											))}
 										</div>
 									</li>
-									<li className="flex justify-between gap-2 py-4">
+									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 										<h4>Roles</h4>
-										<div className="text-right text-light-primary">
+										<div className="md:text-right text-light-primary">
 											{projectData.roles.map(role => (
 												<p key={role}>{role}</p>
 											))}
 										</div>
 									</li>
-									<li className="flex justify-between gap-2 py-4">
+									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 										<h4>Date</h4>
-										<div className="text-right text-light-primary">
+										<div className="md:text-right text-light-primary">
 											{projectData.date.toLocaleDateString()}
 										</div>
 									</li>
 									{projectData.org && (
-										<li className="flex justify-between gap-2 py-4">
+										<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 											<h4>Organization</h4>
-											<div className="text-right text-light-primary">
+											<div className="md:text-right text-light-primary">
 												{projectData.org}
 											</div>
 										</li>
 									)}
 									{projectData.loc && (
-										<li className="flex justify-between gap-2 py-4">
+										<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 											<h4>Location</h4>
 											{projectData.loc.link === '#' ? (
-												<span className="flex-1 overflow-hidden text-ellipsis text-right text-light-primary">
+												<span className="flex-1 overflow-hidden text-ellipsis md:text-right text-light-primary">
 													{projectData.loc.text}
 												</span>
 											) : (
 												<a
-													className="flex-1 cursor-pointer overflow-hidden text-ellipsis text-right text-pink-accent underline"
+													className="flex-1 cursor-pointer overflow-hidden text-ellipsis md:text-right text-pink-accent underline"
 													href={projectData.loc.link}
 													target="_blank"
 												>
@@ -286,6 +292,9 @@ export const MediaViewer = () => {
 						</div>
 					</div>
 				</div>
+				<h3 className="text-center p-4 pb-1 xs:pb-0 mb-10 dlig ss02 font-display text-6xl xs:text-7xl uppercase leading-[0.95] bg-white-primary text-black-primary md:hidden">
+					{title}
+				</h3>
 				<div className="mx-4 mb-4 flex gap-4">
 					<div className="relative w-10 shrink-0 border-2 border-white-primary">
 						<ScrollMarquee
@@ -301,16 +310,16 @@ export const MediaViewer = () => {
 							</p>
 						</ScrollMarquee>
 					</div>
-					<div className="relative h-auto overflow-hidden border-2 border-white-primary bg-black-primary p-32 px-6 text-white-primary">
+					<div className="relative h-auto overflow-hidden border-2 border-white-primary bg-black-primary p-24 md:p-32 md:px-6 px-6 text-white-primary">
 						<GlitchText
 							onScroll
 							scrollRoot={scrollContainer}
 							decayRate={0.5}
-							className="ss02 dlig pointer-events-none absolute -bottom-9 -right-12 select-none font-display text-[12.5rem] uppercase text-purple-watermark "
+							className="ss02 dlig pointer-events-none absolute -bottom-9 -right-12 select-none font-display md:text-[12.5rem] text-[8rem] uppercase text-purple-watermark"
 						>
 							ABOUT
 						</GlitchText>
-						<p className="relative pb-4">
+						<p className="relative mb-6">
 							{projectData.description}
 						</p>
 						<div className="flex flex-wrap gap-4">
@@ -323,7 +332,7 @@ export const MediaViewer = () => {
 					</div>
 				</div>
 				{intialShowcases.length && (
-					<div className="mx-4 mb-4 grid h-full grid-cols-2 grid-rows-[50%_1fr_auto] gap-4">
+					<div className="mx-4 mb-4 grid h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
 						<motion.div
 							initial={{
 								maskPosition: '0% 100%',
@@ -391,7 +400,7 @@ export const MediaViewer = () => {
 								once: true,
 								amount: 0.27,
 							}}
-							className="pixel-mask group relative col-start-2 row-span-3 row-start-1 cursor-none border-2 border-white-primary"
+							className="pixel-mask group relative md:col-start-2 md:row-span-3 md:row-start-1 cursor-none border-2 border-white-primary"
 						>
 							<Showcase
 								src={intialShowcases[0]}
@@ -455,11 +464,11 @@ export const MediaViewer = () => {
 								onScroll
 								scrollRoot={scrollContainer}
 								decayRate={0.5}
-								className="mb-12 text-lg font-bold"
+								className="xs:mb-12 text-lg font-bold"
 							>
 								next →
 							</GlitchText>
-							<h3 className="dlig ss02 whitespace-pre font-display text-7xl uppercase leading-[0.95]">
+							<h3 className="dlig ss02 whitespace-pre font-display text-5xl xs:text-7xl uppercase leading-[0.95]">
 								{nextProject.name
 									.split('_')
 									.map((str, i) =>

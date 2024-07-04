@@ -4,7 +4,9 @@ const config: GatsbyConfig = {
 	siteMetadata: {
 		title: `Reda OS`,
 		siteUrl: `https://www.yourdomain.tld`,
-		description: `This site is a 'desktop-like' experience describing the one (and only) Reda Elmountassir`,
+		image: '/logo.png',
+		twitterUsername: '@RedaElmo',
+		description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
 	},
 	graphqlTypegen: false,
 	plugins: [
@@ -63,7 +65,7 @@ const config: GatsbyConfig = {
 				],
 				name: 'RedaOS',
 				short_name: 'RedaOS',
-				description: `This site is a 'desktop-like' experience describing the one (and only) Reda Elmountassir`,
+				description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
 				start_url: `/`,
 				background_color: `#1f0728`,
 				theme_color: `#f9c80e`,

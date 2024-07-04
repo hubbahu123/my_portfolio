@@ -5,12 +5,12 @@ import {
 	useAnimationFrame,
 	useMotionValue,
 } from 'framer-motion';
+import Float from './Float';
 import { StaticImage } from 'gatsby-plugin-image';
 import { easeSteps } from '../utils';
 import { lerp } from 'three/src/math/MathUtils';
 import triangleImg from '../images/triangle_outline_blue.png';
 import gridImg from '../images/floor_grid.png';
-import Float from './Float';
 
 const FRAMES = 46;
 const FRAME_WIDTH = 256;
@@ -49,7 +49,7 @@ const NameCard = () => {
 			<img
 				src={gridImg}
 				alt="Background graphic"
-				className="w-[700px] absolute bottom-0 left-1/2 -translate-x-1/2"
+				className="w-[700px] max-w-none absolute bottom-0 left-1/2 -translate-x-1/2"
 				style={{
 					mask: 'radial-gradient(100% 100% at bottom, red 30%, transparent 70%)',
 					WebkitMask:
@@ -83,13 +83,13 @@ const NameCard = () => {
 						type: 'tween',
 						ease: 'circOut',
 					}}
-					className="bottom-14 left-1/2 absolute pointer-events-none"
+					className="bottom-40 md:bottom-14 left-1/2 absolute pointer-events-none"
 				>
 					<Float>
 						<motion.img
 							src={triangleImg}
 							alt="Background graphic"
-							className="h-[620px] max-w-none pb-14"
+							className="h-[500px] md:h-[620px] max-w-none pb-14"
 						/>
 					</Float>
 				</motion.div>

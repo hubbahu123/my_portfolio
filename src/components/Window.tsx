@@ -25,6 +25,7 @@ interface WindowProps {
 	initialDimensions?: Dimensions;
 	minDimensions?: Dimensions;
 	disableInteraction?: boolean;
+	disableNavCompensation?: boolean;
 }
 
 const calcOrigin = (window: HTMLElement, windowOrigin: HTMLElement) => {
@@ -57,6 +58,7 @@ export const Window: React.FC<WindowProps> = ({
 	initialDimensions = { w: 500, h: 300 },
 	minDimensions = { w: 200, h: 100 },
 	disableInteraction = false,
+	disableNavCompensation = false,
 }) => {
 	const [isMoving, setIsMoving] = useState(false);
 	const [maximized, setMaximized] = useState(false);
@@ -94,7 +96,7 @@ export const Window: React.FC<WindowProps> = ({
 			}}
 		>
 			<motion.section
-				drag
+				drag={!isMobile}
 				dragListener={false}
 				dragControls={controls}
 				dragConstraints={area}
@@ -130,8 +132,10 @@ export const Window: React.FC<WindowProps> = ({
 						: undefined
 				}
 				ref={windowRef}
-				className={`pointer-events-auto absolute top-0 flex max-h-full max-w-full touch-none flex-col bg-black-primary from-black-primary/75 from-25% to-dark-primary/75 to-70% shadow-[10px_10px_0_0] shadow-black-primary/25 backdrop-blur md:bg-transparent md:bg-gradient-to-r ${
-					(isMobile || maximized) && '!h-full !w-full !transform-none'
+				className={`pointer-events-auto absolute top-0 flex max-h-full max-w-full flex-col bg-black-primary from-black-primary/75 from-25% to-dark-primary/75 to-70% shadow-[10px_10px_0_0] shadow-black-primary/25 backdrop-blur md:bg-transparent md:bg-gradient-to-r ${
+					isMobile || maximized
+						? `!h-full !w-full !transform-none ${!disableNavCompensation && 'border-t-[56px] border-t-black-primary md:border-0'}`
+						: 'touch-none'
 				} ${isMoving && 'invisible backdrop-blur-none'} ${
 					disableInteraction && 'disable-child-interaction'
 				}`}
@@ -166,65 +170,67 @@ export const Window: React.FC<WindowProps> = ({
 					ref={contentRef}
 				/>
 				{!isMobile && (
-					<Resizers
-						onResizeStart={() => setIsMoving(true)}
-						onResizeEnd={() => setIsMoving(false)}
-						onResize={({ delta }, cardinal) => {
-							const westResize = () => {
-								//Prevents negative dragging
-								const w = width.get();
-								let newWidth = w - delta.x;
-								let newX = delta.x;
-								if (newWidth < minDimensions.w) {
-									newWidth = minDimensions.w;
-									newX = w - newWidth;
+					<>
+						<Resizers
+							onResizeStart={() => setIsMoving(true)}
+							onResizeEnd={() => setIsMoving(false)}
+							onResize={({ delta }, cardinal) => {
+								const westResize = () => {
+									//Prevents negative dragging
+									const w = width.get();
+									let newWidth = w - delta.x;
+									let newX = delta.x;
+									if (newWidth < minDimensions.w) {
+										newWidth = minDimensions.w;
+										newX = w - newWidth;
+									}
+
+									x.set(x.get() + newX);
+									width.set(newWidth);
+								};
+
+								const northResize = () => {
+									//Prevents negative dragging
+									const h = height.get();
+									let newHeight = h - delta.y;
+									let newY = delta.y;
+									if (newHeight < minDimensions.h) {
+										newHeight = minDimensions.h;
+										newY = h - newHeight;
+									}
+
+									y.set(y.get() + newY);
+									height.set(newHeight);
+								};
+
+								switch (cardinal) {
+									case 'nw':
+										westResize();
+									case 'n':
+										northResize();
+										break;
+									case 'ne':
+										y.set(y.get() + delta.y);
+										height.set(height.get() - delta.y);
+									case 'e':
+										width.set(width.get() + delta.x);
+										break;
+									case 'se':
+										width.set(width.get() + delta.x);
+									case 's':
+										height.set(height.get() + delta.y);
+										break;
+									case 'sw':
+										height.set(height.get() + delta.y);
+									case 'w':
+										westResize();
+										break;
 								}
-
-								x.set(x.get() + newX);
-								width.set(newWidth);
-							};
-
-							const northResize = () => {
-								//Prevents negative dragging
-								const h = height.get();
-								let newHeight = h - delta.y;
-								let newY = delta.y;
-								if (newHeight < minDimensions.h) {
-									newHeight = minDimensions.h;
-									newY = h - newHeight;
-								}
-
-								y.set(y.get() + newY);
-								height.set(newHeight);
-							};
-
-							switch (cardinal) {
-								case 'nw':
-									westResize();
-								case 'n':
-									northResize();
-									break;
-								case 'ne':
-									y.set(y.get() + delta.y);
-									height.set(height.get() - delta.y);
-								case 'e':
-									width.set(width.get() + delta.x);
-									break;
-								case 'se':
-									width.set(width.get() + delta.x);
-								case 's':
-									height.set(height.get() + delta.y);
-									break;
-								case 'sw':
-									height.set(height.get() + delta.y);
-								case 'w':
-									westResize();
-									break;
-							}
-						}}
-					/>
+							}}
+						/>
+						<Outline ghost={isMoving} />
+					</>
 				)}
-				<Outline ghost={isMoving} />
 			</motion.section>
 		</WindowDataContext.Provider>
 	);

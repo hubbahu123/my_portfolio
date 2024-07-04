@@ -1,114 +1,132 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 
 export const mod = (x: number, y: number) => ((x % y) + y) % y;
 
 export const randRange = (min: number, max: number) =>
-  Math.random() * (max - min) + min;
+	Math.random() * (max - min) + min;
 
 export const map = (
-  x: number,
-  min1: number = 0,
-  max1: number = 1,
-  min2: number,
-  max2: number,
+	x: number,
+	min1: number = 0,
+	max1: number = 1,
+	min2: number,
+	max2: number
 ) => min2 + ((x - min1) * (max2 - min2)) / (max1 - min1);
 
 export const gcd = (x: number, y: number) => {
-  x = Math.abs(x);
-  y = Math.abs(y);
-  while (y) {
-    var t = y;
-    y = x % y;
-    x = t;
-  }
-  return x;
+	x = Math.abs(x);
+	y = Math.abs(y);
+	while (y) {
+		var t = y;
+		y = x % y;
+		x = t;
+	}
+	return x;
 };
 
 export const easeSteps = (steps: number) => (progress: number) =>
-  Math.floor(progress * steps) / steps;
+	Math.floor(progress * steps) / steps;
 
 const CHARS =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!";
+	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!';
 export const randomChar = () => pickRand(Array.from(CHARS));
 
 export function pickRand<T>(arr: Array<T>): T | undefined {
-  if (arr.length === 0) return undefined;
-  const randIndex = Math.floor(Math.random() * arr.length);
-  return arr[randIndex];
+	if (arr.length === 0) return undefined;
+	const randIndex = Math.floor(Math.random() * arr.length);
+	return arr[randIndex];
 }
 
 export const useMediaQuery = (query: string) => {
-  const [matches, setMatches] = useState(false);
+	const [matches, setMatches] = useState(false);
 
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    if (media.matches !== matches) setMatches(media.matches);
+	useEffect(() => {
+		const media = window.matchMedia(query);
+		if (media.matches !== matches) setMatches(media.matches);
 
-    const listener = () => setMatches(media.matches);
+		const listener = () => setMatches(media.matches);
 
-    media.addEventListener("change", listener);
+		media.addEventListener('change', listener);
 
-    return () => media.removeEventListener("change", listener);
-  }, [query]);
+		return () => media.removeEventListener('change', listener);
+	}, [query]);
 
-  return matches;
+	return matches;
 };
 
-export const useBreakpointSM = () => useMediaQuery("(min-width: 640px)");
-export const useBreakpointMD = () => useMediaQuery("(min-width: 768px)");
-export const useBreakpointLG = () => useMediaQuery("(min-width: 1024px)");
-export const useBreakpointXL = () => useMediaQuery("(min-width: 1280px)");
-export const useBreakpoint2XL = () => useMediaQuery("(min-width: 1536px)");
+export const useBreakpointSM = () => useMediaQuery('(min-width: 640px)');
+export const useBreakpointMD = () => useMediaQuery('(min-width: 768px)');
+export const useBreakpointLG = () => useMediaQuery('(min-width: 1024px)');
+export const useBreakpointXL = () => useMediaQuery('(min-width: 1280px)');
+export const useBreakpoint2XL = () => useMediaQuery('(min-width: 1536px)');
 
 export function usePersistent<type extends Object>(
-  key: string,
-  initialState: type,
-  conversion: (str: string) => type,
+	key: string,
+	initialState: type,
+	conversion: (str: string) => type
 ): [type, React.Dispatch<React.SetStateAction<type>>, Function] {
-  let actualInitial: string | null = localStorage.getItem(key);
-  const [value, setVal] = useState(
-    actualInitial === null ? initialState : conversion(actualInitial),
-  );
+	let actualInitial: string | null = localStorage.getItem(key);
+	const [value, setVal] = useState(
+		actualInitial === null ? initialState : conversion(actualInitial)
+	);
 
-  useEffect(() => localStorage.setItem(key, value.toString()), [value]);
-  const clear = () => localStorage.removeItem(key);
+	useEffect(() => localStorage.setItem(key, value.toString()), [value]);
+	const clear = () => localStorage.removeItem(key);
 
-  return [value, setVal, clear];
+	return [value, setVal, clear];
 }
 
 export function useDebounce<type>(
-  initialState: type,
-  delay = 3000,
+	initialState: type,
+	delay = 3000
 ): [type, React.Dispatch<React.SetStateAction<type>>] {
-  const [state, dispatch] = useState(initialState);
-  const timeout = useRef<NodeJS.Timeout>();
-  const debouncedDispatch: React.Dispatch<React.SetStateAction<type>> = (
-    ...props
-  ) => {
-    clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => {
-      dispatch(...props);
-    }, delay);
-  };
-  return [state, debouncedDispatch];
+	const [state, dispatch] = useState(initialState);
+	const timeout = useRef<NodeJS.Timeout>();
+	const debouncedDispatch: React.Dispatch<React.SetStateAction<type>> = (
+		...props
+	) => {
+		clearTimeout(timeout.current);
+		timeout.current = setTimeout(() => {
+			dispatch(...props);
+		}, delay);
+	};
+	return [state, debouncedDispatch];
 }
 
 export function useInterval(callback: Function, delay: number) {
-  useEffect(() => {
-    const interval = setInterval(callback, delay);
-    return () => clearInterval(interval);
-  }, []);
+	useEffect(() => {
+		const interval = setInterval(callback, delay);
+		return () => clearInterval(interval);
+	}, []);
 }
 
+export const useSiteMetadata = () => {
+	const data = useStaticQuery(graphql`
+		query {
+			site {
+				siteMetadata {
+					title
+					description
+					image
+					siteUrl
+					twitterUsername
+				}
+			}
+		}
+	`);
+	return data.site.siteMetadata;
+};
+
 export enum Colors {
-  blueAccent = "#023788",
-  purpleAccent = "#650d89",
-  burgundyAccent = "#920075",
-  pinkAccent = "#f6019d",
-  yellowAccent = "#f9c80e",
-  blackPrimary = "#1f0728",
-  darkPrimary = "#353c45",
-  lightPrimary = "#6e83a1",
-  whitePrimary = "#f5f9ff",
-  purpleWatermark = "#291632",
+	blueAccent = '#023788',
+	purpleAccent = '#650d89',
+	burgundyAccent = '#920075',
+	pinkAccent = '#f6019d',
+	yellowAccent = '#f9c80e',
+	blackPrimary = '#1f0728',
+	darkPrimary = '#353c45',
+	lightPrimary = '#6e83a1',
+	whitePrimary = '#f5f9ff',
+	purpleWatermark = '#291632',
 }

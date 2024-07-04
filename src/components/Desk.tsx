@@ -26,7 +26,7 @@ const mat = new THREE.MeshStandardMaterial({
 	color: Colors.blackPrimary,
 });
 export function Desk(props: JSX.IntrinsicElements['group']) {
-	const { nodes } = useGLTF('/models/desk.glb') as GLTFResult;
+	const { nodes } = useGLTF('/models/desk.glb') as unknown as GLTFResult;
 	const light = useRef<THREE.RectAreaLight>(null);
 	const screen = useRef<THREE.MeshPhongMaterial>(null);
 	const screenTex = useTexture(introImg) as THREE.Texture;
@@ -110,4 +110,4 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 	);
 }
 
-useGLTF.preload('/models/desk.glb');
+useGLTF.preload('/models/desk.glb'); // Randomly breaks when no internet

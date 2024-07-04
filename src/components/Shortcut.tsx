@@ -16,7 +16,7 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 
 	return (
 		<button
-			className="group flex flex-col items-center p-2 w-full max-h-full outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:w-24 md:h-auto md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px]"
+			className="group flex flex-col items-center p-2 w-24 max-h-full h-auto outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px]"
 			type="button"
 			onDoubleClick={
 				overrideClick
@@ -46,10 +46,10 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 			}
 		>
 			<Icon
-				className="w-full h-16 mb-2 select-none pointer-events-none md:mb-4"
+				className="w-16 h-16 mb-2 select-none pointer-events-none md:mb-4"
 				sysObj={sysObj}
 			/>
-			<p className="p-2 text-center text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">
+			<p className="p-2 text-center select-none text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">
 				{sysObj.name}
 				{'ext' in sysObj && sysObj.ext !== 'exe'
 					? `.${sysObj.ext}`

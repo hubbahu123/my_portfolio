@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import OS from '../components/OS';
 import Desktop from '../components/Desktop';
+import { SEO } from '../components/SEO';
 
 const IndexPage: React.FC<PageProps> = () => {
 	return (
@@ -56,5 +57,5 @@ export const Head: HeadFC = () => {
 		};
 	}, []);
 
-	return <title>[{focused ? FRAMES[titleIndex] : 'RedaOS'}]</title>;
+	return <SEO title={focused ? FRAMES[titleIndex] : undefined} />;
 };

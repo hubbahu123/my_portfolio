@@ -38,7 +38,7 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 		<motion.div className="h-full" animate={loaded ? 'loaded' : 'unloaded'}>
 			<section
 				ref={scope}
-				className="z-40 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col"
+				className="z-50 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col"
 			>
 				<motion.div
 					className="overflow-hidden w-64 translate-x-12 transition-transform ease-out delay-1000 duration-1000"

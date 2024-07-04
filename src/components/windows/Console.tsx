@@ -9,12 +9,14 @@ interface HistoryItem {
 }
 
 const INTRO = `
-   ___         __     ____  ____
-  / _ \\___ ___/ /__ _/ __ \\/ __/
- / , _/ -_) _  / _ \`/ /_/ /\\ \\
-/_/|_|\\__/\\_,_/\\_,_/\\____/___/
+   ^        ___         __     ____  ____
+  / \\      / _ \\___ ___/ /__ _/ __ \\/ __/
+<     >   / , _/ -_) _  / _ \`/ /_/ /\\ \\
+  \\ /    /_/|_|\\__/\\_,_/\\_,_/\\____/___/
+   v
+
 Copyright (C) Paradox Corporation. All rights reserved.
-Version 1.0.2
+Console Version 1.0.2
 
   `;
 
@@ -395,9 +397,10 @@ In the interim, enjoy this cat!
 				/>
 				<LocationText location={location} />
 				{input.replaceAll('\n', '\n$ ')}
-				<span className="invisible animate-blink font-bold peer-focus:visible">
+				<span className="hidden md:inline invisible animate-blink font-bold peer-focus:visible">
 					_
 				</span>
+				<span className="md:hidden">Not supported on mobile ☹</span>
 			</div>
 		</div>
 	);

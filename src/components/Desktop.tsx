@@ -14,7 +14,7 @@ import WebGL from 'three/examples/jsm/capabilities/WebGL';
 import { MobileContext } from './OS';
 
 const Desktop: React.FC = () => {
-	const [introDone, setIntroDone] = usePersistent(
+	const [ready, introDone, setIntroDone] = usePersistent(
 		'introDone',
 		!WebGL.isWebGLAvailable(),
 		str => str === 'true'
@@ -23,16 +23,17 @@ const Desktop: React.FC = () => {
 
 	return (
 		<motion.main className="w-full h-full relative">
-			{introDone ? (
-				<Loader>
-					<Background />
-					{isMobile ? <MobileTaskbar /> : <Taskbar />}
-					<ShortcutsArea />
-					<WindowsArea />
-				</Loader>
-			) : (
-				<Intro onFinish={() => setIntroDone(true)} />
-			)}
+			{ready &&
+				(introDone ? (
+					<Loader>
+						<Background />
+						{isMobile ? <MobileTaskbar /> : <Taskbar />}
+						<ShortcutsArea />
+						<WindowsArea />
+					</Loader>
+				) : (
+					<Intro onFinish={() => setIntroDone(true)} />
+				))}
 			<Modifiers />
 		</motion.main>
 	);

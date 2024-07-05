@@ -65,16 +65,21 @@ export function usePersistent<type extends Object>(
 	key: string,
 	initialState: type,
 	conversion: (str: string) => type
-): [type, React.Dispatch<React.SetStateAction<type>>, Function] {
-	let actualInitial: string | null = localStorage.getItem(key);
-	const [value, setVal] = useState(
-		actualInitial === null ? initialState : conversion(actualInitial)
-	);
+): [boolean, type, React.Dispatch<React.SetStateAction<type>>, Function] {
+	const [ready, setReady] = useState(false);
+	const [value, setVal] = useState(initialState);
+
+	useEffect(() => {
+		const actualInitial = localStorage.getItem(key);
+		if (actualInitial) setVal(conversion(actualInitial));
+		setReady(true);
+	}, []);
 
 	useEffect(() => localStorage.setItem(key, value.toString()), [value]);
+
 	const clear = () => localStorage.removeItem(key);
 
-	return [value, setVal, clear];
+	return [ready, value, setVal, clear];
 }
 
 export function useDebounce<type>(

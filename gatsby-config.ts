@@ -72,6 +72,12 @@ const config: GatsbyConfig = {
 				display: `standalone`,
 			},
 		},
+		{
+			resolve: 'gatsby-plugin-html-attributes',
+			options: {
+				lang: 'en',
+			},
+		},
 		'gatsby-plugin-offline',
 	],
 };

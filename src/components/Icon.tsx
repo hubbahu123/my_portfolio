@@ -33,7 +33,6 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 				{...props}
 				draggable={false}
 				src={`/icons/${selectIcon(sysObj)}`}
-				alt={sysObj.name}
 				loading="eager"
 			/>
 		);
@@ -44,7 +43,7 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 			className={props.className}
 			imgClassName="transition-none"
 			style={{ width: '', height: '' }}
-			alt={sysObj.name}
+			alt=""
 			draggable={false}
 			image={image}
 		/>

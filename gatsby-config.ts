@@ -3,7 +3,7 @@ import type { GatsbyConfig } from 'gatsby';
 const config: GatsbyConfig = {
 	siteMetadata: {
 		title: `Reda OS`,
-		siteUrl: `https://www.yourdomain.tld`,
+		siteUrl: `https://redaos.netlify.app`,
 		image: '/logo.png',
 		twitterUsername: '@RedaElmo',
 		description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
@@ -76,6 +76,13 @@ const config: GatsbyConfig = {
 			resolve: 'gatsby-plugin-html-attributes',
 			options: {
 				lang: 'en',
+			},
+		},
+		{
+			resolve: 'gatsby-plugin-robots-txt',
+			options: {
+				host: 'https://redaos.netlify.app',
+				policy: [{ userAgent: '*', allow: '/' }],
 			},
 		},
 		'gatsby-plugin-offline',

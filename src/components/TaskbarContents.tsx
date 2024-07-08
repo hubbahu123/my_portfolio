@@ -176,7 +176,11 @@ const TaskbarContents = () => {
 				onPointerUp={() => setEffectsSelected(false)}
 				dContent={
 					<>
-						<Slider state={brightness} setter={setBrightness}>
+						<Slider
+							state={brightness}
+							setter={setBrightness}
+							purpose="Brightness"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 -0.5 16 16"
@@ -251,6 +255,7 @@ const TaskbarContents = () => {
 							setVolume(val);
 							playBg();
 						}}
+						purpose="Volume"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

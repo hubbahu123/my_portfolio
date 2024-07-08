@@ -207,6 +207,7 @@ const MobileTaskbar = () => {
 						className="col-span-2 mt-6 short:mt-16"
 						state={brightness}
 						setter={setBrightness}
+						purpose="Brightness"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -246,6 +247,7 @@ const MobileTaskbar = () => {
 							setVolume(val);
 							playBg();
 						}}
+						purpose="Volume"
 						className="col-span-2"
 					>
 						<svg

@@ -14,12 +14,12 @@ import WebGL from 'three/examples/jsm/capabilities/WebGL';
 import { MobileContext } from './OS';
 
 const Desktop: React.FC = () => {
+	const isMobile = useContext(MobileContext);
 	const [ready, introDone, setIntroDone] = usePersistent(
 		'introDone',
-		!WebGL.isWebGLAvailable(),
+		!WebGL.isWebGLAvailable() || isMobile,
 		str => str === 'true'
 	);
-	const isMobile = useContext(MobileContext);
 
 	return (
 		<motion.main className="w-full h-full relative">

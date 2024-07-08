@@ -7,6 +7,7 @@ interface SliderProps {
 		| React.Dispatch<React.SetStateAction<number>>
 		| ((value: number) => void);
 	children: React.ReactNode;
+	purpose: string;
 	className?: string;
 	inputClassName?: string;
 }
@@ -15,6 +16,7 @@ const Slider: React.FC<SliderProps> = ({
 	state,
 	setter,
 	children,
+	purpose,
 	className = '',
 	inputClassName = '',
 }) => {
@@ -22,6 +24,7 @@ const Slider: React.FC<SliderProps> = ({
 		<div className={'flex h-6 my-4 ' + className}>
 			{children}
 			<input
+				aria-label={purpose}
 				type="range"
 				value={state}
 				onPointerDownCapture={e => e.stopPropagation()}

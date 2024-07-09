@@ -4,18 +4,18 @@ import { useSettingsStore } from '../store';
 const attemptPlay = (audio: HTMLAudioElement) => () => {
 	const safePlay = () => {
 		try {
-			console.log('played normal');
+			console.log('played normal'); //TODO
 			audio.play();
 		} catch {
-			console.error("Can't play yet");
+			console.error("Can't play yet"); //TODO
 		}
 	};
 	if (audio.readyState >= 3) {
-		console.log('maybe early');
+		console.log('maybe early'); //TODO
 		safePlay();
 		return;
 	}
-	console.log('maybe wrong event');
+	console.log('maybe wrong event'); //TODO
 	audio.addEventListener('canplay', safePlay);
 };
 

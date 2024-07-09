@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Shortcut from './Shortcut';
 import { useBoundStore } from '../store';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -31,6 +31,20 @@ const ShortcutsArea = () => {
 		state.fillDir,
 	]);
 	const shortcuts = desktop && 'children' in desktop ? desktop.children : [];
+
+	// TODO
+	const tempRef = useRef<HTMLUListElement>(null);
+	useEffect(() => {
+		if (tempRef.current) {
+			Array.from(tempRef.current.children).forEach(
+				({ firstElementChild }) => {
+					if (!firstElementChild || !('click' in firstElementChild))
+						return;
+					firstElementChild.click();
+				}
+			);
+		}
+	}, [tempRef.current]);
 
 	//Pulls apps from projects jsons
 	const data = useStaticQuery(graphql`
@@ -97,6 +111,7 @@ const ShortcutsArea = () => {
 				className="grid h-full justify-items-center grid-cols-3 grid-rows-2 sm:!grid-cols-6 md:flex md:items-start xs:grid-cols-5 short:grid-rows-3 average:grid-rows-4 tall:grid-rows-5"
 				style={{ gridAutoRows: 0 }}
 				variants={listVariants}
+				ref={tempRef}
 			>
 				{shortcuts.map((shortcut, i) => (
 					<motion.li

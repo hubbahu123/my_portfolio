@@ -78,17 +78,15 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 										i === windows.length - 1 && 'mr-[25%]'
 									} w-3/5 h-full relative shrink-0 snap-center`}
 								>
-									<motion.div className="w-full h-full">
-										<Icon
-											sysObj={window.sysObj}
-											className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
-										/>
-										<WindowJSX
-											{...window}
-											disableInteraction
-											disableNavCompensation
-										/>
-									</motion.div>
+									<Icon
+										sysObj={window.sysObj}
+										className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
+									/>
+									<WindowJSX
+										{...window}
+										disableInteraction
+										disableNavCompensation
+									/>
 								</motion.div>
 							);
 						})

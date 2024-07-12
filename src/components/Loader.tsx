@@ -35,8 +35,9 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	}, []);
 
 	return (
-		<motion.div className="h-full" animate={loaded ? 'loaded' : 'unloaded'}>
-			<section
+		<>
+			<motion.div
+				animate={loaded ? 'loaded' : 'unloaded'}
 				ref={scope}
 				className="z-50 bg-black-primary w-full h-full fixed flex items-center justify-center flex-col"
 			>
@@ -68,9 +69,9 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 				</motion.div>
 				<p className="text-light-primary">Definitely Loading...</p>
 				<GlitchWall />
-			</section>
+			</motion.div>
 			{children}
-		</motion.div>
+		</>
 	);
 };
 

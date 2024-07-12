@@ -2,15 +2,12 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import OS from '../components/OS';
-import Desktop from '../components/Desktop';
 import { SEO } from '../components/SEO';
 
 const IndexPage: React.FC<PageProps> = () => {
 	return (
 		<React.StrictMode>
-			<OS>
-				<Desktop />
-			</OS>
+			<OS />
 		</React.StrictMode>
 	);
 };

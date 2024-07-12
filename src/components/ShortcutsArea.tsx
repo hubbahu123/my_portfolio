@@ -106,24 +106,22 @@ const ShortcutsArea = () => {
 	);
 
 	return (
-		<div className="pointer-events-none w-full absolute top-0 h-full p-4 pt-20 pb-24 md:pb-4">
-			<motion.ul
-				className="grid h-full justify-items-center grid-cols-3 grid-rows-2 sm:!grid-cols-6 md:flex md:items-start xs:grid-cols-5 short:grid-rows-3 average:grid-rows-4 tall:grid-rows-5"
-				style={{ gridAutoRows: 0 }}
-				variants={listVariants}
-				ref={tempRef}
-			>
-				{shortcuts.map((shortcut, i) => (
-					<motion.li
-						key={i}
-						variants={itemVariants}
-						className="pointer-events-auto"
-					>
-						<Shortcut sysObj={shortcut} />
-					</motion.li>
-				))}
-			</motion.ul>
-		</div>
+		<motion.ul
+			className="pointer-events-none w-full absolute top-0 h-full p-4 pt-20 pb-24 grid justify-items-center grid-cols-3 grid-rows-2 sm:!grid-cols-6 md:flex md:items-start md:pb-4 xs:grid-cols-5 short:grid-rows-3 average:grid-rows-4 tall:grid-rows-5"
+			style={{ gridAutoRows: 0 }}
+			variants={listVariants}
+			ref={tempRef}
+		>
+			{shortcuts.map((shortcut, i) => (
+				<motion.li
+					key={i}
+					variants={itemVariants}
+					className="pointer-events-auto"
+				>
+					<Shortcut sysObj={shortcut} />
+				</motion.li>
+			))}
+		</motion.ul>
 	);
 };
 

@@ -85,6 +85,7 @@ const config: GatsbyConfig = {
 				policy: [{ userAgent: '*', allow: '/' }],
 			},
 		},
+		'gatsby-plugin-minify',
 		'gatsby-plugin-offline',
 	],
 };

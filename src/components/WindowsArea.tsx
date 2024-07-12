@@ -69,38 +69,39 @@ const WindowsArea = () => {
 
 	// The extra div is only there to prevent overlap with the taskbar
 	return (
-		<div className="absolute w-full h-full md:pt-14 top-0 pointer-events-none">
-			<div ref={windowsAreaRef} className="h-full relative">
-				<AnimatePresence>
-					{isMobile && menuOpen && (
-						<Menu
-							windows={windows}
-							bringToFrontReq={bringToFrontReq}
-							deleteWindows={deleteWindows}
+		<div
+			ref={windowsAreaRef}
+			className="absolute w-full h-full top-0 pointer-events-none md:top-14 md:border-b-[56px]"
+		>
+			<AnimatePresence>
+				{isMobile && menuOpen && (
+					<Menu
+						windows={windows}
+						bringToFrontReq={bringToFrontReq}
+						deleteWindows={deleteWindows}
+					/>
+				)}
+				{(isMobile
+					? menuOpen || windows.length === 0
+						? []
+						: windowOpen
+							? [windows[windows.length - 1]]
+							: []
+					: windows
+				).map(window => {
+					const [initialLocation, initialDimensions] =
+						getInitialBounds(window.type);
+					return (
+						<Window
+							key={window.id}
+							{...window}
+							area={windowsAreaRef}
+							initialLocation={initialLocation}
+							initialDimensions={initialDimensions}
 						/>
-					)}
-					{(isMobile
-						? menuOpen || windows.length === 0
-							? []
-							: windowOpen
-								? [windows[windows.length - 1]]
-								: []
-						: windows
-					).map(window => {
-						const [initialLocation, initialDimensions] =
-							getInitialBounds(window.type);
-						return (
-							<Window
-								key={window.id}
-								{...window}
-								area={windowsAreaRef}
-								initialLocation={initialLocation}
-								initialDimensions={initialDimensions}
-							/>
-						);
-					})}
-				</AnimatePresence>
-			</div>
+					);
+				})}
+			</AnimatePresence>
 		</div>
 	);
 };

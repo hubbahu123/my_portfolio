@@ -86,6 +86,7 @@ const TaskbarContents = () => {
 		<>
 			<Dropdown
 				className="group h-full px-4 transition-colors ease-steps hover:bg-white-primary"
+				dClassName="divide-y-2 divide-white-primary"
 				noPadding
 				dContent={
 					<>
@@ -103,7 +104,7 @@ const TaskbarContents = () => {
 						<a
 							href="https://www.linkedin.com/in/reda-elmountassir"
 							target="_blank"
-							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 						>
 							<img
 								src={linkedInImg}
@@ -115,7 +116,7 @@ const TaskbarContents = () => {
 						<a
 							href="https://github.com/redaelmountassir"
 							target="_blank"
-							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 						>
 							<img
 								src={gitHubImg}
@@ -126,9 +127,9 @@ const TaskbarContents = () => {
 						</a>
 						<button
 							type="button"
-							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 							onClick={() => {
-								// restart();
+								restart();
 								pauseBg();
 								playShutdown();
 							}}
@@ -142,7 +143,7 @@ const TaskbarContents = () => {
 						</button>
 						<button
 							type="button"
-							className="group block w-full whitespace-nowrap p-4 text-left outline outline-2 outline-white-primary transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 							onClick={() => {
 								shutdown();
 								pauseBg();
@@ -166,8 +167,8 @@ const TaskbarContents = () => {
 					className="group-active:glitch group-hover:invert"
 				/>
 			</Dropdown>
-			<span className="grow" />
 			<Dropdown
+				pClassName="ml-auto"
 				className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
 				onPointerDown={() => setEffectsSelected(true)}
 				onPointerOut={() =>
@@ -306,13 +307,12 @@ const TaskbarContents = () => {
 			</Dropdown>
 			<Dropdown
 				className="h-full px-3 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+				dClassName="whitespace-nowrap"
 				dContent={
-					<span className="whitespace-nowrap">
-						<p className="text-md mr-4 inline">
-							{Math.floor(battery * 100)}%
-						</p>
-						<Battery level={battery} className="inline w-16" />
-					</span>
+					<>
+						{Math.floor(battery * 100)}%
+						<Battery level={battery} className="inline w-16 ml-4" />
+					</>
 				}
 			>
 				<Battery level={battery} className="w-8" />

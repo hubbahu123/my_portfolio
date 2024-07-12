@@ -34,6 +34,7 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 				draggable={false}
 				src={`/icons/${selectIcon(sysObj)}`}
 				loading="eager"
+				alt=""
 			/>
 		);
 

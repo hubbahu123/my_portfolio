@@ -1,12 +1,15 @@
 import { MotionStyle, Variants, motion } from 'framer-motion';
 import * as React from 'react';
 import { useRef, useState, useEffect } from 'react';
+import { easeSteps } from '../utils';
 
 interface DropdownProps
 	extends React.DetailedHTMLProps<
 		React.ButtonHTMLAttributes<HTMLButtonElement>,
 		HTMLButtonElement
 	> {
+	pClassName?: string;
+	dClassName?: string;
 	children: React.ReactElement;
 	dContent: React.ReactElement;
 	forcedAlignment?: Alignment;
@@ -15,19 +18,35 @@ interface DropdownProps
 
 const dropdownVariants: Variants = {
 	open: {
-		opacity: 1,
-		y: 0,
+		clipPath: 'inset(0 0 0% 0)',
+		WebkitClipPath: 'inset(0 0 0% 0)',
+		transition: {
+			ease: easeSteps(5),
+			type: 'tween',
+		},
 	},
 	closed: {
-		opacity: 0,
-		y: '-100%',
+		clipPath: 'inset(0 0 100% 0)',
+		WebkitClipPath: 'inset(0 0 100% 0)',
+		transition: {
+			ease: easeSteps(5),
+			type: 'tween',
+		},
 	},
 };
 
 type Alignment = 'left' | 'center' | 'right';
 
 export const Dropdown: React.FC<DropdownProps> = props => {
-	const { children, dContent, forcedAlignment, noPadding, ...rest } = props;
+	const {
+		children,
+		dContent,
+		forcedAlignment,
+		noPadding,
+		pClassName,
+		dClassName,
+		...rest
+	} = props;
 
 	const [open, setOpen] = useState(false);
 	const button = useRef<HTMLButtonElement>(null);
@@ -47,8 +66,8 @@ export const Dropdown: React.FC<DropdownProps> = props => {
 				centerX < windowThird
 					? 'left'
 					: centerX < windowThird * 2
-					? 'center'
-					: 'right'
+						? 'center'
+						: 'right'
 			);
 		}
 
@@ -67,16 +86,16 @@ export const Dropdown: React.FC<DropdownProps> = props => {
 		return () => document.removeEventListener('pointerdown', clickOut);
 	}, [forcedAlignment]);
 
-	const alignmentStyle: React.CSSProperties = { top: '100%' };
+	const alignmentStyle: MotionStyle = { top: '100%' };
 	if (align === 'left') alignmentStyle.left = '0';
 	else if (align === 'right') alignmentStyle.right = '0';
 	else {
 		alignmentStyle.left = '50%';
-		alignmentStyle.transform = 'translateX(-50%)';
+		alignmentStyle.x = '-50%';
 	}
 
 	return (
-		<div className="relative" ref={dropdown}>
+		<div className={'relative ' + pClassName} ref={dropdown}>
 			<button
 				{...rest}
 				ref={button}
@@ -88,22 +107,16 @@ export const Dropdown: React.FC<DropdownProps> = props => {
 			>
 				{children}
 			</button>
-			<div
-				className={`absolute overflow-hidden pb-4 ${
+			<motion.div
+				className={`absolute border-2 border-t-0 border-white-primary backdrop-blur bg-gradient-to-r from-black-primary/75 to-dark-primary/75 from-25% to-70% -z-10 ${
 					!open && 'pointer-events-none'
-				}`}
+				} ${!noPadding && 'p-4'} ${dClassName}`}
 				style={alignmentStyle}
+				animate={open ? 'open' : 'closed'}
+				variants={dropdownVariants}
 			>
-				<motion.div
-					className={`m-0.5 outline outline-2 outline-white-primary backdrop-blur bg-gradient-to-r from-black-primary/75 to-dark-primary/75 from-25% to-70% ${
-						!noPadding && 'p-4'
-					}`}
-					animate={open ? 'open' : 'closed'}
-					variants={dropdownVariants}
-				>
-					{dContent}
-				</motion.div>
-			</div>
+				{dContent}
+			</motion.div>
 		</div>
 	);
 };

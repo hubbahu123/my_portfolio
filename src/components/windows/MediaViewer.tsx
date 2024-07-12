@@ -227,6 +227,7 @@ export const MediaViewer = () => {
 									<img
 										src={infoImg}
 										className="mr-4 inline-block h-12 align-top"
+										alt=""
 									/>
 									Info
 								</h3>

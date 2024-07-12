@@ -5,14 +5,21 @@ import arrowUp from '../images/arrow_up.png';
 import arrowUpActive from '../images/arrow_up_active.png';
 import arrowDown from '../images/arrow_down.png';
 import arrowDownActive from '../images/arrow_down_active.png';
-
-interface OSProps {
-	children: React.ReactNode;
-}
+import { motion } from 'framer-motion';
+import ShortcutsArea from './ShortcutsArea';
+import Background from './Background';
+import Taskbar from './Taskbar';
+import MobileTaskbar from './MobileTaskbar';
+import Intro from './Intro';
+import { usePersistent } from '../utils';
+import Loader from './Loader';
+import WindowsArea from './WindowsArea';
+import Modifiers from './Modifiers';
+import WebGL from 'three/examples/jsm/capabilities/WebGL';
 
 export const MobileContext = createContext(true);
 
-const OS: React.FC<OSProps> = ({ children }) => {
+const OS: React.FC = () => {
 	const notMobile = useBreakpointMD();
 
 	//Updates global css properties
@@ -42,14 +49,31 @@ const OS: React.FC<OSProps> = ({ children }) => {
 		};
 	}, []);
 
+	const [ready, introDone, setIntroDone] = usePersistent(
+		'introDone',
+		!WebGL.isWebGLAvailable() || !notMobile,
+		str => str === 'true'
+	);
+
 	return (
 		<MobileContext.Provider value={!notMobile}>
-			<div
-				className={`w-screen h-screen overflow-hidden ${!notMobile && 'use-scrollbar'}`}
+			<main
+				className={`w-screen h-screen overflow-hidden relative bg-black-primary ${!notMobile && 'use-scrollbar'}`}
 				style={{ height: 'var(--vh-full, 100vh)' }}
 			>
-				{children}
-			</div>
+				{ready &&
+					(introDone ? (
+						<Loader>
+							<Background />
+							{!notMobile ? <MobileTaskbar /> : <Taskbar />}
+							<ShortcutsArea />
+							<WindowsArea />
+						</Loader>
+					) : (
+						<Intro onFinish={() => setIntroDone(true)} />
+					))}
+				<Modifiers />
+			</main>
 		</MobileContext.Provider>
 	);
 };

@@ -11,15 +11,12 @@ interface ToggleProps {
 
 const Toggle: React.FC<ToggleProps> = ({ state, setter, children }) => {
 	return (
-		<label className="flex items-center justify-between my-2 cursor-pointer whitespace-nowrap">
+		<button
+			type="button"
+			onClick={() => setter(!state)}
+			className="flex items-center justify-between my-2 cursor-pointer whitespace-nowrap w-full"
+		>
 			{children}
-			<input
-				type="checkbox"
-				name={children}
-				checked={state}
-				onChange={e => setter(e.target.checked)}
-				className="hidden"
-			/>
 			<div
 				className={`w-14 h-6 p-1 ml-4 outline outline-2 outline-white-primary transition-colors ease-steps ${
 					state && 'bg-gradient-to-r from-pink-accent to-blue-accent'
@@ -37,7 +34,7 @@ const Toggle: React.FC<ToggleProps> = ({ state, setter, children }) => {
 					}}
 				/>
 			</div>
-		</label>
+		</button>
 	);
 };
 

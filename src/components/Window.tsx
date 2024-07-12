@@ -43,7 +43,6 @@ export interface WindowDataType {
 	id: number;
 	setTitle: React.Dispatch<React.SetStateAction<string>>;
 	setBasicWindow: React.Dispatch<React.SetStateAction<boolean>>;
-	contentRef: React.RefObject<HTMLDivElement>;
 	getWidth: () => number;
 }
 
@@ -76,8 +75,6 @@ export const Window: React.FC<WindowProps> = ({
 	]);
 	const [windowTitle, setTitle] = useState(sysObj.name);
 
-	const contentRef = useRef<HTMLDivElement>(null);
-
 	const isMobile = useContext(MobileContext);
 	const [menuOpen, toggleMenu] = useMobileStore(state => [
 		state.menuOpen,
@@ -90,7 +87,6 @@ export const Window: React.FC<WindowProps> = ({
 				sysObj,
 				id,
 				setTitle,
-				contentRef,
 				setBasicWindow,
 				getWidth: () => (maximized ? window.innerWidth : width.get()),
 			}}
@@ -164,11 +160,7 @@ export const Window: React.FC<WindowProps> = ({
 						title={windowTitle}
 					/>
 				)}
-				<WindowContent
-					type={type}
-					basicWindow={basicWindow}
-					ref={contentRef}
-				/>
+				<WindowContent type={type} basicWindow={basicWindow} />
 				{!isMobile && (
 					<>
 						<Resizers

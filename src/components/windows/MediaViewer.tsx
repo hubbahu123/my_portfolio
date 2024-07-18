@@ -20,8 +20,7 @@ import { MobileContext } from '../OS';
 
 export const MediaViewer = () => {
 	const isMobile = useContext(MobileContext);
-	const { setTitle, sysObj, setBasicWindow, id } =
-		useContext(WindowDataContext) ?? {};
+	const { setTitle, sysObj, id } = useContext(WindowDataContext) ?? {};
 	if (
 		!sysObj ||
 		!('ext' in sysObj) ||
@@ -30,10 +29,8 @@ export const MediaViewer = () => {
 	)
 		return null;
 	useEffect(() => {
-		if (setTitle && sysObj && setBasicWindow) {
-			setTitle(`${sysObj.name}.${sysObj.ext} - Media Viewer`);
-			setBasicWindow(true);
-		}
+		if (!setTitle || !sysObj) return;
+		setTitle(`${sysObj.name}.${sysObj.ext} - Media Viewer`);
 	}, [setTitle, sysObj]);
 
 	const projectData = sysObj.value;
@@ -163,7 +160,7 @@ export const MediaViewer = () => {
 		!id
 	)
 		return;
-	const loadingRef = useRef<HTMLDivElement>(null);
+	const loadingRef = useRef<HTMLImageElement>(null);
 	const gotoNext = () => {
 		if (!loadingRef.current || !scrollContainer.current) return;
 		animate(
@@ -198,7 +195,7 @@ export const MediaViewer = () => {
 			</div>
 			<div
 				ref={scrollContainer}
-				className="relative h-full overflow-y-auto overflow-x-hidden"
+				className="relative flex-1 overflow-y-auto overflow-x-hidden"
 			>
 				<div
 					className="mx-4 md:mt-12 h-[200%] min-h-[1500px] text-white-primary"
@@ -231,7 +228,6 @@ export const MediaViewer = () => {
 									/>
 									Info
 								</h3>
-
 								<ul className="mb-8 min-w-0 divide-y-2">
 									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
 										<h4>Categories</h4>
@@ -283,13 +279,11 @@ export const MediaViewer = () => {
 									)}
 								</ul>
 							</div>
-							<div className="w-full border-2 border-white-primary bg-black-primary p-4 py-1">
-								<img
-									src={shapeGif}
-									alt="spinning shape"
-									className="h-28 w-full object-contain"
-								/>
-							</div>
+							<img
+								src={shapeGif}
+								alt="spinning shape"
+								className="p-4 py-1 h-28 w-full object-contain border-2 border-white-primary bg-black-primary"
+							/>
 						</div>
 					</div>
 				</div>
@@ -297,21 +291,18 @@ export const MediaViewer = () => {
 					{title}
 				</h3>
 				<div className="mx-4 mb-4 flex gap-4">
-					<div className="relative w-10 shrink-0 border-2 border-white-primary">
-						<ScrollMarquee
-							vertical
-							scroll={scrollY}
-							panSpeed={2}
-							scrollStrength={0.0025}
-							innerClass="w-full content-center"
-							className="!absolute h-full w-full bg-white-primary text-black-primary"
-						>
-							<p className="mb-8 font-bold uppercase tracking-[1em]">
-								{title} ♦️♣♠♥
-							</p>
-						</ScrollMarquee>
-					</div>
-					<div className="relative h-auto overflow-hidden border-2 border-white-primary bg-black-primary p-24 md:p-32 md:px-6 px-6 text-white-primary">
+					<ScrollMarquee
+						vertical
+						scroll={scrollY}
+						panSpeed={2}
+						flexMode
+						scrollStrength={0.0025}
+						innerClass="w-full content-center mb-8 font-bold uppercase tracking-[1em]"
+						className="!h-auto bg-white-primary text-black-primary relative w-10 shrink-0 border-2 border-white-primary"
+					>
+						{title} ♦️♣♠♥
+					</ScrollMarquee>
+					<div className="relative overflow-hidden flex flex-wrap gap-4 border-2 border-white-primary bg-black-primary p-24 md:p-32 md:px-6 px-6 text-white-primary">
 						<GlitchText
 							onScroll
 							scrollRoot={scrollContainer}
@@ -320,16 +311,14 @@ export const MediaViewer = () => {
 						>
 							ABOUT
 						</GlitchText>
-						<p className="relative mb-6">
+						<p className="relative mb-2 w-full">
 							{projectData.description}
 						</p>
-						<div className="flex flex-wrap gap-4">
-							{projectData.tags.map(tag => (
-								<Tag bg="random" key={tag} className="relative">
-									{tag}
-								</Tag>
-							))}
-						</div>
+						{projectData.tags.map(tag => (
+							<Tag bg="random" key={tag} className="relative">
+								{tag}
+							</Tag>
+						))}
 					</div>
 				</div>
 				{intialShowcases.length && (

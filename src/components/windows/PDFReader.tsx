@@ -20,13 +20,13 @@ const PDFReader = () => {
 			type="application/pdf"
 			width="100%"
 			height="100%"
-			className="h-full"
+			className="flex-1"
 		>
 			<iframe
 				src="./resume.pdf"
 				width="100%"
 				height="100%"
-				className="h-full border-none"
+				className="flex-1 h-full border-none"
 			>
 				<PDFNoSupport />
 			</iframe>
@@ -55,6 +55,7 @@ const PDFNoSupport = () => {
 				{[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((_, i, arr) => (
 					<motion.span
 						key={i}
+						className="block"
 						initial={{
 							opacity:
 								1 - Math.abs(i / (arr.length - 1) - 0.5) * 1.5,
@@ -68,7 +69,7 @@ const PDFNoSupport = () => {
 							duration: 2,
 						}}
 					>
-						DOWNLOAD <br />
+						DOWNLOAD
 					</motion.span>
 				))}
 			</h3>

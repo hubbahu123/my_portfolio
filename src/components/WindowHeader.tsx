@@ -18,13 +18,13 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 	title,
 }) => {
 	return (
-		<div className="overflow-hidden pb-0.5">
+		<div className="overflow-hidden">
 			<motion.div
 				initial={{ y: '-105%' }}
 				animate={{ y: 0 }}
 				transition={{ delay: 1.25, ease: 'easeOut', type: 'tween' }}
 				onPointerDown={maximized ? undefined : onGrab}
-				className={`touch-none text-white select-none w-full h-10 flex items-center outline outline-2 outline-white-primary ${
+				className={`touch-none text-white select-none w-full h-10 flex items-center border-b-2 border-white-primary ${
 					!maximized && 'cursor-grab'
 				}`}
 			>
@@ -39,6 +39,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 					{maximized ? (
 						<StaticImage
 							src="../images/restore_down.png"
+							title="restore down"
 							alt="restore down"
 							placeholder="none"
 							draggable={false}
@@ -50,6 +51,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 					) : (
 						<StaticImage
 							src="../images/maximize.png"
+							title="maximize"
 							alt="maximize"
 							placeholder="none"
 							draggable={false}
@@ -67,6 +69,7 @@ const WindowHeader: React.FC<WindowHeaderProps> = ({
 				>
 					<StaticImage
 						src="../images/close.png"
+						title="close"
 						alt="close"
 						placeholder="none"
 						draggable={false}

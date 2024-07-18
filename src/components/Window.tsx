@@ -42,7 +42,6 @@ export interface WindowDataType {
 	sysObj: SystemObject;
 	id: number;
 	setTitle: React.Dispatch<React.SetStateAction<string>>;
-	setBasicWindow: React.Dispatch<React.SetStateAction<boolean>>;
 	getWidth: () => number;
 }
 
@@ -61,7 +60,6 @@ export const Window: React.FC<WindowProps> = ({
 }) => {
 	const [isMoving, setIsMoving] = useState(false);
 	const [maximized, setMaximized] = useState(false);
-	const [basicWindow, setBasicWindow] = useState(false);
 	const width = useMotionValue(initialDimensions.w);
 	const height = useMotionValue(initialDimensions.h);
 	const x = useMotionValue(initialLocation.x);
@@ -87,7 +85,6 @@ export const Window: React.FC<WindowProps> = ({
 				sysObj,
 				id,
 				setTitle,
-				setBasicWindow,
 				getWidth: () => (maximized ? window.innerWidth : width.get()),
 			}}
 		>
@@ -160,7 +157,7 @@ export const Window: React.FC<WindowProps> = ({
 						title={windowTitle}
 					/>
 				)}
-				<WindowContent type={type} basicWindow={basicWindow} />
+				<WindowContent type={type} />
 				{!isMobile && (
 					<>
 						<Resizers

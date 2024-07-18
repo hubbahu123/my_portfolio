@@ -10,7 +10,6 @@ import TextEditor from './windows/TextEditor';
 
 interface WindowContentProps {
 	type: WindowType;
-	basicWindow: boolean;
 }
 
 const pickContentComponent = (type: WindowType): React.ReactNode => {
@@ -35,17 +34,18 @@ const pickContentComponent = (type: WindowType): React.ReactNode => {
 	}
 };
 
-const WindowContent: React.FC<WindowContentProps> = ({ type, basicWindow }) => {
-	return (
-		<div
-			className={
-				basicWindow
-					? 'relative flex-1 overflow-hidden'
-					: 'relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden'
-			}
-		>
-			{pickContentComponent(type)}
-		</div>
-	);
+const WindowContent: React.FC<WindowContentProps> = ({ type }) => {
+	return pickContentComponent(type);
 };
+
 export default WindowContent;
+
+{
+	/* <div
+className={
+  basicWindow
+    ? "relative flex-1 overflow-hidden"
+    : "relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+}
+> */
+}

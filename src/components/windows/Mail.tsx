@@ -22,7 +22,7 @@ const Mail = () => {
 	const [inbox, setInbox] = useState<boolean[]>([]);
 
 	return (
-		<div className="w-full flex h-full text-white-primary border-white-primary overflow-hidden flex-col pb-20 md:pb-0 md:flex-row">
+		<div className="flex-1 flex text-white-primary border-white-primary overflow-hidden flex-col pb-20 md:pb-0 md:flex-row">
 			<ul
 				className={`overflow-hidden transition-all ease-steps flex md:block border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
 					width > 1200 && 'md:!max-w-60 md:!bg-black-primary'

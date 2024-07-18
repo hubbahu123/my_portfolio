@@ -1,11 +1,13 @@
-import React, { useContext, useRef } from 'react';
-import Window, { Dimensions } from './Window';
+import React, { lazy, Suspense, useContext, useRef } from 'react';
+import { Dimensions } from './Window';
 import { useBoundStore, useMobileStore } from '../store';
 import { AnimatePresence, Point } from 'framer-motion';
 import { MobileContext } from './OS';
 import Menu from './Menu';
 import { WindowType } from '../store/types';
 import { randRange } from '../utils';
+
+const Window = lazy(() => import('./Window'));
 
 const getInitialBounds = (type: WindowType): [Point, Dimensions] => {
 	switch (type) {
@@ -92,13 +94,15 @@ const WindowsArea = () => {
 					const [initialLocation, initialDimensions] =
 						getInitialBounds(window.type);
 					return (
-						<Window
-							key={window.id}
-							{...window}
-							area={windowsAreaRef}
-							initialLocation={initialLocation}
-							initialDimensions={initialDimensions}
-						/>
+						<Suspense>
+							<Window
+								key={window.id}
+								{...window}
+								area={windowsAreaRef}
+								initialLocation={initialLocation}
+								initialDimensions={initialDimensions}
+							/>
+						</Suspense>
 					);
 				})}
 			</AnimatePresence>

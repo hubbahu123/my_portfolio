@@ -291,7 +291,7 @@ In the interim, enjoy this cat!
 	}, []);
 
 	return (
-		<div
+		<p
 			className="flicker relative flex-1 overflow-y-auto overflow-x-hidden whitespace-break-spaces break-all bg-black-primary p-2 pb-[10%] text-sm text-white-primary [text-shadow:_0_0_1rem_#f5f9ff9c]"
 			ref={consoleRef}
 			onPointerUp={e => {
@@ -300,112 +300,116 @@ In the interim, enjoy this cat!
 			}}
 		>
 			{history.map(({ text, mod, location }, i) => (
-				<div
-					className={`${
-						mod === 'Error' &&
-						`text-burgundy-accent [text-shadow:_0_0_1rem_#920075]`
-					} ${
-						mod === 'Warning' &&
-						`text-yellow-accent [text-shadow:_0_0_1rem_#f9c80e]`
-					} ${
-						mod === 'Success' &&
-						`text-blue-accent [text-shadow:_0_0_1rem_#023788]`
-					}`}
-					key={i}
-				>
+				<React.Fragment key={i}>
 					{location && <LocationText location={location} />}
-					{text}
-				</div>
+					{mod ? (
+						<span
+							className={`${
+								mod === 'Error' &&
+								`text-burgundy-accent [text-shadow:_0_0_1rem_#920075]`
+							} ${
+								mod === 'Warning' &&
+								`text-yellow-accent [text-shadow:_0_0_1rem_#f9c80e]`
+							} ${
+								mod === 'Success' &&
+								`text-blue-accent [text-shadow:_0_0_1rem_#023788]`
+							}`}
+						>
+							{text}
+						</span>
+					) : (
+						text
+					)}
+					<br />
+				</React.Fragment>
 			))}
-			<div>
-				<textarea
-					ref={inputRef}
-					value={input}
-					autoCapitalize="off"
-					autoComplete="off"
-					autoCorrect="off"
-					spellCheck={false}
-					className="peer pointer-events-none absolute opacity-0"
-					onChange={e => setInput(e.target.value)}
-					onKeyDown={e => {
-						let dir = 0;
-						if (inputRef.current) {
-							inputRef.current.selectionStart = input.length;
-							inputRef.current.selectionEnd = input.length;
-						}
-						switch (e.key) {
-							case 'Enter':
-								e.preventDefault();
-								if (e.ctrlKey) {
-									setInput(input + '\n');
-									return;
-								}
-
-								setHistory(prevHistory => [
-									...prevHistory,
-									{ text: input, location },
-									...input.split('\n').map(val => exec(val)),
-								]);
-
-								setInput('');
-								quickSelect.current = { i: -1, lastVal: '' };
+			<textarea
+				ref={inputRef}
+				value={input}
+				autoCapitalize="off"
+				autoComplete="off"
+				autoCorrect="off"
+				spellCheck={false}
+				className="peer pointer-events-none absolute opacity-0"
+				onChange={e => setInput(e.target.value)}
+				onKeyDown={e => {
+					let dir = 0;
+					if (inputRef.current) {
+						inputRef.current.selectionStart = input.length;
+						inputRef.current.selectionEnd = input.length;
+					}
+					switch (e.key) {
+						case 'Enter':
+							e.preventDefault();
+							if (e.ctrlKey) {
+								setInput(input + '\n');
 								return;
-							case 'ArrowLeft':
-							case 'ArrowRight':
-								e.preventDefault();
-								return;
-							case 'ArrowUp':
-								dir = -1;
-								break;
-							case 'ArrowDown':
-								dir = 1;
-								break;
-							default:
-								quickSelect.current = { i: -1, lastVal: '' };
-								return;
-						}
+							}
 
-						const inputs = getInputs();
+							setHistory(prevHistory => [
+								...prevHistory,
+								{ text: input, location },
+								...input.split('\n').map(val => exec(val)),
+							]);
 
-						let newInput = '';
+							setInput('');
+							quickSelect.current = { i: -1, lastVal: '' };
+							return;
+						case 'ArrowLeft':
+						case 'ArrowRight':
+							e.preventDefault();
+							return;
+						case 'ArrowUp':
+							dir = -1;
+							break;
+						case 'ArrowDown':
+							dir = 1;
+							break;
+						default:
+							quickSelect.current = { i: -1, lastVal: '' };
+							return;
+					}
+
+					const inputs = getInputs();
+
+					let newInput = '';
+					if (quickSelect.current.i === -1) {
+						//If no history item is selected
+						if (dir === 1) return; //Can't go into the future
+						quickSelect.current.i = inputs.length - 1;
 						if (quickSelect.current.i === -1) {
-							//If no history item is selected
-							if (dir === 1) return; //Can't go into the future
-							quickSelect.current.i = inputs.length - 1;
-							if (quickSelect.current.i === -1) {
-								quickSelect.current.i = -1;
-								return;
-							}
-							quickSelect.current.lastVal = input;
-							newInput = inputs[quickSelect.current.i].text;
-						} else {
-							quickSelect.current.i += dir;
-							if (quickSelect.current.i === -1) {
-								quickSelect.current.i = 0;
-								return;
-							}
-							newInput = inputs[quickSelect.current.i]?.text;
-							if (newInput === undefined) {
-								newInput = quickSelect.current.lastVal;
-								quickSelect.current.i = -1;
-							}
+							quickSelect.current.i = -1;
+							return;
 						}
+						quickSelect.current.lastVal = input;
+						newInput = inputs[quickSelect.current.i].text;
+					} else {
+						quickSelect.current.i += dir;
+						if (quickSelect.current.i === -1) {
+							quickSelect.current.i = 0;
+							return;
+						}
+						newInput = inputs[quickSelect.current.i]?.text;
+						if (newInput === undefined) {
+							newInput = quickSelect.current.lastVal;
+							quickSelect.current.i = -1;
+						}
+					}
 
-						setInput(newInput);
-						if (!inputRef.current) return;
-					}}
-				/>
-				<LocationText location={location} />
-				{input.replaceAll('\n', '\n$ ')}
-				<span className="hidden md:inline invisible animate-blink font-bold peer-focus:visible">
-					_
-				</span>
-				<span className="md:hidden">Not supported on mobile ☹</span>
-			</div>
-		</div>
+					setInput(newInput);
+					if (!inputRef.current) return;
+				}}
+			/>
+			<LocationText location={location} />
+			{input.replaceAll('\n', '\n$ ')}
+			<span className="hidden md:inline invisible animate-blink font-bold peer-focus:visible">
+				_
+			</span>
+			<span className="md:hidden">Not supported on mobile ☹</span>
+		</p>
 	);
 };
 
 const LocationText = (props: { location: Path }) => {
-	return <span className="">{props.location.join('/')}$ </span>;
+	return `${props.location.join('/')}$ `;
 };

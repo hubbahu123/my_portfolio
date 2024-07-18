@@ -195,6 +195,7 @@ body {
 		animation-play-state: paused;
 	}
 
+	/* purgecss ignore */
 	.scale-by-height [aria-hidden='true'] {
 		@apply !hidden;
 	}

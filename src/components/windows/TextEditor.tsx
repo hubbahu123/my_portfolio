@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useScroll } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { WindowDataContext } from '../Window';
-import { easeSteps, pickRand, randRange } from '../../utils';
+import { easeSteps, useInterval } from '../../utils';
 import NameCard from '../NameCard';
 import ScrollMarquee from '../ScrollMarquee';
 import GlitchText from '../GlitchText';
@@ -24,8 +24,7 @@ function countSentences(str: string) {
 const countWords = (str: string) => str.trim().split(/\s+/).length;
 
 const TextEditor = () => {
-	const { setTitle, sysObj, setBasicWindow, getWidth } =
-		useContext(WindowDataContext) ?? {};
+	const { setTitle, sysObj, getWidth } = useContext(WindowDataContext) ?? {};
 	if (
 		!sysObj ||
 		!('ext' in sysObj) ||
@@ -34,8 +33,8 @@ const TextEditor = () => {
 	)
 		return;
 	useEffect(() => {
-		if (setTitle && sysObj && setBasicWindow)
-			setTitle(`${sysObj.name}.${sysObj.ext} - Text Editor`);
+		if (!setTitle || !sysObj) return;
+		setTitle(`${sysObj.name}.${sysObj.ext} - Text Editor`);
 	}, [setTitle, sysObj]);
 
 	const scrollContainer = useRef(null);
@@ -50,7 +49,7 @@ const TextEditor = () => {
 	const imgs = [
 		<StaticImage
 			height={500}
-			alt="Jumping into a exican cenote"
+			alt="Jumping into a Mexican cenote"
 			src="../../images/about/cenote.jpg"
 		/>,
 		<StaticImage
@@ -125,51 +124,41 @@ const TextEditor = () => {
 		/>,
 	];
 	const [currentImg, setCurrentImg] = useState(randInt(0, imgs.length - 1));
+	const updateImg = () => setCurrentImg(old => (old + 1) % imgs.length);
+	useInterval(updateImg, 20000);
 
 	return (
 		<>
-			<div className="hidden md:block w-full pr-10 z-10 fixed bottom-0">
-				<p className="text-center whitespace-pre overflow-hidden bg-white-primary text-black-primary p-1">
-					{[
-						`${wordCount} word${wordCount > 1 ? 's' : ''}`,
-						`${text.length} character${text.length > 1 ? 's' : ''}`,
-						`${sentenceCount} sentence${sentenceCount > 1 ? 's' : ''}`,
-					].join('    ')}
-				</p>
-			</div>
+			<div className=" bg-[url('/bg_imgs/stars.gif')] bg-cover bg-center w-full h-full -z-10 absolute" />
+			<p className="block w-full p-1 z-10 md:fixed bottom-0 text-center whitespace-pre overflow-hidden bg-white-primary text-black-primary">
+				{[
+					`${wordCount} word${wordCount > 1 ? 's' : ''}`,
+					`${text.length} character${text.length > 1 ? 's' : ''}`,
+					`${sentenceCount} sentence${sentenceCount > 1 ? 's' : ''}`,
+				].join('    ')}
+			</p>
 			<div
-				className="relative overflow-y-auto overflow-x-hidden w-full h-full"
+				className="relative overflow-y-auto overflow-x-hidden flex-1 md:mb-8"
 				ref={scrollContainer}
 			>
 				<NameCard />
 				<ScrollMarquee
 					scroll={scrollY}
 					panSpeed={2}
-					className="w-full bg-yellow-accent border-y-2 border-white-primary text-black-primary"
+					className="w-full bg-yellow-accent border-y-2 font-bold py-1 whitespace-pre border-white-primary text-black-primary"
 				>
-					<p className="font-bold py-1 whitespace-pre">
-						{[
-							'Developer',
-							'Hackerman',
-							'UI/UX',
-							'Design',
-							'Vaporwave',
-							'Gaming',
-							'Since 2006',
-							'',
-						].join('  ►  ')}
-					</p>
+					{
+						'Developer  ►  Hackerman  ►  UI/UX  ►  Design  ►  Vaporwave  ►  Gaming  ►  Since 2006  ►  '
+					}
 				</ScrollMarquee>
-				<div className="clearfix p-8 py-16 md:py-32 relative md:pl-6 gap-6 text-white-primary bg-[repeating-linear-gradient(transparent,transparent_2em,#f5f9ff10_2em,#f5f9ff10_4em)]">
+				<div className="clearfix p-8 py-16 md:py-32 relative md:pl-6 gap-6 text-white-primary md:bg-[repeating-linear-gradient(#f5f9ff06,#f5f9ff06_2em,#f5f9ff10_2em,#f5f9ff10_4em)] bg-[repeating-linear-gradient(#1f0728,#1f0728_2em,#291632_2em,#291632_4em)]">
 					<div
 						className={`w-auto cursor-pointer ${
 							getWidth() <= 800
 								? 'md:hidden xs:ml-32 ml-0 mb-14'
 								: 'group md:block h-full transition relative flicker ease-steps w-2/5 md:float-right duration-1000 ml-8 mb-7'
 						}`}
-						onClick={() =>
-							setCurrentImg(old => (old + 1) % imgs.length)
-						}
+						onClick={updateImg}
 					>
 						<Float className="group">
 							{imgs.map((img, i) => (

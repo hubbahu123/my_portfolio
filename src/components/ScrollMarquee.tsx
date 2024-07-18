@@ -16,6 +16,7 @@ interface MarqueeProps
 		HTMLDivElement
 	> {
 	frameTime?: number;
+	flexMode?: boolean;
 	scroll?: MotionValue<number>;
 	innerClass?: string;
 	panSpeed?: number;
@@ -28,6 +29,7 @@ const ScrollMarquee: React.FC<MarqueeProps> = props => {
 		children,
 		className = '',
 		innerClass = '',
+		flexMode = false,
 		panSpeed = 10,
 		scrollStrength = 0.002,
 		vertical = false,
@@ -68,7 +70,7 @@ const ScrollMarquee: React.FC<MarqueeProps> = props => {
 	return (
 		<div
 			{...rest}
-			className={`${className} group relative ${vertical ? 'h-full' : 'w-full'} overflow-hidden whitespace-nowrap`}
+			className={`${className} group relative ${vertical ? !flexMode && 'h-full' : 'w-full'} overflow-hidden whitespace-nowrap`}
 			style={{
 				...style,
 				textOrientation: vertical ? 'upright' : style?.textOrientation,
@@ -76,7 +78,7 @@ const ScrollMarquee: React.FC<MarqueeProps> = props => {
 			}}
 		>
 			<motion.span
-				className={fullInnerClass}
+				className={`${flexMode && 'absolute'} ${fullInnerClass}`}
 				style={vertical ? { y: x } : { x }}
 			>
 				{children}

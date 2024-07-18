@@ -38,7 +38,7 @@ const NameCard = () => {
 	return (
 		<div
 			ref={containerRef}
-			className="w-full h-full overflow-hidden relative bg-[url('/bg_imgs/stars.gif')] bg-cover bg-center"
+			className="w-full h-full overflow-hidden relative"
 			onPointerMove={e => {
 				if (!containerRef.current) return;
 				const bounds = containerRef.current.getBoundingClientRect();

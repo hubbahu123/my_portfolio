@@ -20,13 +20,13 @@ export const useBoundStore = create<WindowSlice & DirectorySlice>()((...a) => ({
 
 export const useMobileStore = create<MobileStore>(set => ({
 	menuOpen: false,
-	windowOpen: false,
+	windowOpen: undefined,
 	toggleMenu: () => set(state => ({ menuOpen: !state.menuOpen })),
-	home: () => set({ windowOpen: false, menuOpen: false }),
-	showWindow: () => set({ windowOpen: true }),
+	home: () => set({ windowOpen: undefined, menuOpen: false }),
+	showWindow: toShow => set({ windowOpen: toShow }),
 	back: () =>
 		set(state =>
-			state.menuOpen ? { menuOpen: false } : { windowOpen: false }
+			state.menuOpen ? { menuOpen: false } : { windowOpen: undefined }
 		),
 }));
 

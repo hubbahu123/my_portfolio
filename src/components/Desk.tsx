@@ -17,11 +17,6 @@ type GLTFResult = GLTF & {
 	};
 };
 
-type ContextType = Record<
-	string,
-	React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>
->;
-
 const mat = new THREE.MeshStandardMaterial({
 	color: Colors.blackPrimary,
 });
@@ -31,8 +26,6 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 	const screen = useRef<THREE.MeshPhongMaterial>(null);
 	const screenTex = useTexture(introImg) as THREE.Texture;
 	screenTex.minFilter = THREE.NearestFilter;
-
-	useEffect(() => () => mat.dispose(), []);
 
 	useFrame(state => {
 		if (!light.current || !screen.current) return;
@@ -46,7 +39,7 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 	});
 
 	return (
-		<group {...props} dispose={null}>
+		<group {...props} dispose={null} matrixAutoUpdate={false}>
 			<rectAreaLight
 				position={[0.18, 0.26, 0.155]}
 				width={1.9}
@@ -58,18 +51,24 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 				receiveShadow
 				position={[0, 0.02, 0]}
 				rotation-x={Math.PI / -2}
+				matrixAutoUpdate={false}
 			>
 				<meshLambertMaterial color={Colors.blackPrimary} />
 				<planeGeometry args={[100, 100, 1, 1]} />
 			</mesh>
-			<group position={[-0.179, 0.02, 0.01]}>
-				<mesh geometry={nodes.plant.geometry} castShadow>
+			<group position={[-0.179, 0.02, 0.01]} matrixAutoUpdate={false}>
+				<mesh
+					geometry={nodes.plant.geometry}
+					castShadow
+					matrixAutoUpdate={false}
+				>
 					<meshPhongMaterial color={Colors.blackPrimary} />
 				</mesh>
 				<mesh
 					geometry={nodes.vase.geometry}
 					material={mat}
 					castShadow
+					matrixAutoUpdate={false}
 				/>
 			</group>
 			<mesh
@@ -78,6 +77,7 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 				position={[0.01, 0.121, 0.196]}
 				rotation={[-0.528, -0.515, -0.496]}
 				castShadow
+				matrixAutoUpdate={false}
 			/>
 			<mesh
 				geometry={nodes.macintosh.geometry}
@@ -86,10 +86,12 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 				rotation={[0, -0.15, 0]}
 				scale={0.097}
 				castShadow
+				matrixAutoUpdate={false}
 			>
 				<mesh
 					geometry={nodes.screen.geometry}
 					position={[-0.034, 2.471, 1.097]}
+					matrixAutoUpdate={false}
 				>
 					<motion.meshPhongMaterial
 						shininess={100}

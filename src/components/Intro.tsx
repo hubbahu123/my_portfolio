@@ -6,13 +6,19 @@ import { Desk } from './Desk';
 import { PerspectiveCamera } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import MouseControls from './MouseControls';
+import * as THREE from 'three';
+
+THREE.ColorManagement.enabled = true;
 
 const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 	return (
 		<Canvas
 			dpr={window.devicePixelRatio}
 			shadows
-			gl={{ powerPreference: 'high-performance' }}
+			gl={{
+				powerPreference: 'high-performance',
+				alpha: false,
+			}}
 		>
 			<React.Suspense fallback={null}>
 				<Desk

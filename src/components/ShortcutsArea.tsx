@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import Shortcut from './Shortcut';
 import { useBoundStore } from '../store';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -25,7 +25,7 @@ const listVariants: Variants = {
 	},
 };
 
-const ShortcutsArea = () => {
+const ShortcutsArea = memo(() => {
 	const [desktop, fillDir] = useBoundStore(state => [
 		state.navigate('users/@redaelmountassir/Desktop'),
 		state.fillDir,
@@ -33,18 +33,18 @@ const ShortcutsArea = () => {
 	const shortcuts = desktop && 'children' in desktop ? desktop.children : [];
 
 	// TODO
-	const tempRef = useRef<HTMLUListElement>(null);
-	useEffect(() => {
-		if (tempRef.current) {
-			Array.from(tempRef.current.children).forEach(
-				({ firstElementChild }) => {
-					if (!firstElementChild || !('click' in firstElementChild))
-						return;
-					firstElementChild.click();
-				}
-			);
-		}
-	}, [tempRef.current]);
+	// const tempRef = useRef<HTMLUListElement>(null);
+	// useEffect(() => {
+	// 	if (tempRef.current) {
+	// 		Array.from(tempRef.current.children).forEach(
+	// 			({ firstElementChild }) => {
+	// 				if (!firstElementChild || !('click' in firstElementChild))
+	// 					return;
+	// 				firstElementChild.click();
+	// 			}
+	// 		);
+	// 	}
+	// }, [tempRef.current]);
 
 	//Pulls apps from projects jsons
 	const data = useStaticQuery(graphql`
@@ -110,7 +110,7 @@ const ShortcutsArea = () => {
 			className="pointer-events-none w-full absolute top-0 h-full p-4 pt-20 pb-24 grid justify-items-center grid-cols-3 grid-rows-2 sm:!grid-cols-6 md:flex md:items-start md:pb-4 xs:grid-cols-5 short:grid-rows-3 average:grid-rows-4 tall:grid-rows-5"
 			style={{ gridAutoRows: 0 }}
 			variants={listVariants}
-			ref={tempRef}
+			// ref={tempRef}
 		>
 			{shortcuts.map((shortcut, i) => (
 				<motion.li
@@ -123,6 +123,6 @@ const ShortcutsArea = () => {
 			))}
 		</motion.ul>
 	);
-};
+});
 
 export default ShortcutsArea;

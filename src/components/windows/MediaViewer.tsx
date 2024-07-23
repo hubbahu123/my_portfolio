@@ -138,10 +138,9 @@ export const MediaViewer = () => {
 	);
 
 	//Next project
-	const [traverse, addWindow, deleteWindow] = useBoundStore(state => [
+	const [traverse, replaceWindow] = useBoundStore(state => [
 		state.traverse,
-		state.addWindow,
-		state.deleteWindow,
+		state.replaceWindow,
 	]);
 	const nextProject = useMemo(() => {
 		const parentFolders = traverse(sysObj);
@@ -170,8 +169,7 @@ export const MediaViewer = () => {
 		);
 		setTimeout(() => {
 			if (!scrollContainer.current) return;
-			deleteWindow(id);
-			addWindow(nextProject);
+			replaceWindow(id, nextProject);
 			scrollContainer.current.scrollTo(0, 0);
 			if (typeof onChange === 'function') onChange(0);
 		}, 2000);

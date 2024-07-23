@@ -62,6 +62,17 @@ const config: GatsbyConfig = {
 						sizes: `512x512`,
 						type: `image/png`,
 					},
+					{
+						src: `src/images/logo/logo_512x512.png`,
+						sizes: `512x512`,
+						type: `image/png`,
+					},
+					{
+						src: 'src/images/logo/maskable_logo.png',
+						sizes: '128x128',
+						type: 'image/png',
+						purpose: 'maskable',
+					},
 				],
 				name: 'RedaOS',
 				short_name: 'RedaOS',

@@ -19,14 +19,11 @@ export const FileExplorer = () => {
 	useEffect(() => setTitle(`File Explorer - ${sysObj.name}`), [sysObj]);
 	const isTrash = sysObj.name === 'Trash';
 
-	const [traverse, addWindow, deleteWindow, emptyDir] = useBoundStore(
-		state => [
-			state.traverse,
-			state.addWindow,
-			state.deleteWindow,
-			state.emptyDir,
-		]
-	);
+	const [traverse, replaceWindow, emptyDir] = useBoundStore(state => [
+		state.traverse,
+		state.replaceWindow,
+		state.emptyDir,
+	]);
 	const parentFolders = useMemo(() => traverse(sysObj), [sysObj]);
 	const [selected, setSelected] = useState(-1);
 	//sysObj itself will not react to updates, requires state. This solution is both criminal and poorly designed
@@ -57,11 +54,7 @@ export const FileExplorer = () => {
 								type="button"
 								className="text-md group relative w-full p-2 text-left transition-colors ease-steps md:hover:bg-white-primary md:hover:text-black-primary md:p-4"
 								onPointerDown={() => setSelected(i)}
-								onClick={() => {
-									//Replaces current window (I have 0 clue why this works)
-									deleteWindow(id);
-									addWindow(folder);
-								}}
+								onClick={() => replaceWindow(id, folder)}
 							>
 								<span className="absolute opacity-0 transition-opacity ease-steps md:group-hover:opacity-100">
 									&gt;
@@ -100,11 +93,7 @@ export const FileExplorer = () => {
 								overrideClick={
 									'ext' in child
 										? undefined
-										: () => {
-												//Replaces current window (I have 0 clue why this works)
-												deleteWindow(id);
-												addWindow(child);
-											}
+										: () => replaceWindow(id, child)
 								}
 							/>
 						</li>
@@ -126,7 +115,7 @@ export const FileExplorer = () => {
 					<span className="hidden md:inline">Empty Trash</span>
 					<img
 						src={trashImg}
-						alt="Empty Trash"
+						alt=""
 						className="w-8 my-2 block md:hidden"
 					/>
 				</button>

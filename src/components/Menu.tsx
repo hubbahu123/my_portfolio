@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useAnimationFrame } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { Window } from '../store/types';
 import WindowJSX from './Window';
 import Icon from './Icon';
@@ -7,11 +7,10 @@ import { clamp } from 'three/src/math/MathUtils';
 
 interface MenuProps {
 	windows: Window[];
-	bringToFrontReq: Function;
 	deleteWindows: Function;
 }
 
-const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
+const Menu: React.FC<MenuProps> = memo(({ windows, deleteWindows }) => {
 	const windowsArea = useRef<HTMLDivElement>(null);
 	const scroll = useRef({ amount: 0, changed: false });
 
@@ -51,7 +50,7 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 				className="w-full grow overflow-x-auto pt-24 flex items-center gap-4 no-scrollbar snap-x snap-mandatory"
 				style={{ touchAction: 'pan-x', msTouchAction: 'pan-x' }}
 				ref={windowsArea}
-				onScroll={e => {
+				onScroll={() => {
 					scroll.current.amount =
 						windowsArea.current?.scrollLeft ?? 0;
 					scroll.current.changed = true;
@@ -83,7 +82,7 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 										className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
 									/>
 									<WindowJSX
-										{...window}
+										windowData={window}
 										disableInteraction
 										disableNavCompensation
 									/>
@@ -104,6 +103,6 @@ const Menu: React.FC<MenuProps> = ({ windows, deleteWindows }) => {
 			</button>
 		</motion.div>
 	);
-};
+});
 
 export default Menu;

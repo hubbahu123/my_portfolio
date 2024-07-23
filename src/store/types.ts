@@ -53,12 +53,13 @@ export interface Window {
 }
 
 export interface WindowSlice {
+	lastId: number;
 	windows: Window[];
 	findWindow(windows: Window[], ref: number | Window): number;
-	addWindow(sysObj: SystemObject): void;
+	addWindow(sysObj: SystemObject, customID?: number): void;
 	deleteWindow(ref: number | Window): void;
+	replaceWindow(oldWindow: number | Window, newObj: SystemObject): void;
 	deleteWindows(): void;
-	bringToFront(ref: number | Window): void;
 }
 
 export interface DirectorySlice {
@@ -81,10 +82,10 @@ export interface DirectorySlice {
 
 export interface MobileStore {
 	menuOpen: boolean;
-	windowOpen: boolean;
+	windowOpen?: Window;
 	toggleMenu: Function;
 	home: Function;
-	showWindow: Function;
+	showWindow(toShow: Window): void;
 	back: Function;
 }
 

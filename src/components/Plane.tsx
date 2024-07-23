@@ -58,6 +58,7 @@ const Plane: React.FC<PlaneProps> = ({ seed }) => {
 					fragDepth: false,
 					drawBuffers: false,
 					shaderTextureLOD: false,
+					clipCullDistance: false,
 				}}
 				transparent
 				toneMapped={false}

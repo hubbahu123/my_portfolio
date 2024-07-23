@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { WindowType } from '../store/types';
 import { Console } from './windows/Console';
 import { FileExplorer } from './windows/FileExplorer';
@@ -8,7 +8,7 @@ import MediaViewer from './windows/MediaViewer';
 import Virus from './windows/Virus';
 import TextEditor from './windows/TextEditor';
 
-interface WindowContentProps {
+interface WindowBodyProps {
 	type: WindowType;
 }
 
@@ -34,18 +34,8 @@ const pickContentComponent = (type: WindowType): React.ReactNode => {
 	}
 };
 
-const WindowContent: React.FC<WindowContentProps> = ({ type }) => {
+const WindowBody: React.FC<WindowBodyProps> = memo(({ type }) => {
 	return pickContentComponent(type);
-};
+});
 
-export default WindowContent;
-
-{
-	/* <div
-className={
-  basicWindow
-    ? "relative flex-1 overflow-hidden"
-    : "relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-}
-> */
-}
+export default WindowBody;

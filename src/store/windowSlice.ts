@@ -3,6 +3,7 @@ import type {
 	WindowSlice,
 	DirectorySlice,
 	SystemObject,
+	Window,
 	WindowType,
 } from './types';
 import { useMobileStore } from '.';
@@ -34,27 +35,24 @@ export const createWindowSlice: StateCreator<
 	WindowSlice
 > = (set, get) => ({
 	windows: [],
+	lastId: 0,
 	findWindow: (windows, ref) =>
 		typeof ref === 'number'
 			? windows.findIndex(window => window.id === ref)
 			: windows.indexOf(ref),
-	addWindow(sysObj) {
-		useMobileStore.getState().showWindow();
+	addWindow(sysObj, customID = -1) {
 		const type = pickWindowType(sysObj);
+		let id = customID === -1 ? get().lastId : customID;
+		const newWindow: Window = {
+			sysObj,
+			type,
+			id,
+		};
+		useMobileStore.getState().showWindow(newWindow);
 
 		set(state => ({
-			windows: [
-				...state.windows,
-				{
-					sysObj,
-					type,
-					id:
-						state.windows.reduce(
-							(prev, current) => Math.max(prev, current.id),
-							-1
-						) + 1, // Get the next open id value starting from 0
-				},
-			],
+			lastId: id + 1,
+			windows: [...state.windows, newWindow],
 		}));
 	},
 	deleteWindow(ref) {
@@ -64,16 +62,13 @@ export const createWindowSlice: StateCreator<
 			return { windows };
 		});
 	},
+	replaceWindow(oldWindow, newObj) {
+		get().deleteWindow(oldWindow);
+		const idToReuse =
+			typeof oldWindow === 'number' ? oldWindow : oldWindow.id;
+		get().addWindow(newObj, idToReuse);
+	},
 	deleteWindows() {
 		set(_ => ({ windows: [] }));
-	},
-	bringToFront(ref) {
-		useMobileStore.getState().showWindow();
-
-		const windows = [...get().windows];
-		const index = get().findWindow(windows, ref);
-		if (index === windows.length - 1) return; //Already in front
-		windows.push(...windows.splice(index, 1));
-		set(_ => ({ windows }));
 	},
 });

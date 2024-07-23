@@ -1,6 +1,6 @@
 import { MotionStyle, Variants, motion } from 'framer-motion';
 import * as React from 'react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, memo } from 'react';
 import { easeSteps } from '../utils';
 
 interface DropdownProps
@@ -37,7 +37,7 @@ const dropdownVariants: Variants = {
 
 type Alignment = 'left' | 'center' | 'right';
 
-export const Dropdown: React.FC<DropdownProps> = props => {
+export const Dropdown: React.FC<DropdownProps> = memo(props => {
 	const {
 		children,
 		dContent,
@@ -119,6 +119,6 @@ export const Dropdown: React.FC<DropdownProps> = props => {
 			</motion.div>
 		</div>
 	);
-};
+});
 
 export default Dropdown;

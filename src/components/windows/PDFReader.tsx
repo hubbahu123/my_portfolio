@@ -38,7 +38,7 @@ const PDFNoSupport = () => {
 	const [dowloaded, setDowloaded] = useState(false);
 
 	return (
-		<div className="relative select-none h-full w-full overflow-hidden bg-black-primary">
+		<div className="relative  h-full w-full overflow-hidden bg-black-primary">
 			<a
 				href="./resume.pdf"
 				download="resume.pdf"

@@ -39,6 +39,8 @@ function checkVisibility(window: Window | undefined): string {
 	}
 }
 
+const symbolMat = createGlitchMat();
+
 export const Symbols: React.FC<
 	React.JSX.IntrinsicElements['group']
 > = props => {
@@ -49,8 +51,6 @@ export const Symbols: React.FC<
 	});
 
 	// Create glitchy material
-	const symbolMat = useMemo(() => createGlitchMat(), []);
-	useEffect(() => () => symbolMat.dispose(), []);
 	useFrame(state => {
 		if (!symbolMat.userData.shader || !symbolMat.userData.shader.uniforms)
 			return;

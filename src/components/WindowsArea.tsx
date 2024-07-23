@@ -1,4 +1,10 @@
-import React, { lazy, Suspense, useContext, useRef } from 'react';
+import React, {
+	lazy,
+	PointerEventHandler,
+	Suspense,
+	useContext,
+	useRef,
+} from 'react';
 import { Dimensions } from './Window';
 import { useBoundStore, useMobileStore } from '../store';
 import { AnimatePresence, Point } from 'framer-motion';
@@ -57,9 +63,9 @@ const getInitialBounds = (type: WindowType): [Point, Dimensions] => {
 
 const WindowsArea = () => {
 	const windowsAreaRef = useRef(null);
-	const [windows, bringToFrontReq, deleteWindows] = useBoundStore(state => [
+	const z = useRef(1);
+	const [windows, deleteWindows] = useBoundStore(state => [
 		state.windows,
-		state.bringToFront,
 		state.deleteWindows,
 	]);
 
@@ -73,31 +79,26 @@ const WindowsArea = () => {
 	return (
 		<div
 			ref={windowsAreaRef}
-			className="absolute w-full h-full top-0 pointer-events-none md:top-14 md:border-b-[56px]"
+			className="absolute w-full h-full z-0 top-0 pointer-events-none md:top-14 md:border-b-[56px]"
 		>
 			<AnimatePresence>
 				{isMobile && menuOpen && (
-					<Menu
-						windows={windows}
-						bringToFrontReq={bringToFrontReq}
-						deleteWindows={deleteWindows}
-					/>
+					<Menu windows={windows} deleteWindows={deleteWindows} />
 				)}
 				{(isMobile
-					? menuOpen || windows.length === 0
+					? menuOpen || !windowOpen
 						? []
-						: windowOpen
-							? [windows[windows.length - 1]]
-							: []
+						: [windowOpen]
 					: windows
 				).map(window => {
 					const [initialLocation, initialDimensions] =
 						getInitialBounds(window.type);
 					return (
-						<Suspense>
+						<Suspense key={window.id}>
 							<Window
 								key={window.id}
-								{...window}
+								windowData={window}
+								z={z}
 								area={windowsAreaRef}
 								initialLocation={initialLocation}
 								initialDimensions={initialDimensions}

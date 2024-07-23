@@ -6,8 +6,8 @@ import WindowHeader from './WindowHeader';
 import { MobileContext } from './OS';
 import Outline from './Outline';
 import { easeSteps } from '../utils';
-import WindowContent from './WindowContent';
-import { SystemObject, WindowType } from '../store/types';
+import WindowBody from './WindowBody';
+import { SystemObject, Window as WindowDataTypeDef } from '../store/types';
 import { useBoundStore } from '../store';
 import { useMobileStore } from '../store';
 
@@ -17,9 +17,8 @@ export interface Dimensions {
 }
 
 interface WindowProps {
-	sysObj: SystemObject;
-	type: WindowType;
-	id: number;
+	windowData: WindowDataTypeDef; // I tried my best this shits confusing
+	z?: React.MutableRefObject<number>;
 	area?: React.RefObject<Element>;
 	initialLocation?: Point;
 	initialDimensions?: Dimensions;
@@ -48,16 +47,16 @@ export interface WindowDataType {
 export const WindowDataContext = createContext<WindowDataType | null>(null);
 
 export const Window: React.FC<WindowProps> = ({
-	sysObj,
-	type,
-	id,
+	windowData,
 	area,
+	z,
 	initialLocation = { x: 0, y: 0 },
 	initialDimensions = { w: 500, h: 300 },
 	minDimensions = { w: 200, h: 100 },
 	disableInteraction = false,
 	disableNavCompensation = false,
 }) => {
+	const { id, sysObj, type } = windowData;
 	const [isMoving, setIsMoving] = useState(false);
 	const [maximized, setMaximized] = useState(false);
 	const width = useMotionValue(initialDimensions.w);
@@ -67,17 +66,27 @@ export const Window: React.FC<WindowProps> = ({
 	const controls = useDragControls();
 	const windowRef = useRef<HTMLDivElement>(null);
 
-	const [bringToFrontReq, deleteReq] = useBoundStore(state => [
-		state.bringToFront,
-		state.deleteWindow,
-	]);
+	const [deleteReq] = useBoundStore(state => [state.deleteWindow]);
 	const [windowTitle, setTitle] = useState(sysObj.name);
 
 	const isMobile = useContext(MobileContext);
-	const [menuOpen, toggleMenu] = useMobileStore(state => [
+	const [menuOpen, toggleMenu, showWindow] = useMobileStore(state => [
 		state.menuOpen,
 		state.toggleMenu,
+		state.showWindow,
 	]);
+
+	const updateZ = () => {
+		if (!z || isMobile) return;
+		if (!windowRef.current || !z.current) return;
+		if (
+			windowRef.current.style.zIndex &&
+			parseInt(windowRef.current.style.zIndex) === z.current
+		)
+			return;
+		windowRef.current.style.zIndex = (++z.current).toString();
+	};
+	useEffect(updateZ, [windowRef.current]);
 
 	return (
 		<WindowDataContext.Provider
@@ -85,7 +94,10 @@ export const Window: React.FC<WindowProps> = ({
 				sysObj,
 				id,
 				setTitle,
-				getWidth: () => (maximized ? window.innerWidth : width.get()),
+				getWidth: React.useCallback(
+					() => (maximized ? window.innerWidth : width.get()),
+					[]
+				),
 			}}
 		>
 			<motion.section
@@ -113,14 +125,12 @@ export const Window: React.FC<WindowProps> = ({
 					type: 'tween',
 					ease: easeSteps(7),
 				}}
-				onPointerDown={
-					!isMobile ? () => bringToFrontReq(id) : undefined
-				}
+				onPointerDown={updateZ}
 				onPointerUp={
 					isMobile
 						? () => {
 								if (menuOpen) toggleMenu();
-								bringToFrontReq(id);
+								showWindow(windowData);
 							}
 						: undefined
 				}
@@ -157,7 +167,7 @@ export const Window: React.FC<WindowProps> = ({
 						title={windowTitle}
 					/>
 				)}
-				<WindowContent type={type} />
+				<WindowBody type={type} />
 				{!isMobile && (
 					<>
 						<Resizers

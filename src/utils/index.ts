@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 
 export const mod = (x: number, y: number) => ((x % y) + y) % y;
@@ -39,10 +39,10 @@ export function pickRand<T>(arr: Array<T>): T | undefined {
 }
 
 export const useMediaQuery = (query: string) => {
-	const [matches, setMatches] = useState(false);
+	const media = useMemo(() => window?.matchMedia(query), [query]);
+	const [matches, setMatches] = useState(media ? media.matches : false);
 
 	useEffect(() => {
-		const media = window.matchMedia(query);
 		if (media.matches !== matches) setMatches(media.matches);
 
 		const listener = () => setMatches(media.matches);
@@ -65,17 +65,19 @@ export function usePersistent<type extends Object>(
 	key: string,
 	initialState: type,
 	conversion: (str: string) => type
-): [boolean, type, React.Dispatch<React.SetStateAction<type>>, Function] {
+): [boolean, type, (value: type) => void, Function] {
 	const [ready, setReady] = useState(false);
-	const [value, setVal] = useState(initialState);
+	const [value, setValue] = useState(initialState);
+	const setVal = (value: type) => {
+		setValue(value);
+		localStorage.setItem(key, value.toString());
+	};
 
 	useEffect(() => {
 		const actualInitial = localStorage.getItem(key);
 		if (actualInitial) setVal(conversion(actualInitial));
 		setReady(true);
 	}, []);
-
-	useEffect(() => localStorage.setItem(key, value.toString()), [value]);
 
 	const clear = () => localStorage.removeItem(key);
 

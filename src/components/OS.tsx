@@ -52,13 +52,16 @@ const OS: React.FC = () => {
 	const [ready, introDone, setIntroDone] = usePersistent(
 		'introDone',
 		!WebGL.isWebGLAvailable() || !notMobile,
-		str => str === 'true'
+		str => {
+			console.log(str === 'true');
+			return str === 'true';
+		}
 	);
 
 	return (
 		<MobileContext.Provider value={!notMobile}>
 			<main
-				className={`w-screen h-screen overflow-hidden relative bg-black-primary ${!notMobile && 'use-scrollbar'}`}
+				className={`w-screen h-screen overflow-hidden relative bg-black ${!notMobile && 'use-scrollbar'}`}
 				style={{ height: 'var(--vh-full, 100vh)' }}
 			>
 				{ready &&

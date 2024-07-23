@@ -41,10 +41,9 @@ body {
 	font-named-instance: 'Regular';
 	/* Allows for use of font features! */
 	src:
-		url(/fonts/retro_font_fancy.otf) format('opentype'),
 		url(/fonts/retro_font_fancy.woff2) format('woff2'),
 		url(/fonts/retro_font_fancy.woff) format('woff'),
-		url(/fonts/retro_font_fancy.ttf) format('truetype');
+		url(/fonts/retro_font_fancy.otf) format('opentype');
 }
 
 :root {
@@ -152,6 +151,10 @@ body {
 }
 
 @layer utilities {
+	img {
+		@apply select-none;
+	}
+
 	.no-scrollbar::-webkit-scrollbar {
 		display: none;
 	}
@@ -210,6 +213,10 @@ body {
 	.disable-child-interaction::after {
 		content: '';
 		@apply absolute h-full w-full;
+	}
+
+	.invisible * {
+		@apply !transition-none;
 	}
 
 	.full-flicker {

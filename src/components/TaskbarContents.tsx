@@ -17,6 +17,33 @@ import shutdownImg from '../images/shutdown.png';
 import bgMusic from '../audio/background.mp3';
 import exitSound from '../audio/shutdown.mp3';
 
+interface TimeDropdownProps {
+	timeSelected: boolean;
+	setTimeSelected: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const TimeDropdown: React.FC<TimeDropdownProps> = ({
+	timeSelected,
+	setTimeSelected,
+}) => {
+	const [now, setNow] = useState<Date>();
+	useInterval(() => setNow(new Date()), 1000);
+
+	return (
+		<Dropdown
+			className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+			onPointerDown={() => setTimeSelected(true)}
+			onPointerOut={() => timeSelected && setTimeSelected(false)}
+			onPointerUp={() => setTimeSelected(false)}
+			dContent={<Clock now={now} />}
+		>
+			<GlitchText animated={timeSelected}>
+				{now?.toLocaleTimeString() ?? 'Loading...'}
+			</GlitchText>
+		</Dropdown>
+	);
+};
+
 const TaskbarContents = () => {
 	const {
 		brightness,
@@ -76,11 +103,9 @@ const TaskbarContents = () => {
 		document.documentElement.style.cursor = hardmode ? 'none' : '';
 	}, [hardmode]);
 
-	const [now, setNow] = useState<Date>();
 	const [effectsSelected, setEffectsSelected] = useState(false);
 	const [audioSelected, setAudioSelected] = useState(false);
 	const [timeSelected, setTimeSelected] = useState(false);
-	useInterval(() => setNow(new Date()), 1000);
 
 	return (
 		<>
@@ -317,17 +342,10 @@ const TaskbarContents = () => {
 			>
 				<Battery level={battery} className="w-8" />
 			</Dropdown>
-			<Dropdown
-				className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
-				onPointerDown={() => setTimeSelected(true)}
-				onPointerOut={() => timeSelected && setTimeSelected(false)}
-				onPointerUp={() => setTimeSelected(false)}
-				dContent={<Clock now={now} />}
-			>
-				<GlitchText animated={timeSelected}>
-					{now?.toLocaleTimeString() ?? 'Loading...'}
-				</GlitchText>
-			</Dropdown>
+			<TimeDropdown
+				timeSelected={timeSelected}
+				setTimeSelected={setTimeSelected}
+			/>
 		</>
 	);
 };

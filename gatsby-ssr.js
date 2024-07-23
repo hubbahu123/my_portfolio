@@ -20,7 +20,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 		/>,
 		<link
 			rel="preload"
-			href="/fonts/retro_font_fancy.otf"
+			href="/fonts/retro_font_fancy.woff2"
 			as="font"
 			type="font/otf"
 			crossOrigin="anonymous"

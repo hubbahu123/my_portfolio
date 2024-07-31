@@ -40,7 +40,10 @@ export function pickRand<T>(arr: Array<T>): T | undefined {
 
 export const useMediaQuery = (query: string) => {
 	const media = useMemo(
-		() => (window ? window.matchMedia(query) : undefined),
+		() =>
+			typeof window === 'undefined'
+				? undefined
+				: window.matchMedia(query),
 		[query]
 	);
 	const [matches, setMatches] = useState(media ? media.matches : false);

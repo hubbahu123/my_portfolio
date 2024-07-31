@@ -39,7 +39,10 @@ export function pickRand<T>(arr: Array<T>): T | undefined {
 }
 
 export const useMediaQuery = (query: string) => {
-	const media = useMemo(() => window?.matchMedia(query), [query]);
+	const media = useMemo(
+		() => (window ? window.matchMedia(query) : undefined),
+		[query]
+	);
 	const [matches, setMatches] = useState(media ? media.matches : false);
 
 	useEffect(() => {

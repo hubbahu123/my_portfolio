@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSettingsStore } from '../store';
 import { useInterval } from '../utils';
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion';
@@ -15,7 +15,7 @@ import linkedInImg from '../images/linkedIn.png';
 import restartImg from '../images/restart.png';
 import shutdownImg from '../images/shutdown.png';
 
-const MobileTaskbar = () => {
+const MobileTaskbar = memo(() => {
 	const {
 		brightness,
 		setBrightness,
@@ -119,7 +119,8 @@ const MobileTaskbar = () => {
 							<img
 								src={linkedInImg}
 								alt="LinkedIn Logo"
-								height={24}
+								width="24"
+								height="24"
 							/>
 						</a>
 						<a
@@ -130,7 +131,8 @@ const MobileTaskbar = () => {
 							<img
 								src={gitHubImg}
 								alt="GitHub Logo"
-								height={24}
+								width="24"
+								height="24"
 							/>
 						</a>
 						<button
@@ -145,7 +147,8 @@ const MobileTaskbar = () => {
 							<img
 								src={restartImg}
 								alt="restart symbol"
-								height={24}
+								width="24"
+								height="24"
 							/>
 						</button>
 						<button
@@ -160,7 +163,8 @@ const MobileTaskbar = () => {
 							<img
 								src={shutdownImg}
 								alt="shutdown symbol"
-								height={24}
+								width="24"
+								height="24"
 							/>
 						</button>
 					</div>
@@ -318,7 +322,8 @@ const MobileTaskbar = () => {
 					src={mobileIcons}
 					alt="Mobile icons"
 					className="ml-auto h-4"
-					height={16}
+					height="16"
+					width="36"
 				/>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -362,6 +367,6 @@ const MobileTaskbar = () => {
 			</motion.div>
 		</>
 	);
-};
+});
 
 export default MobileTaskbar;

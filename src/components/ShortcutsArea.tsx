@@ -32,20 +32,6 @@ const ShortcutsArea = memo(() => {
 	]);
 	const shortcuts = desktop && 'children' in desktop ? desktop.children : [];
 
-	// TODO
-	// const tempRef = useRef<HTMLUListElement>(null);
-	// useEffect(() => {
-	// 	if (tempRef.current) {
-	// 		Array.from(tempRef.current.children).forEach(
-	// 			({ firstElementChild }) => {
-	// 				if (!firstElementChild || !('click' in firstElementChild))
-	// 					return;
-	// 				firstElementChild.click();
-	// 			}
-	// 		);
-	// 	}
-	// }, [tempRef.current]);
-
 	//Pulls apps from projects jsons
 	const data = useStaticQuery(graphql`
 		query ProjectsQuery {
@@ -94,10 +80,12 @@ const ShortcutsArea = memo(() => {
 						// WARNING! ABSYMAL TYPESCRIPT! MY LAZY ASS DID NOT WANNA DEAL WITH
 						// GRAPHQL TYPE GEN
 						edge.node.date = new Date(edge.node.date);
+						const isVid =
+							typeof edge.node.showcases[0] === 'string';
 						return {
 							name: edge.node?.parent?.name ?? 'Unnamed',
 							value: edge.node,
-							ext: 'png', // TODO: Enable .mp4 as well
+							ext: isVid ? 'mp4' : 'png', // TODO: Enable .mp4 as well
 						};
 					}
 				)
@@ -110,7 +98,6 @@ const ShortcutsArea = memo(() => {
 			className="pointer-events-none w-full absolute top-0 h-full p-4 pt-20 pb-24 grid justify-items-center grid-cols-3 grid-rows-2 sm:!grid-cols-6 md:flex md:items-start md:pb-4 xs:grid-cols-5 short:grid-rows-3 average:grid-rows-4 tall:grid-rows-5"
 			style={{ gridAutoRows: 0 }}
 			variants={listVariants}
-			// ref={tempRef}
 		>
 			{shortcuts.map((shortcut, i) => (
 				<motion.li

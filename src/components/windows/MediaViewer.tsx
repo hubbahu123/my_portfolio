@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { WindowDataContext } from '../Window';
 import { motion, useAnimate, useScroll, useTransform } from 'framer-motion';
 import { GatsbyImage, IGatsbyImageData, getImage } from 'gatsby-plugin-image';
+import { MobileContext } from '../OS';
 import { Throbber } from '../Throbber';
 import { easeSteps } from '../../utils';
 import { useBoundStore } from '../../store';
@@ -16,7 +17,6 @@ import mapImg from '../../images/map_watermark.png';
 import shapeGif from '../../images/icohedron.gif';
 import handsGif from '../../images/hands.gif';
 import throbber from '../../images/throbber.gif';
-import { MobileContext } from '../OS';
 
 export const MediaViewer = () => {
 	const isMobile = useContext(MobileContext);
@@ -481,18 +481,34 @@ const Showcase: React.FC<{
 	style?: React.CSSProperties;
 }> = ({ src, className, imgClassName, style, project }) => {
 	if (typeof src === 'string') {
+		console.log('ssq');
 		return (
-			<video muted autoPlay className={className}>
-				<source src={src} type="video/mp4" />
-				Your browser does not support the video tag.
-			</video>
+			<>
+				<video
+					muted
+					autoPlay
+					loop
+					className={`${className} z-10 bg-black-primary`}
+				>
+					<source src={src} type="video/mp4" />
+					Your browser does not support the video tag.
+				</video>
+				<Follow>
+					<img
+						alt="magnifying glass"
+						src={glassImg}
+						width={75}
+						height={75}
+						className="pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2"
+					/>
+				</Follow>
+			</>
 		);
 	}
 
 	const img = getImage(src);
 	if (!img) return <Throbber />;
 
-	//TODO
 	return (
 		<>
 			<img

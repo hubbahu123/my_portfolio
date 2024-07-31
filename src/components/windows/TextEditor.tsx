@@ -6,7 +6,6 @@ import NameCard from '../NameCard';
 import ScrollMarquee from '../ScrollMarquee';
 import GlitchText from '../GlitchText';
 import ContentEditable from '../ContentEditable';
-import camImg from '../../images/cam.png';
 import Float from '../Float';
 import { StaticImage } from 'gatsby-plugin-image';
 import { randInt } from 'three/src/math/MathUtils';
@@ -188,9 +187,10 @@ const TextEditor = () => {
 								</motion.div>
 							))}
 						</Float>
-						<img
-							src={camImg}
+						<StaticImage
+							src="../../images/cam.png"
 							alt="camera"
+							width={96}
 							className="hidden md:block absolute bottom-0 right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
 						/>
 					</div>

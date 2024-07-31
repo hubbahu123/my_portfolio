@@ -16,7 +16,7 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-manifest',
 			options: {
-				icon: 'src/images/icon.png',
+				icon: './src/images/logo/logo.png',
 			},
 		},
 		'gatsby-plugin-sharp',
@@ -40,35 +40,35 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-manifest',
 			options: {
-				icon: `src/images/logo/logo_512x512.png`,
+				icon: `./src/images/logo/logo_512x512.png`,
 				icons: [
 					{
-						src: `src/images/logo/logo.png`,
+						src: `./src/images/logo/logo.png`,
 						sizes: `16x16`,
 						type: `image/png`,
 					},
 					{
-						src: `src/images/logo/logo.ico`,
+						src: `./src/images/logo/logo.ico`,
 						sizes: `32x32`,
 						type: `image/vnd.microsoft.icon`,
 					},
 					{
-						src: `src/images/logo/logo_192x192.png`,
+						src: `./src/images/logo/logo_192x192.png`,
 						sizes: `192x192`,
 						type: `image/png`,
 					},
 					{
-						src: `src/images/logo/logo_512x512.png`,
+						src: `./src/images/logo/logo_512x512.png`,
 						sizes: `512x512`,
 						type: `image/png`,
 					},
 					{
-						src: `src/images/logo/logo_512x512.png`,
+						src: `./src/images/logo/logo_512x512.png`,
 						sizes: `512x512`,
 						type: `image/png`,
 					},
 					{
-						src: 'src/images/logo/maskable_logo.png',
+						src: './src/images/logo/maskable_logo.png',
 						sizes: '128x128',
 						type: 'image/png',
 						purpose: 'maskable',
@@ -113,13 +113,15 @@ const config: GatsbyConfig = {
 			},
 		},
 		'gatsby-plugin-minify',
+		'gatsby-plugin-offline',
+		`gatsby-plugin-perf-budgets`,
 		{
 			resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
 			options: {
 				devMode: true,
+				openAnalyzer: false,
 			},
 		},
-		'gatsby-plugin-offline',
 	],
 };
 

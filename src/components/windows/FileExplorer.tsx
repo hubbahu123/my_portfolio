@@ -116,7 +116,9 @@ export const FileExplorer = () => {
 					<img
 						src={trashImg}
 						alt=""
-						className="w-8 my-2 block md:hidden"
+						width={32}
+						height={32}
+						className="my-2 block md:hidden"
 					/>
 				</button>
 			)}

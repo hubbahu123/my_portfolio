@@ -5,7 +5,6 @@ import arrowUp from '../images/arrow_up.png';
 import arrowUpActive from '../images/arrow_up_active.png';
 import arrowDown from '../images/arrow_down.png';
 import arrowDownActive from '../images/arrow_down_active.png';
-import { motion } from 'framer-motion';
 import ShortcutsArea from './ShortcutsArea';
 import Background from './Background';
 import Taskbar from './Taskbar';
@@ -15,7 +14,6 @@ import { usePersistent } from '../utils';
 import Loader from './Loader';
 import WindowsArea from './WindowsArea';
 import Modifiers from './Modifiers';
-import WebGL from 'three/examples/jsm/capabilities/WebGL';
 
 export const MobileContext = createContext(true);
 
@@ -51,11 +49,8 @@ const OS: React.FC = () => {
 
 	const [ready, introDone, setIntroDone] = usePersistent(
 		'introDone',
-		!WebGL.isWebGLAvailable() || !notMobile,
-		str => {
-			console.log(str === 'true');
-			return str === 'true';
-		}
+		!notMobile,
+		str => str === 'true'
 	);
 
 	return (

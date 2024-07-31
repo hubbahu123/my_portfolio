@@ -16,6 +16,7 @@ import pixelatedHeadGif from '../images/pixelated_head.gif';
 import triangleImg from '../images/triangle_outline_blue.png';
 import palmImg from '../images/palm.png';
 import { motion } from 'framer-motion';
+import { StaticImage } from 'gatsby-plugin-image';
 
 THREE.ColorManagement.enabled = true;
 const PALM_PATH =
@@ -71,7 +72,7 @@ const Background: React.FC = () => {
 			<img
 				src={Math.random() !== 0 ? bgImg2 : bgImg1}
 				alt="background image of sky"
-				className="h-full w-full  object-cover"
+				className="h-full w-full object-cover"
 				draggable={false}
 			/>
 			<img
@@ -79,28 +80,44 @@ const Background: React.FC = () => {
 				draggable={false}
 				className="absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-[62%]  drop-shadow-[0_0_35px_#b1d7ef] filter"
 			/>
-			<img
-				src={palmImg}
+			<StaticImage
+				src="../images/palm.png"
+				alt=""
+				width={384}
+				layout="fixed"
 				draggable={false}
+				placeholder="none"
 				style={{ clipPath: PALM_PATH }}
-				className="absolute -bottom-10 -left-32 w-96 origin-[35%_bottom] rotate-6  transition-transform duration-1000 ease-in-out hover:rotate-12 md:-left-5"
+				imgClassName="!transition-none"
+				className="absolute -bottom-10 -left-32 origin-[35%_bottom] rotate-6 transition-transform duration-1000 ease-in-out hover:rotate-12 md:-left-5"
 			/>
 			<img
 				src={pixelatedHeadGif}
+				alt=""
 				draggable={false}
 				className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 "
 			/>
-			<img
-				src={palmImg}
+			<StaticImage
+				src="../images/palm.png"
+				alt=""
+				width={384}
+				layout="fixed"
 				draggable={false}
+				placeholder="none"
 				style={{ clipPath: PALM_PATH }}
-				className="invisible absolute -bottom-24 -right-10 w-96 origin-[35%_bottom] -rotate-12 scale-75 -scale-x-100  transition-transform duration-1000 ease-in-out hover:-rotate-6 md:visible"
+				imgClassName="!transition-none"
+				className="invisible absolute -bottom-24 -right-10 origin-[35%_bottom] -rotate-12 scale-75 -scale-x-100  transition-transform duration-1000 ease-in-out hover:-rotate-6 md:visible"
 			/>
-			<img
-				src={palmImg}
+			<StaticImage
+				src="../images/palm.png"
+				alt=""
+				width={384}
+				layout="fixed"
 				draggable={false}
+				placeholder="none"
 				style={{ clipPath: PALM_PATH }}
-				className="absolute -bottom-10 -right-36 w-96 origin-[35%_bottom] rotate-12 -scale-x-100  transition-transform duration-1000 ease-in-out hover:rotate-6"
+				imgClassName="!transition-none"
+				className="absolute -bottom-10 -right-36 origin-[35%_bottom] rotate-12 -scale-x-100  transition-transform duration-1000 ease-in-out hover:rotate-6"
 			/>
 		</>
 	);

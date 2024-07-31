@@ -70,7 +70,6 @@ export interface DirectorySlice {
 		path: Path | string
 	): SystemObject | undefined;
 	navigate(path: Path | string): SystemObject | undefined;
-	move(target: Path | string, dir: Directory | Path): boolean;
 	traverse(target: SystemObject, startDir?: Directory): Directory[] | null;
 	modifySystem(
 		target: Path | string,

@@ -119,7 +119,11 @@ export const Window: React.FC<WindowProps> = ({
 				}}
 				initial={isMobile ? { opacity: 0 } : { scale: 0 }}
 				animate={isMobile ? { opacity: 1 } : { scale: 1 }}
-				exit={isMobile ? { opacity: 0 } : { scale: 0 }}
+				exit={
+					isMobile
+						? { opacity: 0, pointerEvents: 'none' }
+						: { scale: 0 }
+				}
 				transition={{
 					duration: 0.3,
 					type: 'tween',

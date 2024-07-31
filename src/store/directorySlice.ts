@@ -53,9 +53,6 @@ export const createDirectorySlice: StateCreator<
 		if (path.length === 0) return get().rootDir;
 		return get().navigateFrom(get().rootDir, path);
 	},
-	move(target, dir) {
-		return false;
-	},
 	traverse(target, startDir) {
 		//Start at rootDir
 		if (!startDir) startDir = get().rootDir;

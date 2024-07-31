@@ -85,6 +85,7 @@ const PDFNoSupport = () => {
 			<StaticImage
 				src="../../images/dolphin.png"
 				alt="dolphin"
+				placeholder="none"
 				height={112}
 				layout="fixed"
 				className="-rotate-45 absolute left-1/4 -translate-x-1/2 top-1/4 -translate-y-1/2"
@@ -92,6 +93,7 @@ const PDFNoSupport = () => {
 			<StaticImage
 				src="../../images/dolphin.png"
 				alt="dolphin"
+				placeholder="none"
 				height={144}
 				layout="fixed"
 				className="absolute left-3/4 -translate-x-1/2 top-3/4 -translate-y-1/2"

@@ -6,7 +6,7 @@ import { clamp } from 'three/src/math/MathUtils';
 import Battery from './Battery';
 import Slider from './Slider';
 import ToggleBtn from './ToggleBtn';
-import { useBackgroundSound, usePlaySound } from '../utils/sound';
+import { useAudio } from '../utils';
 import bgMusic from '../audio/background.mp3';
 import mobileIcons from '../images/mobile_icon.png';
 import exitSound from '../audio/shutdown.mp3';
@@ -41,8 +41,8 @@ const MobileTaskbar = memo(() => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useBackgroundSound(bgMusic, 0.5);
-	const [playShutdown] = usePlaySound(exitSound, 1);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
+	const [playShutdown] = useAudio(exitSound, 1);
 
 	const settingsReveal = useMotionValue(0);
 

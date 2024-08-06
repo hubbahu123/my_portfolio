@@ -2,7 +2,7 @@ import React from 'react';
 import { useSettingsStore } from '../store';
 import { map } from '../utils';
 import { motion } from 'framer-motion';
-import staticVideo from '../videos/static.mp4';
+import staticVid from '../videos/static.mp4';
 
 const Modifiers = () => {
 	const [brightness, scanlines, useStatic, useFlicker] = useSettingsStore(
@@ -26,7 +26,7 @@ const Modifiers = () => {
 					autoPlay
 					loop
 				>
-					<source src={staticVideo} type="video/mp4" />
+					<source src={staticVid} type="video/mp4" />
 				</video>
 			)}
 			{scanlines && (

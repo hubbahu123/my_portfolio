@@ -148,6 +148,24 @@ body {
 	::spelling-error {
 		@apply decoration-pink-accent decoration-dashed;
 	}
+
+	.gatsby-image-wrapper.absolute {
+		position: absolute;
+		/* Goofy ahhh bug fix */
+	}
+
+	.gatsby-image-wrapper-constrained.hidden {
+		display: hidden;
+		/* Goofy ahhh bug fixes */
+	}
+
+	.select-none {
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+	}
 }
 
 @layer utilities {

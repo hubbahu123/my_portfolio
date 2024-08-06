@@ -9,7 +9,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { useState } from 'react';
 import Battery from './Battery';
 import { useSettingsStore } from '../store';
-import { useBackgroundSound, usePlaySound } from '../utils/sound';
+import { useAudio } from '../utils';
 import gitHubImg from '../images/github.png';
 import linkedInImg from '../images/linkedIn.png';
 import restartImg from '../images/restart.png';
@@ -70,8 +70,8 @@ const TaskbarContents = () => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useBackgroundSound(bgMusic, 0.5);
-	const [playShutdown] = usePlaySound(exitSound, 1);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
+	const [playShutdown] = useAudio(exitSound, 1);
 	const volumeRef = useRef(75);
 	const toggleMute = () => {
 		if (volume === 0) return setVolume(volumeRef.current);

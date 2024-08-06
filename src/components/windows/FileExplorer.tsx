@@ -4,6 +4,8 @@ import { useBoundStore } from '../../store';
 import Shortcut from '../Shortcut';
 import GlitchText from '../GlitchText';
 import Marquee from '../Marquee';
+import { useAudio } from '../../utils';
+import trashAudio from '../../audio/trash.mp3';
 import sunImg from '../../images/circle.png';
 import trashImg from '../../images/trash.png';
 
@@ -101,9 +103,7 @@ export const FileExplorer = () => {
 				)}
 			</ul>
 			{isTrash && parentFolders && (
-				<button
-					type="button"
-					className="ease-step bottom-20 fixed right-10 m-4 bg-gradient-to-r from-blue-accent to-pink-accent bg-double bg-left px-4 py-2 text-white-primary outline outline-2 outline-white-primary transition-all hover:bg-right active:scale-95 md:bottom-0"
+				<TrashBtn
 					onClick={() => {
 						emptyDir([
 							...parentFolders.map(dir => dir.name),
@@ -111,16 +111,7 @@ export const FileExplorer = () => {
 						]);
 						setChildren([]);
 					}}
-				>
-					<span className="hidden md:inline">Empty Trash</span>
-					<img
-						src={trashImg}
-						alt=""
-						width={32}
-						height={32}
-						className="my-2 block md:hidden"
-					/>
-				</button>
+				/>
 			)}
 			<img
 				src={sunImg}
@@ -130,3 +121,29 @@ export const FileExplorer = () => {
 		</div>
 	);
 };
+
+const TrashBtn: React.FC<{ onClick: Function }> = ({ onClick }) => {
+	const [playTrash] = useAudio(trashAudio);
+
+	return (
+		<button
+			type="button"
+			className="ease-step bottom-20 fixed right-10 m-4 bg-gradient-to-r from-blue-accent to-pink-accent bg-double bg-left px-4 py-2 text-white-primary outline outline-2 outline-white-primary transition-all hover:bg-right active:scale-95 md:bottom-0"
+			onClick={() => {
+				playTrash();
+				onClick();
+			}}
+		>
+			<span className="hidden md:inline">Empty Trash</span>
+			<img
+				src={trashImg}
+				alt=""
+				width={32}
+				height={32}
+				className="my-2 block md:hidden"
+			/>
+		</button>
+	);
+};
+
+export default FileExplorer;

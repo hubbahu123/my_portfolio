@@ -152,14 +152,14 @@ const TextEditor = () => {
 				</ScrollMarquee>
 				<div className="clearfix p-8 py-16 md:py-32 relative md:pl-6 gap-6 text-white-primary md:bg-[repeating-linear-gradient(#f5f9ff06,#f5f9ff06_2em,#f5f9ff10_2em,#f5f9ff10_4em)] bg-[repeating-linear-gradient(#1f0728,#1f0728_2em,#291632_2em,#291632_4em)]">
 					<div
-						className={`w-auto cursor-pointer ${
+						className={`w-auto cursor-pointer text-right relative sm:text-center ${
 							getWidth() <= 800
-								? 'md:hidden xs:ml-32 ml-0 mb-14'
+								? 'mb-20 md:hidden md:mb-14'
 								: 'group md:block h-full transition relative flicker ease-steps w-2/5 md:float-right duration-1000 ml-8 mb-7'
 						}`}
 						onClick={updateImg}
 					>
-						<Float className="group">
+						<Float className="group xs:inline-block">
 							{imgs.map((img, i) => (
 								<motion.div
 									key={i}
@@ -181,7 +181,7 @@ const TextEditor = () => {
 										type: 'tween',
 										ease: easeSteps(25),
 									}}
-									className={`transition bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i > 0 && 'absolute'}`}
+									className={`transition bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
 								>
 									{img}
 								</motion.div>
@@ -191,10 +191,10 @@ const TextEditor = () => {
 							src="../../images/cam.png"
 							alt="camera"
 							width={96}
-							className="hidden md:block absolute bottom-0 right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
+							className="hidden sm:block absolute bottom-0 right-40 md:right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
 						/>
 					</div>
-					<h3 className="font-display mb-7 static leading-[0.95] uppercase text-7xl origin-bottom-left w-full whitespace-nowrap z-10 rotate-0 top-16 xs:rotate-90 xs:absolute md:!rotate-0 md:!static">
+					<h3 className="font-display mb-7 [text-shadow:_0px_-4px_20px_var(--tw-shadow-color)] xs:shadow-black-primary sm:shadow-none static leading-[0.95] uppercase text-7xl origin-bottom-left w-full whitespace-nowrap z-10 rotate-0 top-16 xs:rotate-90 xs:absolute sm:!rotate-0 sm:!static">
 						<span className="hidden xs:inline">† </span>
 						<GlitchText
 							onScroll

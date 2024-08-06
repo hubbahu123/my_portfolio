@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
+import { useSettingsStore } from '../store';
 
 export const mod = (x: number, y: number) => ((x % y) + y) % y;
 
@@ -49,14 +50,14 @@ export const useMediaQuery = (query: string) => {
 	const [matches, setMatches] = useState(media ? media.matches : false);
 
 	useEffect(() => {
+		if (!media) return;
+
 		if (media.matches !== matches) setMatches(media.matches);
-
 		const listener = () => setMatches(media.matches);
-
 		media.addEventListener('change', listener);
 
 		return () => media.removeEventListener('change', listener);
-	}, [query]);
+	}, [media]);
 
 	return matches;
 };
@@ -129,6 +130,25 @@ export const useSiteMetadata = () => {
 		}
 	`);
 	return data.site.siteMetadata;
+};
+
+export const useAudio = (src: string, vol = 1, loop = false) => {
+	const audio = useMemo(() => new Audio(), []);
+	const globalVol = useSettingsStore(store => store.volume / 100);
+	useEffect(() => {
+		audio.volume = vol * globalVol;
+	}, [vol, globalVol]);
+
+	const tryPlay = () => {
+		audio.loop = loop;
+		if (audio.src !== src) audio.src = src;
+		if (!audio.paused) return;
+		if (audio.readyState >= 3) return audio.play();
+
+		audio.addEventListener('canplay', audio.play);
+	};
+
+	return [tryPlay, audio.pause];
 };
 
 export enum Colors {

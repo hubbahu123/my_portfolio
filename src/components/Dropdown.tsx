@@ -95,7 +95,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(props => {
 	}
 
 	return (
-		<div className={'relative ' + pClassName} ref={dropdown}>
+		<div className={'relative select-none ' + pClassName} ref={dropdown}>
 			<button
 				{...rest}
 				ref={button}

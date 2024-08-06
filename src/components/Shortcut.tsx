@@ -49,7 +49,7 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 				className="w-16 h-16 mb-2  pointer-events-none md:mb-4"
 				sysObj={sysObj}
 			/>
-			<p className="p-2 text-center  text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">
+			<p className="p-2 text-center select-none text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">
 				{sysObj.name}
 				{'ext' in sysObj && sysObj.ext !== 'exe'
 					? `.${sysObj.ext}`

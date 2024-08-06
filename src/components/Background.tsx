@@ -9,7 +9,6 @@ import { StaticImage } from 'gatsby-plugin-image';
 
 const Background3D = React.lazy(() => import('./Background3D'));
 
-THREE.ColorManagement.enabled = true;
 const PALM_PATH =
 	'polygon(42% 100%, 38% 70%, 48% 37%, 63% 54%, 72% 46%, 80% 43%, 66% 30%, 95% 30%, 96% 25%, 87% 23%, 73% 16%, 94% 18%, 84% 4%, 60% 5%, 42% 0%, 34% 1%, 36% 9%, 21% 7%, 5% 13%, 14% 19%, 2% 25%, 4% 31%, 17% 31%, 23% 34%, 24% 44%, 31% 46%, 35% 52%, 27% 69%, 22% 100%)';
 const Background: React.FC = () => {

@@ -6,7 +6,7 @@ import type {
 	Window,
 	WindowType,
 } from './types';
-import { useMobileStore } from '.';
+import { useMobileStore, useSettingsStore } from '.';
 import windowOpenAudio from '../audio/open_window.mp3';
 
 const pickWindowType = (sysObj: SystemObject): WindowType => {
@@ -38,11 +38,15 @@ export const createWindowSlice: StateCreator<
 	windows: [],
 	lastId: 0,
 	windowAudio: undefined,
-	playSound() {
+	playSound(reverse = false) {
+		const globalVol = useSettingsStore.getState().volume / 100;
+		if (globalVol === 0) return;
 		let audioElement = get().windowAudio;
 		if (!audioElement) {
 			audioElement = new Audio(windowOpenAudio);
-			audioElement.volume = 0.2;
+			audioElement.playbackRate = reverse ? -1.5 : 1.5;
+			audioElement.preservesPitch = !reverse;
+			audioElement.volume = 0.02 * globalVol;
 			set({ windowAudio: audioElement });
 		}
 		if (audioElement.readyState >= 3) return audioElement.play();
@@ -68,6 +72,7 @@ export const createWindowSlice: StateCreator<
 		}));
 	},
 	deleteWindow(ref) {
+		get().playSound(true);
 		set(state => {
 			const windows = [...state.windows];
 			windows.splice(get().findWindow(windows, ref));

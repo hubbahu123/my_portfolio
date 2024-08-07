@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useSettingsStore } from '../store';
-import bgImg1 from '../images/background_1.jpg';
-import bgImg2 from '../images/background_2.jpg';
 import pixelatedHeadGif from '../images/pixelated_head.gif';
 import triangleImg from '../images/triangle_outline_blue.png';
 import { motion } from 'framer-motion';
 import { StaticImage } from 'gatsby-plugin-image';
+import { useMemo } from 'react';
 
 const Background3D = React.lazy(() => import('./Background3D'));
 
@@ -13,15 +12,32 @@ const PALM_PATH =
 	'polygon(42% 100%, 38% 70%, 48% 37%, 63% 54%, 72% 46%, 80% 43%, 66% 30%, 95% 30%, 96% 25%, 87% 23%, 73% 16%, 94% 18%, 84% 4%, 60% 5%, 42% 0%, 34% 1%, 36% 9%, 21% 7%, 5% 13%, 14% 19%, 2% 25%, 4% 31%, 17% 31%, 23% 34%, 24% 44%, 31% 46%, 35% 52%, 27% 69%, 22% 100%)';
 const Background: React.FC = () => {
 	const use3D = useSettingsStore(state => state.use3D);
+	const odds = useMemo(Math.random, []);
 
 	return (
 		<>
-			<img
-				src={Math.random() !== 0 ? bgImg2 : bgImg1}
-				alt="background image of sky"
-				className="absolute h-full w-full object-cover pointer-events-none"
-				draggable={false}
-			/>
+			{odds < 0.001 ? (
+				<StaticImage
+					src="../images/background_1.jpg"
+					alt="background image of sky"
+					layout="fullWidth"
+					objectFit="cover"
+					className="absolute w-full h-full pointer-events-none"
+					imgClassName="object-cover"
+					draggable={false}
+				/>
+			) : (
+				<StaticImage
+					src="../images/background_2.jpg"
+					alt="background image of sky"
+					layout="fullWidth"
+					objectFit="cover"
+					className="absolute w-full h-full pointer-events-none"
+					imgClassName="object-cover"
+					draggable={false}
+				/>
+			)}
+
 			{use3D ? (
 				<React.Suspense>
 					<Background3D />

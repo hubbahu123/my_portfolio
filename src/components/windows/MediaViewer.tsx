@@ -480,6 +480,7 @@ const Showcase: React.FC<{
 	imgClassName?: string;
 	style?: React.CSSProperties;
 }> = ({ src, className, imgClassName, style, project }) => {
+	console.log(src);
 	if (typeof src === 'string') {
 		console.log('ssq');
 		return (
@@ -488,7 +489,7 @@ const Showcase: React.FC<{
 					muted
 					autoPlay
 					loop
-					className={`${className} z-10 bg-black-primary`}
+					className={`${className} z-10 bg-black-primary object-cover`}
 				>
 					<source src={src} type="video/mp4" />
 					Your browser does not support the video tag.

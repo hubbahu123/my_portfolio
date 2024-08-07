@@ -134,6 +134,7 @@ export const useSiteMetadata = () => {
 
 export const useAudio = (src: string, vol = 1, loop = false) => {
 	const audio = useMemo(() => new Audio(), []);
+	const srcUsed = useRef('');
 	const globalVol = useSettingsStore(store => store.volume / 100);
 	useEffect(() => {
 		audio.volume = vol * globalVol;
@@ -141,14 +142,17 @@ export const useAudio = (src: string, vol = 1, loop = false) => {
 
 	const tryPlay = () => {
 		audio.loop = loop;
-		if (audio.src !== src) audio.src = src;
+		if (srcUsed.current !== src) {
+			srcUsed.current = src;
+			audio.src = src;
+		}
 		if (!audio.paused) return;
 		if (audio.readyState >= 3) return audio.play();
 
 		audio.addEventListener('canplay', audio.play);
 	};
 
-	return [tryPlay, audio.pause];
+	return [tryPlay, audio.pause.bind(audio)];
 };
 
 export enum Colors {

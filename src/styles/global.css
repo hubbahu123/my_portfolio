@@ -209,7 +209,12 @@ body {
 
 	.darken-bottom::after {
 		content: '';
-		@apply absolute top-0 h-full w-full bg-gradient-to-t from-black-primary to-40%;
+		@apply absolute top-0 h-full w-full bg-gradient-to-t from-black-primary/90 to-50%;
+	}
+
+	.darken-left::after {
+		content: '';
+		@apply absolute top-0 left-0 pointer-events-none h-full w-full xs:bg-gradient-to-r sm:!bg-none from-black-primary to-40%;
 	}
 
 	.animate-pause {

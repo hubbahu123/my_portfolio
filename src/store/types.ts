@@ -56,7 +56,7 @@ export interface WindowSlice {
 	lastId: number;
 	windows: Window[];
 	windowAudio?: HTMLAudioElement;
-	playSound(): void;
+	playSound(reverse?: boolean): void;
 	findWindow(windows: Window[], ref: number | Window): number;
 	addWindow(
 		sysObj: SystemObject,

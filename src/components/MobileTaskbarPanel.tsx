@@ -41,8 +41,8 @@ const MobileTaskbar = memo(() => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
-	const [playShutdown] = useAudio(exitSound, 1);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.01, true);
+	const [playShutdown] = useAudio(exitSound, 0.2);
 
 	const settingsReveal = useMotionValue(0);
 
@@ -138,11 +138,7 @@ const MobileTaskbar = memo(() => {
 						<button
 							type="button"
 							className="cursor-pointer"
-							onClick={() => {
-								restart();
-								pauseBg();
-								playShutdown();
-							}}
+							onClick={() => restart()}
 						>
 							<img
 								src={restartImg}

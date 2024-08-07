@@ -70,8 +70,8 @@ const TaskbarContents = () => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
-	const [playShutdown] = useAudio(exitSound, 1);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.01, true);
+	const [playShutdown] = useAudio(exitSound, 0.2);
 	const volumeRef = useRef(75);
 	const toggleMute = () => {
 		if (volume === 0) return setVolume(volumeRef.current);
@@ -153,11 +153,7 @@ const TaskbarContents = () => {
 						<button
 							type="button"
 							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
-							onClick={() => {
-								restart();
-								pauseBg();
-								playShutdown();
-							}}
+							onClick={() => restart()}
 						>
 							<img
 								src={restartImg}
@@ -188,6 +184,7 @@ const TaskbarContents = () => {
 				<StaticImage
 					src="../images/logo/logo_plain.png"
 					alt="Start Button"
+					placeholder="none"
 					width={28}
 					className="group-active:glitch group-hover:invert"
 				/>

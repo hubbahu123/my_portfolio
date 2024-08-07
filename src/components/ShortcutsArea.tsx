@@ -52,6 +52,7 @@ const ShortcutsArea = memo(() => {
 							childImageSharp {
 								gatsbyImageData(layout: FIXED)
 							}
+							publicURL
 						}
 						logo {
 							childImageSharp {
@@ -80,8 +81,18 @@ const ShortcutsArea = memo(() => {
 						// WARNING! ABSYMAL TYPESCRIPT! MY LAZY ASS DID NOT WANNA DEAL WITH
 						// GRAPHQL TYPE GEN
 						edge.node.date = new Date(edge.node.date);
+						// @ts-ignore
 						const isVid =
-							typeof edge.node.showcases[0] === 'string';
+							typeof edge.node.showcases[0].childImageSharp ===
+							null;
+						// @ts-ignore
+						edge.node.showcases = edge.node.showcases.map(
+							showcase =>
+								showcase.childImageSharp === null
+									? (showcase.publicURL as string)
+									: showcase
+						);
+						console.log(edge.node.showcases);
 						return {
 							name: edge.node?.parent?.name ?? 'Unnamed',
 							value: edge.node,

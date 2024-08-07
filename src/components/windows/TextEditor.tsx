@@ -181,7 +181,7 @@ const TextEditor = () => {
 										type: 'tween',
 										ease: easeSteps(25),
 									}}
-									className={`transition bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
+									className={`transition darken-left bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
 								>
 									{img}
 								</motion.div>
@@ -194,7 +194,7 @@ const TextEditor = () => {
 							className="hidden sm:block absolute bottom-0 right-40 md:right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
 						/>
 					</div>
-					<h3 className="font-display mb-7 [text-shadow:_0px_-4px_20px_var(--tw-shadow-color)] xs:shadow-black-primary sm:shadow-none static leading-[0.95] uppercase text-7xl origin-bottom-left w-full whitespace-nowrap z-10 rotate-0 top-16 xs:rotate-90 xs:absolute sm:!rotate-0 sm:!static">
+					<h3 className="font-display mb-7 xs:shadow-black-primary sm:shadow-none static leading-[0.95] uppercase text-7xl origin-bottom-left w-full whitespace-nowrap z-10 top-16 xs:rotate-90 xs:absolute sm:!rotate-0 sm:!static">
 						<span className="hidden xs:inline">† </span>
 						<GlitchText
 							onScroll

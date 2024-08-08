@@ -92,7 +92,6 @@ const ShortcutsArea = memo(() => {
 									? (showcase.publicURL as string)
 									: showcase
 						);
-						console.log(edge.node.showcases);
 						return {
 							name: edge.node?.parent?.name ?? 'Unnamed',
 							value: edge.node,

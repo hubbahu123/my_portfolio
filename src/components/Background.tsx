@@ -39,7 +39,13 @@ const Background: React.FC = () => {
 			)}
 
 			{use3D ? (
-				<React.Suspense>
+				<React.Suspense
+					fallback={
+						<p className="absolute top-1/2 text-center w-full -translate-y-1/2 text-white-primary">
+							Loading...
+						</p>
+					}
+				>
 					<Background3D />
 				</React.Suspense>
 			) : (

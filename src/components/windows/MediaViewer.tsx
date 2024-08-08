@@ -320,7 +320,7 @@ export const MediaViewer = () => {
 					</div>
 				</div>
 				{intialShowcases.length && (
-					<div className="mx-4 mb-4 grid overflow-y-hidden h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
+					<div className="mx-4 mb-4 grid overflow-hidden h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
 						<motion.div
 							initial={{
 								maskPosition: '0% 100%',
@@ -492,7 +492,7 @@ const Showcase: React.FC<{
 					muted
 					autoPlay
 					loop
-					className={`${className} z-10 bg-black-primary object-cover`}
+					className={`${className} z-10 relative bg-black-primary object-cover`}
 				>
 					<source src={src} type="video/mp4" />
 					Your browser does not support the video tag.

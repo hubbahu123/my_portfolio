@@ -108,6 +108,9 @@ const config: GatsbyConfig = {
 						"bg-[url('/bg_imgs/rainbow.png')]",
 						"bg-[url('/bg_imgs/stars.gif')]",
 						"bg-[url('/bg_imgs/tile.png')]",
+						'gatsby-image-wrapper',
+						'gatsby-image-wrapper-constrained',
+						'scale-by-height',
 					],
 				},
 			},
@@ -118,7 +121,6 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
 			options: {
-				devMode: true,
 				openAnalyzer: false,
 			},
 		},

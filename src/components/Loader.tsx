@@ -1,6 +1,6 @@
 import { motion, useAnimate } from 'framer-motion';
 import { StaticImage } from 'gatsby-plugin-image';
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import GlitchWall from './GlitchWall';
 
 const FRAMES = 36;

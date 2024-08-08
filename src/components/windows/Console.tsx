@@ -76,7 +76,7 @@ export const Console = () => {
 
 		const executed: HistoryItem = { text: '' };
 		const parts = input.trim().split(/\s+/).filter(Boolean);
-		switch (parts[0].toLowerCase()) {
+		switch (parts[0] ? parts[0].toLowerCase() : parts[0]) {
 			case 'help':
 				executed.text = `
 Usage: [command_name] --flag_1 --flag_2 -f_shorthand <parameter_1> <parameter_2>...

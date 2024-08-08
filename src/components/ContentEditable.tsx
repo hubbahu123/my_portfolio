@@ -1,5 +1,5 @@
 import { motion, useMotionValue } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 
 function getCaretPosition() {
 	const sel = window.getSelection();
@@ -76,7 +76,7 @@ interface ContentEditableProps
 	onUpdate: (str: string) => void;
 }
 
-const ContentEditable: React.FC<ContentEditableProps> = props => {
+const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 	const { value, onUpdate, ...rest } = props;
 	const display = useMotionValue('none');
 	const x = useMotionValue(0);
@@ -160,6 +160,6 @@ const ContentEditable: React.FC<ContentEditableProps> = props => {
 			/>
 		</>
 	);
-};
+});
 
 export default ContentEditable;

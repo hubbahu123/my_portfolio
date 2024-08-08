@@ -32,6 +32,10 @@ const InitialSystem: Directory = {
 						},
 					],
 				},
+				{
+					name: 'Homework',
+					children: [],
+				},
 			],
 		},
 		{

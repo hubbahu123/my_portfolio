@@ -1,6 +1,17 @@
 import type { GatsbyConfig } from 'gatsby';
 
 const config: GatsbyConfig = {
+	headers: [
+		{
+			source: '/resume.pdf',
+			headers: [
+				{
+					key: 'X-Frame-Options',
+					value: 'SAMEORIGIN',
+				},
+			],
+		},
+	],
 	siteMetadata: {
 		title: `Reda OS`,
 		siteUrl: `https://redaos.netlify.app`,

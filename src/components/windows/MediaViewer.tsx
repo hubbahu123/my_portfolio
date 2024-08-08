@@ -320,7 +320,7 @@ export const MediaViewer = () => {
 					</div>
 				</div>
 				{intialShowcases.length && (
-					<div className="mx-4 mb-4 grid h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
+					<div className="mx-4 mb-4 grid overflow-y-hidden h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
 						<motion.div
 							initial={{
 								maskPosition: '0% 100%',
@@ -340,7 +340,7 @@ export const MediaViewer = () => {
 								once: true,
 								amount: 0.6,
 							}}
-							className="pixel-mask group relative cursor-none border-2 border-white-primary"
+							className="pixel-mask group min-h-0 relative cursor-none border-2 border-white-primary"
 						>
 							<Showcase
 								src={intialShowcases[1]}
@@ -388,7 +388,7 @@ export const MediaViewer = () => {
 								once: true,
 								amount: 0.27,
 							}}
-							className="pixel-mask group relative md:col-start-2 md:row-span-3 md:row-start-1 cursor-none border-2 border-white-primary"
+							className="pixel-mask min-h-0 group relative md:col-start-2 md:row-span-3 md:row-start-1 cursor-none border-2 border-white-primary"
 						>
 							<Showcase
 								src={intialShowcases[0]}
@@ -480,9 +480,7 @@ const Showcase: React.FC<{
 	imgClassName?: string;
 	style?: React.CSSProperties;
 }> = ({ src, className, imgClassName, style, project }) => {
-	console.log(src);
 	if (typeof src === 'string') {
-		console.log('ssq');
 		return (
 			<>
 				<video

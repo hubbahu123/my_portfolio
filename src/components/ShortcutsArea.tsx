@@ -95,7 +95,7 @@ const ShortcutsArea = memo(() => {
 						return {
 							name: edge.node?.parent?.name ?? 'Unnamed',
 							value: edge.node,
-							ext: isVid ? 'mp4' : 'png', // TODO: Enable .mp4 as well
+							ext: isVid ? 'mp4' : 'png',
 						};
 					}
 				)

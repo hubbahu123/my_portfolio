@@ -483,6 +483,11 @@ const Showcase: React.FC<{
 	if (typeof src === 'string') {
 		return (
 			<>
+				<img
+					src={throbber}
+					alt="Throbber"
+					className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
+				/>
 				<video
 					muted
 					autoPlay

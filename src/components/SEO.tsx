@@ -17,15 +17,6 @@ const GetFrames = (text: string, shown: number): string[] => {
 	});
 };
 
-//Add some held frames
-const FRAMES = [
-	...Array(6).fill('-----RedaOS-----'),
-	...GetFrames(
-		'-----RedaOS---------------💻---------------👾-----',
-		16
-	).reverse(),
-];
-
 export const SEO: React.FC<SEOProps> = memo(
 	({ description, pathname, children }) => {
 		const {
@@ -44,42 +35,13 @@ export const SEO: React.FC<SEOProps> = memo(
 			twitterUsername,
 		};
 
-		const titleRef = useRef<HTMLTitleElement>(null);
-		const titleInfo = useRef({ i: -1, focused: true });
 		useEffect(() => {
-			const updateFrame = () => {
-				if (!titleRef.current) return;
-				if (!titleInfo.current.focused)
-					return (titleRef.current.textContent =
-						'Where are you going 🥺');
-				titleInfo.current.i = (titleInfo.current.i + 1) % FRAMES.length;
-				titleRef.current.textContent =
-					FRAMES[titleInfo.current.i] || 'RedaOS';
-			};
-			updateFrame();
-			const intervalID = setInterval(updateFrame, 250);
-
-			const focusHandler = () => {
-				titleInfo.current.focused = true;
-				updateFrame();
-			};
-			const blurHandler = () => {
-				titleInfo.current.focused = false;
-				updateFrame();
-			};
-			window.addEventListener('focus', focusHandler);
-			window.addEventListener('blur', blurHandler);
-
-			return () => {
-				clearInterval(intervalID);
-				window.removeEventListener('focus', focusHandler);
-				window.removeEventListener('blur', blurHandler);
-			};
-		}, []);
+			document.getElementsByTagName('title')?.textContent = 'test';
+		});
 
 		return (
 			<>
-				<title ref={titleRef}>{seo.title}</title>
+				<title>{seo.title}</title>
 				<meta name="description" content={seo.description} />
 				<meta name="image" content={seo.image} />
 				<meta name="twitter:card" content="summary_large_image" />

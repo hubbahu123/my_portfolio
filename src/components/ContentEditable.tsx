@@ -86,9 +86,9 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 
 	useEffect(() => {
 		if (!contentEditableRef.current) return;
-		if (contentEditableRef.current.textContent === props.value) return;
-		contentEditableRef.current.textContent = props.value;
-	});
+		contentEditableRef.current.innerHTML = props.value;
+		onUpdate(contentEditableRef.current.textContent ?? '');
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('selectionchange', () => {

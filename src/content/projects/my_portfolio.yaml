@@ -1,0 +1,29 @@
+---
+loc:
+    text: Here!
+    link: '#'
+roles:
+    - Sole Developer
+date: '2024-08-10'
+tags:
+    - Typescript
+    - GatsbyJS
+    - TailwindCSS
+    - ThreeJS
+    - Framer Motion
+    - Flask
+    - Django
+    - Python
+    - Zustand
+    - React
+categories:
+    - Web Development
+description:
+    A portfolio site built to showcase my frontend abilities, resembling
+    an early operating system. Originally built on a Flask backend (which still can
+    be found on my github!), but upgraded to Gatsby in order to allow for reactivity.
+showcases:
+    - '../../images/artistry_machine/mockup_1.jpg'
+    - '../../images/artistry_machine/mockup_2.jpg'
+    - '../../images/artistry_machine/mockup_3.jpg'
+logo: '../../images/logo/logo_32x32.png'

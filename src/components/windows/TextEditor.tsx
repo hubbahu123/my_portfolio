@@ -191,6 +191,7 @@ const TextEditor = () => {
 							src="../../images/cam.png"
 							alt="camera"
 							width={96}
+							placeholder="none"
 							className="hidden sm:block absolute bottom-0 right-40 md:right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
 						/>
 					</div>
@@ -207,9 +208,7 @@ const TextEditor = () => {
 					<ContentEditable
 						className="md:pl-7 md:ml-5 md:border-l-2 border-white-primary bg-transparent leading-8 outline-none border-y-0 border-r-0 min-h-96 resize-none"
 						value={text}
-						onUpdate={text => {
-							setText(text);
-						}}
+						onUpdate={setText}
 					/>
 				</div>
 			</div>

@@ -96,7 +96,7 @@ ls: will display the contents of the current working directory (add -h or --hidd
 cd: changes the current working directory to the new one
 |   path: the relative or absolute path to be navigated to
 clear: clears console of all contents
-cat: prints out the contents of a file
+cat: prints out the contents of a text file
 |   path: the path to a .txt file (the only one supported)
                 `;
 				break;

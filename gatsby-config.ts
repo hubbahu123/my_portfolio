@@ -40,7 +40,7 @@ const config: GatsbyConfig = {
 			},
 			__key: 'images',
 		},
-		`gatsby-transformer-json`,
+		`gatsby-transformer-yaml`,
 		{
 			resolve: `gatsby-source-filesystem`,
 			options: {

@@ -1,0 +1,23 @@
+---
+org: Franklin Institute
+roles:
+    - Developer and Engineer
+date: '2020-02-08'
+categories:
+    - Web Development
+tags:
+    - C++
+    - Python
+    - TCP
+    - Arduino
+    - Raspberry PI
+    - Linux
+description:
+    A construction of the famous enemy of Doctor Who, this accurate-to-size
+    recreation built with my team at the Franklin Institute is driven by a universal
+    custom remote that also controls a WIP R2D2.
+showcases:
+    - '../../images/dalek/dalek.mp4'
+    - '../../images/dalek/dalek.jpg'
+    - '../../images/dalek/dalek.mp4'
+logo: '../../images/dalek/logo.png'

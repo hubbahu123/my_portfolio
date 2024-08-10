@@ -35,7 +35,7 @@ const ShortcutsArea = memo(() => {
 	//Pulls apps from projects jsons
 	const data = useStaticQuery(graphql`
 		query ProjectsQuery {
-			allProjectsJson {
+			allProjectsYaml {
 				edges {
 					node {
 						loc {
@@ -76,7 +76,7 @@ const ShortcutsArea = memo(() => {
 		() =>
 			fillDir(
 				'users/@redaelmountassir/Desktop/Projects',
-				data?.allProjectsJson?.edges?.map(
+				data?.allProjectsYaml?.edges?.map(
 					(edge: { node: MediaFile }) => {
 						// WARNING! ABSYMAL TYPESCRIPT! MY LAZY ASS DID NOT WANNA DEAL WITH
 						// GRAPHQL TYPE GEN

@@ -13,7 +13,15 @@ const InitialSystem: Directory = {
 						{
 							name: 'about_me',
 							ext: 'txt',
-							value: `uefiywrbgihwrbgihwrbgihwbrihgbwrhigbrewhibgihrwbgihrwbgihr`,
+							value: `Hello World! My name is Reda Elmountassir and I am a <i>full-stack developer</i> based in Philly.
+                            In my work at <i>Coded By: Ventures</i> and my personal time I create projects adopting new technologies and techniques.
+                            I am also obsessed with soccer, rap, music, and all things related to my cultural identity (as a proud Moroccan 🇲🇦).</br>
+                            </br>
+                            My creative drive me to build projects that I am proud of representing my ability and push me past my limits.</br>
+                            </br>
+                            <u>Experience</u></br>
+                            - 4 years at R&D at the Franklin Institute</br>
+                            - 3 years and counting at Coded By: Ventures (previously Draft Studios)`,
 						},
 						{ name: 'Contact', ext: 'exe' },
 						{ name: 'resume', ext: 'pdf' },

@@ -402,10 +402,9 @@ In the interim, enjoy this cat!
 			/>
 			<LocationText location={location} />
 			{input.replaceAll('\n', '\n$ ')}
-			<span className="hidden md:inline invisible animate-blink font-bold peer-focus:visible">
+			<span className="inline invisible animate-blink font-bold peer-focus:visible">
 				_
 			</span>
-			<span className="md:hidden">Not supported on mobile ☹</span>
 		</p>
 	);
 };

@@ -36,7 +36,7 @@ export const SEO: React.FC<SEOProps> = memo(
 		};
 
 		useEffect(() => {
-			document.getElementsByTagName('title').textContent = 'test';
+			document.getElementsByTagName('title')[0].textContent = 'test';
 		});
 
 		return (

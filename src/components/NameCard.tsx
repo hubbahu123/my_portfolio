@@ -50,11 +50,6 @@ const NameCard = () => {
 				src={gridImg}
 				alt="Background graphic"
 				className="w-[700px] max-w-none absolute bottom-0 left-1/2 -translate-x-1/2"
-				style={{
-					mask: 'radial-gradient(100% 100% at bottom, red 30%, transparent 70%)',
-					WebkitMask:
-						'radial-gradient(100% 100% at bottom, red 30%, transparent 70%)',
-				}}
 			/>
 			<motion.div
 				className="h-full preserve-3D"

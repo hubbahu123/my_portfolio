@@ -52,7 +52,7 @@ float perlin3D(vec3 x) {
     return (mix(mix(mix( rand1D(n+0.0), rand1D(n+1.0),f.x),
         mix(rand1D(n+57.0), rand1D(n+58.0),f.x),f.y),
         mix(mix( rand1D(n+113.0), rand1D(n+114.0),f.x),
-        mix( rand1D(n+170.0), rand1D(n+171.0),f.x),f.y),f.z) + 1.0) / 2.0;
+        mix( rand1D(n+170.0), rand1D(n+171.0),f.x),f.y),f.z) + 1.0) * 0.5;
 }
 
 void main() {
@@ -73,9 +73,9 @@ void main() {
     //Sky color
     vec3 nebulaSamplePos = vWorldPosition;
     nebulaSamplePos.z += seed + time * NEBULA_SPEED;
-    float nebulaMask = pow(perlin3D(nebulaSamplePos / 500.0), 3.0);
-    nebulaMask -= (1.0 - nebulaMask) * pow(perlin3D(nebulaSamplePos / 100.0), 3.0) * .75;
-    nebulaMask -= (1.0 - nebulaMask) * pow(perlin3D(nebulaSamplePos / 50.0), 3.0) * .5;
+    float nebulaMask = pow(perlin3D(nebulaSamplePos * 0.002), 3.0);
+    nebulaMask -= (1.0 - nebulaMask) * pow(perlin3D(nebulaSamplePos * 0.01), 3.0) * .75;
+    nebulaMask -= (1.0 - nebulaMask) * pow(perlin3D(nebulaSamplePos * 0.02), 3.0) * .5;
     vec3 sky = mix(groundColor, mix(mix(skyColor, nebulaColor, 0.5 * (1.0 - nebulaMask)), vec3(1.0), starMask), h);
 
     gl_FragColor = vec4(mix(sky, mix(sunColor, sunColor2, h), sunMask), 1.0);

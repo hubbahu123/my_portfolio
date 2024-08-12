@@ -31,9 +31,11 @@ const calcOrigin = (window: HTMLElement, windowOrigin: HTMLElement) => {
 	const windowBounds = window.getBoundingClientRect();
 	const windowOriginsBounds = windowOrigin.getBoundingClientRect();
 	return `${
-		windowOriginsBounds.x + windowOriginsBounds.width / 2 - windowBounds.x
+		windowOriginsBounds.x + windowOriginsBounds.width * 0.5 - windowBounds.x
 	}px ${
-		windowOriginsBounds.y + windowOriginsBounds.height / 2 - windowBounds.y
+		windowOriginsBounds.y +
+		windowOriginsBounds.height * 0.5 -
+		windowBounds.y
 	}px`;
 };
 
@@ -139,11 +141,11 @@ export const Window: React.FC<WindowProps> = ({
 						: undefined
 				}
 				ref={windowRef}
-				className={`pointer-events-auto absolute top-0 flex max-h-full max-w-full flex-col bg-black-primary from-black-primary/75 from-25% to-dark-primary/75 to-70% shadow-[10px_10px_0_0] shadow-black-primary/25 backdrop-blur md:bg-transparent md:bg-gradient-to-r ${
+				className={`pointer-events-auto absolute top-0 flex max-h-full max-w-full flex-col bg-black-primary from-black-primary/75 from-25% to-dark-primary/75 to-70% shadow-[10px_10px_0_0] shadow-black-primary/25 md:backdrop-blur md:bg-transparent md:bg-gradient-to-r ${
 					isMobile || maximized
 						? `!h-full !w-full !transform-none ${!disableNavCompensation && 'border-t-[56px] border-t-black-primary md:border-0'}`
 						: 'touch-none'
-				} ${isMoving && 'invisible backdrop-blur-none'} ${
+				} ${isMoving && 'invisible md:backdrop-blur-none'} ${
 					disableInteraction && 'disable-child-interaction'
 				}`}
 				style={{

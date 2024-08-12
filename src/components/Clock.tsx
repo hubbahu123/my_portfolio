@@ -37,7 +37,7 @@ const Clock: React.FC<{ now?: Date }> = ({ now }) => {
 					height="18"
 					x="15.625"
 					y="13.5"
-					transform={`rotate(${(minHand / 3600) * 360 + 180})`}
+					transform={`rotate(${minHand * 0.1 + 180})`}
 					transform-origin="16 15.5"
 					className="drop-shadow-[1px_1px_0_rgb(0_0_0_/_0.1)]"
 				/>
@@ -47,7 +47,7 @@ const Clock: React.FC<{ now?: Date }> = ({ now }) => {
 					height="16"
 					x="15.75"
 					y="13.5"
-					transform={`rotate(${(secs / 60) * 360 + 180})`}
+					transform={`rotate(${secs * 6 + 180})`}
 					transform-origin="16 15.5"
 				/>
 			</svg>

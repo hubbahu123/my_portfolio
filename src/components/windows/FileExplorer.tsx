@@ -48,7 +48,7 @@ export const FileExplorer = () => {
 			>
 				{`${children.length} Items       ${stored}KB in ${sysObj.name}       175KB Available`}
 			</Marquee>
-			<ul className="z-10 flex-1 overflow-x-hidden bg-black-primary text-white-primary border-b-2 md:border-b-0 md:border-r-2 border-white-primary flex justify-end md:block">
+			<ul className="z-20 flex-1 overflow-x-hidden bg-black-primary text-white-primary border-b-2 md:border-b-0 md:border-r-2 border-white-primary flex justify-end md:block">
 				{parentFolders &&
 					parentFolders.map((folder, i) => (
 						<li key={folder.name} className="text-nowrap">
@@ -80,7 +80,7 @@ export const FileExplorer = () => {
 					{sysObj.name}
 				</li>
 			</ul>
-			<ul className="col-span-2 flex flex-wrap flex-[2] content-start justify-around gap-4 p-12 px-4 md:p-4 md:content-around">
+			<ul className="col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around gap-4 p-12 px-4 md:p-4 md:content-around">
 				{children.length === 0 ? (
 					<p className="text-md my-auto text-center font-bold text-white-primary">
 						{isTrash
@@ -116,7 +116,7 @@ export const FileExplorer = () => {
 			<img
 				src={sunImg}
 				alt="Background graphic"
-				className="-bottom-6 right-1/2 translate-x-1/2 absolute -z-10 max-w-none w-[125%] md:bottom-[5%] md:w-auto md:h-3/4 opacity-40 md:opacity-100 md:translate-x-0 md:-right-32"
+				className="-bottom-6 right-1/2 translate-x-1/2 absolute md:-z-10 max-w-none w-[125%] md:bottom-[5%] md:w-auto md:h-3/4 opacity-40 md:opacity-100 md:translate-x-0 md:-right-32"
 			/>
 		</div>
 	);

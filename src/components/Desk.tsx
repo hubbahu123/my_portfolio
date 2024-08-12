@@ -50,7 +50,7 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 			<mesh
 				receiveShadow
 				position={[0, 0.02, 0]}
-				rotation-x={Math.PI / -2}
+				rotation-x={Math.PI * -0.5}
 			>
 				<meshLambertMaterial color={Colors.blackPrimary} />
 				<planeGeometry args={[100, 100, 1, 1]} />

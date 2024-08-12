@@ -38,7 +38,7 @@ const Sky: React.FC<SkyProps> = ({ seed }) => {
 			sunPos: {
 				value: new Vector3().setFromSphericalCoords(
 					camera.far,
-					Math.PI / 2 - 0.2,
+					Math.PI * 0.5 - 0.2,
 					Math.PI
 				),
 			},

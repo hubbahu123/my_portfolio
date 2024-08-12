@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion, Transition, useScroll } from 'framer-motion';
 import { WindowDataContext } from '../Window';
-import { easeSteps, useInterval } from '../../utils';
+import { ease25Steps, ease5Steps, useInterval } from '../../utils';
 import NameCard from '../NameCard';
 import ScrollMarquee from '../ScrollMarquee';
 import GlitchText from '../GlitchText';
@@ -9,6 +9,7 @@ import ContentEditable from '../ContentEditable';
 import Float from '../Float';
 import { StaticImage } from 'gatsby-plugin-image';
 import { randInt } from 'three/src/math/MathUtils';
+import { MobileContext } from '../OS';
 
 function countSentences(str: string) {
 	const sentences = str.split(/[.!?]/);
@@ -21,6 +22,10 @@ function countSentences(str: string) {
 }
 
 const countWords = (str: string) => str.trim().split(/\s+/).length;
+
+const transition: Transition = {
+	ease: ease25Steps,
+};
 
 const TextEditor = () => {
 	const { setTitle, sysObj, getWidth } = useContext(WindowDataContext) ?? {};
@@ -35,6 +40,8 @@ const TextEditor = () => {
 		if (!setTitle || !sysObj) return;
 		setTitle(`${sysObj.name}.${sysObj.ext} - Text Editor`);
 	}, [setTitle, sysObj]);
+
+	const isMobile = useContext(MobileContext);
 
 	const scrollContainer = useRef(null);
 	const { scrollY } = useScroll({
@@ -128,7 +135,7 @@ const TextEditor = () => {
 
 	return (
 		<>
-			<div className=" bg-[url('/bg_imgs/stars.gif')] bg-cover bg-center w-full h-full -z-10 absolute" />
+			<div className="bg-[url('/bg_imgs/stars.gif')] bg-cover bg-center w-full h-full md:-z-10 absolute" />
 			<p className="block w-full p-1 z-10 md:fixed bottom-0 text-center whitespace-pre overflow-hidden bg-white-primary text-black-primary">
 				{[
 					`${wordCount} word${wordCount > 1 ? 's' : ''}`,
@@ -163,23 +170,32 @@ const TextEditor = () => {
 							{imgs.map((img, i) => (
 								<motion.div
 									key={i}
-									animate={
-										currentImg === i ? 'shown' : 'hidden'
-									}
+									animate={`${isMobile ? 'mobile' : ''}${currentImg === i ? 'Shown' : 'Hidden'}`}
 									variants={{
-										shown: {
+										Shown: {
 											maskPosition: '0 0%',
 											WebkitMaskPosition: '0 0%',
+											transition,
 										},
-										hidden: {
+										Hidden: {
 											maskPosition: '0 100%',
 											WebkitMaskPosition: '0 100%',
+											transition,
+										},
+										mobileShown: {
+											clipPath: 'inset(0 0% 0 0)',
+										},
+										mobileHidden: {
+											clipPath: 'inset(0 100% 0 0)',
+											transition: {
+												delay: 0.5,
+											},
 										},
 									}}
 									transition={{
 										duration: 0.5,
 										type: 'tween',
-										ease: easeSteps(25),
+										ease: ease5Steps,
 									}}
 									className={`transition darken-left bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
 								>
@@ -192,7 +208,7 @@ const TextEditor = () => {
 							alt="camera"
 							width={96}
 							placeholder="none"
-							className="hidden sm:block absolute bottom-0 right-40 md:right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
+							className="hidden sm:block absolute bottom-0 right-0 sm:right-40 md:right-0 -rotate-45 translate-x-1/3 w-24 animate-blink"
 						/>
 					</div>
 					<h3 className="font-display mb-7 xs:shadow-black-primary sm:shadow-none static leading-[0.95] uppercase text-7xl origin-bottom-left w-full whitespace-nowrap z-10 top-16 xs:rotate-90 xs:absolute sm:!rotate-0 sm:!static">

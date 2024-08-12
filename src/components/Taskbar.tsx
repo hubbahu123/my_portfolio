@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
-import { easeSteps } from '../utils';
+import { ease5Steps } from '../utils';
 import TaskbarContents from './TaskbarContents';
 
 const Taskbar: React.FC = () => {
@@ -14,7 +14,7 @@ const Taskbar: React.FC = () => {
 					y: 0,
 					transition: {
 						type: 'tween',
-						ease: easeSteps(5),
+						ease: ease5Steps,
 						delay: 0.5,
 					},
 				},

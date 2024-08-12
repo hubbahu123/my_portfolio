@@ -37,13 +37,13 @@ float snoise(vec2 v){
     vec3 g;
     g.x  = a0.x  * x0.x  + h.x  * x0.y;
     g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-    return (130.0 * dot(m, g) + 1.0) / 2.0;
+    return (130.0 * dot(m, g) + 1.0) * 0.5;
 }
 
 float calcNoise(vec2 samplePos, vec3 pos) {
     float octave1 = snoise(samplePos.xy / NOISE_SCALE);
     float octave2 = snoise(samplePos.xy / (NOISE_SCALE * .25));
-    float noise = (octave1 + octave2 * .25) / 1.25;
+    float noise = (octave1 + octave2 * .25) * 0.8;
     float heightGrad = smoothstep(gridDepth, 0.0, abs(pos.x));
     heightGrad *= heightGrad;
     return noise * NOISE_MAGNITUDE * (1.0 -heightGrad);

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useBoundStore, useMobileStore } from '../store';
 import { StaticImage } from 'gatsby-plugin-image';
-import { easeSteps } from '../utils';
+import { ease5Steps } from '../utils';
 import { motion } from 'framer-motion';
 import MobileTaskbarPanel from './MobileTaskbarPanel';
 
@@ -29,7 +29,7 @@ const MobileTaskbar = memo(() => {
 						y: 0,
 						transition: {
 							type: 'tween',
-							ease: easeSteps(5),
+							ease: ease5Steps,
 							delay: 0.5,
 						},
 					},

@@ -1,5 +1,6 @@
 import { motion, useMotionValue } from 'framer-motion';
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useContext, useEffect, useRef } from 'react';
+import { MobileContext } from './OS';
 
 function getCaretPosition() {
 	const sel = window.getSelection();
@@ -81,6 +82,7 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 	const display = useMotionValue('none');
 	const x = useMotionValue(0);
 	const y = useMotionValue(0);
+	const isMobile = useContext(MobileContext);
 
 	const contentEditableRef = useRef<HTMLParagraphElement>(null);
 
@@ -101,51 +103,62 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 
 	return (
 		<>
-			<motion.div
-				className="fixed top-0 left-0 z-50"
-				style={{ display, x, y }}
-				onFocus={() => display.set('block')}
-				onBlur={() => display.set('none')}
-			>
-				<motion.div className="-translate-x-1/2 -translate-y-[300%] border-2 border-white-primary divide-x-2 divide-white-primary bg-black-primary">
-					<button
-						className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 font-bold"
-						type="button"
-						onClick={e => {
-							if (!contentEditableRef.current) return;
-							e.preventDefault();
-							modifySelection(contentEditableRef.current, 'b');
-							display.set('none');
-						}}
-					>
-						B
-					</button>
-					<button
-						className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 underline"
-						type="button"
-						onClick={e => {
-							if (!contentEditableRef.current) return;
-							e.preventDefault();
-							modifySelection(contentEditableRef.current, 'u');
-							display.set('none');
-						}}
-					>
-						U
-					</button>
-					<button
-						className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 italic"
-						type="button"
-						onClick={e => {
-							if (!contentEditableRef.current) return;
-							e.preventDefault();
-							modifySelection(contentEditableRef.current, 'i');
-							display.set('none');
-						}}
-					>
-						I
-					</button>
+			{!isMobile && (
+				<motion.div
+					className="fixed top-0 left-0 z-50"
+					style={{ display, x, y }}
+					onFocus={() => display.set('block')}
+					onBlur={() => display.set('none')}
+				>
+					<motion.div className="-translate-x-1/2 -translate-y-[300%] border-2 border-white-primary divide-x-2 divide-white-primary bg-black-primary">
+						<button
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 font-bold"
+							type="button"
+							onClick={e => {
+								if (!contentEditableRef.current) return;
+								e.preventDefault();
+								modifySelection(
+									contentEditableRef.current,
+									'b'
+								);
+								display.set('none');
+							}}
+						>
+							B
+						</button>
+						<button
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 underline"
+							type="button"
+							onClick={e => {
+								if (!contentEditableRef.current) return;
+								e.preventDefault();
+								modifySelection(
+									contentEditableRef.current,
+									'u'
+								);
+								display.set('none');
+							}}
+						>
+							U
+						</button>
+						<button
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 italic"
+							type="button"
+							onClick={e => {
+								if (!contentEditableRef.current) return;
+								e.preventDefault();
+								modifySelection(
+									contentEditableRef.current,
+									'i'
+								);
+								display.set('none');
+							}}
+						>
+							I
+						</button>
+					</motion.div>
 				</motion.div>
-			</motion.div>
+			)}
 			<p
 				{...rest}
 				contentEditable

@@ -1,22 +1,24 @@
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { WindowDataContext } from '../Window';
-import { motion, useAnimate, useScroll, useTransform } from 'framer-motion';
-import { GatsbyImage, IGatsbyImageData, getImage } from 'gatsby-plugin-image';
+import {
+	motion,
+	useAnimate,
+	useMotionValueEvent,
+	useScroll,
+	useTransform,
+} from 'framer-motion';
 import { MobileContext } from '../OS';
-import { Throbber } from '../Throbber';
-import { easeSteps } from '../../utils';
+import { ease25Steps, ease5Steps } from '../../utils';
 import { useBoundStore } from '../../store';
 import ScrollMarquee from '../ScrollMarquee';
 import GlitchText from '../GlitchText';
-import Follow from '../Follow';
 import Tag from '../Tag';
 import Marquee from '../Marquee';
-import infoImg from '../../images/info.png';
-import glassImg from '../../images/glass.png';
 import mapImg from '../../images/map_watermark.png';
-import shapeGif from '../../images/icohedron.gif';
 import handsGif from '../../images/hands.gif';
 import throbber from '../../images/throbber.gif';
+import Showcase from '../Showcase';
+import MainShowcase from '../MainShowcase';
 
 export const MediaViewer = () => {
 	const isMobile = useContext(MobileContext);
@@ -34,59 +36,22 @@ export const MediaViewer = () => {
 	}, [setTitle, sysObj]);
 
 	const projectData = sysObj.value;
+	const title = sysObj.name.replaceAll('_', ' ');
 
-	// Animation Stuff
-	const [scrollContainer, animate] = useAnimate();
+	// Scroll-based animation
+	const [scrollContainer, animate] = useAnimate<HTMLDivElement>();
 	const scrollTarget = useRef(null);
 	const { scrollYProgress, scrollY } = useScroll({
 		target: scrollTarget,
 		container: scrollContainer,
 	});
-	let onChange: (latestValue: number) => void;
-	useEffect(() => {
+	const [inTop, setInTop] = useState(true);
+	useMotionValueEvent(scrollYProgress, 'change', latest => {
 		if (!scrollContainer.current) return;
-		let topHalf = true;
-		const blinkAnim = animate(
-			'#main-showcase',
-			{
-				maskPosition: ['0% 0%', '0% 100%', '0% 0%'],
-				webkitMaskPosition: ['0% 0%', '0% 100%', '0% 0%'],
-			},
-			{
-				duration: 0.75,
-				type: 'tween',
-				autoplay: false,
-				ease: easeSteps(25),
-			}
-		);
-
-		onChange = async function (val: number) {
-			if (!scrollContainer.current) return;
-			if (!topHalf && val < 0.35) {
-				topHalf = true;
-
-				blinkAnim.play();
-				animate(
-					'#main-showcase',
-					{ position: 'absolute', maskSize: '100% 4700%' },
-					{ delay: 0.375, type: 'tween' }
-				);
-			} else if (topHalf && val > 0.45) {
-				if (!topHalf) return;
-				topHalf = false;
-
-				blinkAnim.play();
-				animate(
-					'#main-showcase',
-					{ position: 'relative', maskSize: '200% 4700%' },
-					{ delay: 0.375, type: 'tween' }
-				);
-			}
-		};
-		const unsub = scrollYProgress.on('change', onChange);
-
-		return unsub;
-	}, [scrollYProgress]);
+		if (!inTop && latest < 0.25) setInTop(true);
+		else if (inTop && latest > 0.45) setInTop(false);
+	});
+	const scrollToTitle = useRef<HTMLHeadingElement>(null);
 
 	const scrollTarget2 = useRef(null);
 	const { scrollYProgress: scrollYProgress2 } = useScroll({
@@ -99,34 +64,6 @@ export const MediaViewer = () => {
 		isMobile
 			? ['inset(5rem 5rem)', 'inset(0rem 0rem)']
 			: ['inset(5rem 12rem)', 'inset(0rem 0rem)']
-	);
-
-	// Title anim
-	const title = sysObj.name.replaceAll('_', ' ');
-	const titleAnimated = useMemo<React.JSX.Element[]>(
-		() =>
-			sysObj.name?.split('_').map((str, i) => (
-				<span key={i} className="-mt-4 block overflow-hidden">
-					<motion.span
-						initial={{ y: '100%' }}
-						whileInView={{ y: 0 }}
-						transition={{
-							delay: (i + 2) * 0.5,
-							type: 'tween',
-							ease: 'circOut',
-							duration: 1,
-						}}
-						viewport={{
-							once: true,
-							root: scrollContainer,
-						}}
-						className="block pt-2"
-					>
-						{(i + 1) % 2 == 0 ? `• ${str}` : str}
-					</motion.span>
-				</span>
-			)),
-		[sysObj.name]
 	);
 
 	const intialShowcases =
@@ -165,13 +102,17 @@ export const MediaViewer = () => {
 		animate(
 			loadingRef.current,
 			{ opacity: [0, 1, 1, 0] },
-			{ type: 'tween', duration: 4, ease: 'circInOut' }
+			{
+				type: 'tween',
+				duration: 3,
+				times: [0, 0.2, 0.8, 1],
+				ease: ease5Steps,
+			}
 		);
+		setInTop(true);
 		setTimeout(() => {
-			if (!scrollContainer.current) return;
 			replaceWindow(id, nextProject);
-			scrollContainer.current.scrollTo(0, 0);
-			if (typeof onChange === 'function') onChange(0);
+			scrollContainer.current?.scrollTo(0, 0);
 		}, 2000);
 	};
 	useEffect(
@@ -196,97 +137,39 @@ export const MediaViewer = () => {
 				className="relative flex-1 overflow-y-auto overflow-x-hidden"
 			>
 				<div
-					className="mx-4 md:mt-12 h-[200%] min-h-[1500px] text-white-primary"
+					className="mx-4 md:mt-12 h-[150%] min-h-[1250px] text-white-primary"
 					ref={scrollTarget}
 				>
-					<div className="sticky top-0 md:top-12 mb-14 flex gap-4">
-						<div className="z-10 basis-0 md:flex-1 min-w-0">
-							<div
-								id="main-showcase"
-								className="pixel-mask darken-bottom group absolute h-full w-full cursor-none border-2 border-white-primary"
-							>
-								<Showcase
-									src={projectData.showcases[0]}
-									imgClassName="!transition ease-out group-hover:scale-110"
-									className="scale-by-height !h-full !w-full"
-									project={title}
-								/>
-							</div>
-							<h3 className="md:inline hidden dlig ss02 pointer-events-none absolute -bottom-12 left-7 overflow-visible whitespace-nowrap font-display text-7xl uppercase leading-[0.95] shadow-black-primary/25 [text-shadow:_-5px_5px_5px_var(--tw-shadow-color)]">
-								{titleAnimated}
-							</h3>
-						</div>
-						<div className="w-full min-w-0 flex-1">
-							<div className="mb-4 w-full border-2 border-white-primary bg-black-primary p-4 py-6">
-								<h3 className="mb-2 text-center font-display text-6xl">
-									<img
-										src={infoImg}
-										className="mr-4 inline-block h-12 align-top"
-										alt=""
-									/>
-									Info
-								</h3>
-								<ul className="mb-8 min-w-0 divide-y-2">
-									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
-										<h4>Categories</h4>
-										<div className="md:text-right text-light-primary">
-											{projectData.categories.map(cat => (
-												<p key={cat}>{cat}</p>
-											))}
-										</div>
-									</li>
-									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
-										<h4>Roles</h4>
-										<div className="md:text-right text-light-primary">
-											{projectData.roles.map(role => (
-												<p key={role}>{role}</p>
-											))}
-										</div>
-									</li>
-									<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
-										<h4>Date</h4>
-										<div className="md:text-right text-light-primary">
-											{projectData.date.toLocaleDateString()}
-										</div>
-									</li>
-									{projectData.org && (
-										<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
-											<h4>Organization</h4>
-											<div className="md:text-right text-light-primary">
-												{projectData.org}
-											</div>
-										</li>
-									)}
-									{projectData.loc && (
-										<li className="flex justify-between gap-2 py-4 flex-col md:flex-row">
-											<h4>Location</h4>
-											{projectData.loc.link === '#' ? (
-												<span className="flex-1 overflow-hidden text-ellipsis md:text-right text-light-primary">
-													{projectData.loc.text}
-												</span>
-											) : (
-												<a
-													className="flex-1 cursor-pointer overflow-hidden text-ellipsis md:text-right text-pink-accent underline"
-													href={projectData.loc.link}
-													target="_blank"
-												>
-													{projectData.loc.text} &#16;
-												</a>
-											)}
-										</li>
-									)}
-								</ul>
-							</div>
-							<img
-								src={shapeGif}
-								alt="spinning shape"
-								className="p-4 py-1 h-28 w-full object-contain border-2 border-white-primary bg-black-primary"
-							/>
-						</div>
-					</div>
+					<MainShowcase
+						file={sysObj}
+						scrollContainer={scrollContainer}
+						inTop={inTop}
+						skipSection={() => {
+							if (isMobile) {
+								scrollToTitle.current?.scrollIntoView({
+									block: 'end',
+									behavior: 'smooth',
+								});
+								return;
+							}
+							scrollContainer.current?.scrollTo({
+								top: 450,
+								behavior: 'smooth',
+							});
+						}}
+					/>
 				</div>
-				<h3 className="text-center p-4 pb-1 xs:pb-0 mb-10 dlig ss02 font-display text-6xl xs:text-7xl uppercase leading-[0.95] bg-white-primary text-black-primary md:hidden">
-					{title}
+				<h3
+					ref={scrollToTitle}
+					className="text-center p-4 pb-1 xs:pb-0 mb-10 dlig ss02 font-display text-6xl xs:text-7xl uppercase leading-[0.95] bg-white-primary text-black-primary md:hidden"
+				>
+					<GlitchText
+						onScroll
+						scrollRoot={scrollContainer}
+						decayRate={0.5}
+					>
+						{title}
+					</GlitchText>
 				</h3>
 				<div className="mx-4 mb-4 flex gap-4">
 					<ScrollMarquee
@@ -331,9 +214,9 @@ export const MediaViewer = () => {
 								WebkitMaskPosition: '0% 0%',
 							}}
 							transition={{
-								duration: 0.75,
+								duration: isMobile ? 0 : 0.75,
 								type: 'tween',
-								ease: easeSteps(25),
+								ease: ease25Steps,
 							}}
 							viewport={{
 								root: scrollContainer,
@@ -379,9 +262,9 @@ export const MediaViewer = () => {
 								WebkitMaskPosition: '0% 0%',
 							}}
 							transition={{
-								duration: 0.75,
+								duration: isMobile ? 0 : 0.75,
 								type: 'tween',
-								ease: easeSteps(25),
+								ease: ease25Steps,
 							}}
 							viewport={{
 								root: scrollContainer,
@@ -412,9 +295,9 @@ export const MediaViewer = () => {
 								WebkitMaskPosition: '0% 0%',
 							}}
 							transition={{
-								duration: 0.75,
+								duration: isMobile ? 0 : 0.75,
 								type: 'tween',
-								ease: easeSteps(25),
+								ease: ease25Steps,
 							}}
 							viewport={{
 								root: scrollContainer,
@@ -472,71 +355,3 @@ export const MediaViewer = () => {
 };
 
 export default MediaViewer;
-
-const Showcase: React.FC<{
-	src: string | IGatsbyImageData;
-	project: string;
-	className?: string;
-	imgClassName?: string;
-	style?: React.CSSProperties;
-}> = ({ src, className, imgClassName, style, project }) => {
-	if (typeof src === 'string') {
-		return (
-			<>
-				<img
-					src={throbber}
-					alt="Throbber"
-					className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
-				/>
-				<video
-					muted
-					autoPlay
-					loop
-					className={`${className} z-10 relative bg-black-primary object-cover`}
-				>
-					<source src={src} type="video/mp4" />
-					Your browser does not support the video tag.
-				</video>
-				<Follow>
-					<img
-						alt="magnifying glass"
-						src={glassImg}
-						width={75}
-						height={75}
-						className="pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2"
-					/>
-				</Follow>
-			</>
-		);
-	}
-
-	const img = getImage(src);
-	if (!img) return <Throbber />;
-
-	return (
-		<>
-			<img
-				src={throbber}
-				alt="Throbber"
-				className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
-			/>
-			<GatsbyImage
-				alt={`Showcase for ${project}`}
-				image={img}
-				className={`${className} flicker z-10 bg-black-primary`}
-				imgClassName={imgClassName}
-				style={{ ...style, animationDelay: `${-Math.random()}s` }}
-				objectFit="cover"
-			/>
-			<Follow>
-				<img
-					alt="magnifying glass"
-					src={glassImg}
-					width={75}
-					height={75}
-					className="pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2"
-				/>
-			</Follow>
-		</>
-	);
-};

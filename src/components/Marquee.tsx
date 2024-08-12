@@ -25,7 +25,7 @@ const Marquee: React.FC<MarqueeProps> = props => {
 		...rest
 	} = props;
 	const durationStr = `${panTime}s`;
-	const delayStr = `-${panTime / 2}s`;
+	const delayStr = `-${panTime * 0.5}s`;
 	const fullInnerClass = `inline-block ${vertical ? 'animate-pan-vertical min-h-full' : 'animate-pan min-w-full'} ${innerClass} ${pauseOnHover && 'group-hover:animate-pause'}`;
 	const timingFunc = steps ? `steps(${steps})` : undefined;
 

@@ -1,7 +1,7 @@
 import { MotionStyle, Variants, motion } from 'framer-motion';
 import * as React from 'react';
 import { useRef, useState, useEffect, memo } from 'react';
-import { easeSteps } from '../utils';
+import { ease5Steps } from '../utils';
 
 interface DropdownProps
 	extends React.DetailedHTMLProps<
@@ -21,7 +21,7 @@ const dropdownVariants: Variants = {
 		clipPath: 'inset(0 0 0% 0)',
 		WebkitClipPath: 'inset(0 0 0% 0)',
 		transition: {
-			ease: easeSteps(5),
+			ease: ease5Steps,
 			type: 'tween',
 		},
 	},
@@ -29,7 +29,7 @@ const dropdownVariants: Variants = {
 		clipPath: 'inset(0 0 100% 0)',
 		WebkitClipPath: 'inset(0 0 100% 0)',
 		transition: {
-			ease: easeSteps(5),
+			ease: ease5Steps,
 			type: 'tween',
 		},
 	},
@@ -59,7 +59,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(props => {
 			setAlign(forcedAlignment);
 		} else {
 			const buttonRect = button.current.getBoundingClientRect();
-			const centerX = buttonRect.left + buttonRect.width / 2;
+			const centerX = buttonRect.left + buttonRect.width * 0.5;
 			const windowThird = window.innerWidth / 3;
 			// Sets the alignment of a dropdown based on if it falls in the 1st, 2nd, or 3rd area of the screen
 			setAlign(
@@ -112,6 +112,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(props => {
 					!open && 'pointer-events-none'
 				} ${!noPadding && 'p-4'} ${dClassName}`}
 				style={alignmentStyle}
+				initial="closed"
 				animate={open ? 'open' : 'closed'}
 				variants={dropdownVariants}
 			>

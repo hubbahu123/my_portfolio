@@ -121,7 +121,6 @@ const config: GatsbyConfig = {
 						"bg-[url('/bg_imgs/tile.png')]",
 						/gatsby-image-wrapper$/,
 						/gatsby-image-wrapper-constrained$/,
-						/scale-by-height$/,
 					],
 				},
 			},

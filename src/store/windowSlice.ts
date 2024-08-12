@@ -39,7 +39,7 @@ export const createWindowSlice: StateCreator<
 	lastId: 0,
 	windowAudio: undefined,
 	playSound(reverse = false) {
-		const globalVol = useSettingsStore.getState().volume / 100;
+		const globalVol = useSettingsStore.getState().volume * 0.01;
 		if (globalVol === 0) return;
 		let audioElement = get().windowAudio;
 		if (!audioElement) {

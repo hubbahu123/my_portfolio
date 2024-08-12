@@ -7,16 +7,6 @@ interface SEOProps {
 	children?: React.ReactNode;
 }
 
-const GetFrames = (text: string, shown: number): string[] => {
-	const charArray = Array.from(text);
-	return charArray.map((_, i) => {
-		let frame = charArray.slice(i, i + shown).join('');
-		if (frame.length < shown)
-			frame += charArray.slice(0, shown - frame.length).join(''); //Wraps around if needed
-		return frame;
-	});
-};
-
 export const SEO: React.FC<SEOProps> = memo(
 	({ description, pathname, children }) => {
 		const {

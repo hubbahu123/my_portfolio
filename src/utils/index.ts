@@ -29,6 +29,9 @@ export const gcd = (x: number, y: number) => {
 export const easeSteps = (steps: number) => (progress: number) =>
 	Math.floor(progress * steps) / steps;
 
+export const ease5Steps = easeSteps(5);
+export const ease25Steps = easeSteps(25);
+
 const CHARS =
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#+&%?!';
 export const randomChar = () => pickRand(Array.from(CHARS));
@@ -135,7 +138,7 @@ export const useSiteMetadata = () => {
 export const useAudio = (src: string, vol = 1, loop = false) => {
 	const audio = useMemo(() => new Audio(), []);
 	const srcUsed = useRef('');
-	const globalVol = useSettingsStore(store => store.volume / 100);
+	const globalVol = useSettingsStore(store => store.volume * 0.01);
 	useEffect(() => {
 		audio.volume = vol * globalVol;
 	}, [vol, globalVol]);

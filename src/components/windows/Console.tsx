@@ -4,6 +4,7 @@ import { useBoundStore, useSettingsStore } from '../../store';
 
 interface HistoryItem {
 	text: string;
+	noWrap?: boolean;
 	mod?: 'Warning' | 'Error' | 'Success';
 	location?: Path; //Only applies to inputs
 }
@@ -31,7 +32,9 @@ function reducePath(path: Path) {
 
 export const Console = () => {
 	// Time and location
-	const [history, setHistory] = useState<HistoryItem[]>([{ text: INTRO }]);
+	const [history, setHistory] = useState<HistoryItem[]>([
+		{ text: INTRO, noWrap: true },
+	]);
 	const [location, setLocation] = useState<Path>([
 		'C:',
 		'users',
@@ -292,19 +295,19 @@ In the interim, enjoy this cat!
 
 	return (
 		<p
-			className="flicker relative flex-1 overflow-y-auto overflow-x-hidden whitespace-break-spaces break-all bg-black-primary p-2 pb-[10%] text-sm text-white-primary [text-shadow:_0_0_1rem_#f5f9ff9c]"
+			className="pointer-events-none flicker relative flex-1 overflow-y-auto overflow-x-hidden whitespace-break-spaces break-all bg-black-primary p-2 pb-[10%] text-sm text-white-primary [text-shadow:_0_0_1rem_#f5f9ff9c] md:pointer-events-auto"
 			ref={consoleRef}
 			onPointerUp={e => {
 				e.preventDefault();
 				focusInput();
 			}}
 		>
-			{history.map(({ text, mod, location }, i) => (
+			{history.map(({ text, mod, location, noWrap = false }, i) => (
 				<React.Fragment key={i}>
 					{location && <LocationText location={location} />}
-					{mod ? (
+					{mod || noWrap ? (
 						<span
-							className={`${
+							className={`${noWrap && 'whitespace-pre'} ${
 								mod === 'Error' &&
 								`text-burgundy-accent [text-shadow:_0_0_1rem_#920075]`
 							} ${
@@ -402,9 +405,10 @@ In the interim, enjoy this cat!
 			/>
 			<LocationText location={location} />
 			{input.replaceAll('\n', '\n$ ')}
-			<span className="inline invisible animate-blink font-bold peer-focus:visible">
+			<span className="hidden md:inline invisible animate-blink font-bold peer-focus:visible">
 				_
 			</span>
+			<span className="md:hidden">Not supported on mobile ☹</span>
 		</p>
 	);
 };

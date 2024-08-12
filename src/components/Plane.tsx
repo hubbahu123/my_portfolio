@@ -41,7 +41,7 @@ const Plane: React.FC<PlaneProps> = ({ seed }) => {
 
 	return (
 		<mesh
-			rotation-x={Math.PI / -2}
+			rotation-x={Math.PI * -0.5}
 			position={[0, -100, camera.far / -2 + 200]}
 			scale={isMobile ? [0.3, 1, 0.3] : 1}
 		>

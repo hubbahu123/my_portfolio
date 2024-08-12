@@ -155,7 +155,7 @@ body {
 	}
 
 	.gatsby-image-wrapper-constrained.hidden {
-		display: hidden;
+		display: none;
 		/* Goofy ahhh bug fixes */
 	}
 
@@ -214,16 +214,18 @@ body {
 
 	.darken-left::after {
 		content: '';
-		@apply absolute top-0 left-0 pointer-events-none h-full w-full xs:bg-gradient-to-r sm:!bg-none from-black-primary to-40%;
+		@apply absolute top-0 left-0 pointer-events-none h-full w-full xs:bg-gradient-to-r sm:!bg-none from-black-primary/75 to-25%;
 	}
 
 	.animate-pause {
 		animation-play-state: paused;
 	}
 
-	.scale-by-height [aria-hidden='true'] {
-		@apply !hidden;
+	/* purgecss start ignore */
+	.scale-by-height [data-placeholder-image] {
+		@apply hidden;
 	}
+	/* purgecss end ignore */
 
 	.disable-child-interaction * {
 		animation-play-state: paused !important;
@@ -264,11 +266,14 @@ body {
 		-webkit-transform-style: preserve-3d;
 	}
 
-	.pixel-mask {
-		mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
-		mask-size: 100% 4700%;
-		-webkit-mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
-		-webkit-mask-size: 100% 2600%;
+	@media (min-width: 768px) {
+		.pixel-mask {
+			mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
+			mask-size: 100% 2500%;
+			-webkit-mask: luminance
+				url(../../static/bg_imgs/fade_away_sheet.png);
+			-webkit-mask-size: 100% 2600%;
+		}
 	}
 }
 

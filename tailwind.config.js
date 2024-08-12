@@ -32,9 +32,9 @@ export const theme = {
 		},
 		screens: {
 			xs: '512px',
-			short: { raw: '(min-height: 300px)' },
-			average: { raw: '(min-height: 400px)' },
-			tall: { raw: '(min-height: 600px)' },
+			short: { raw: '(min-height: 500px)' },
+			average: { raw: '(min-height: 650px)' },
+			tall: { raw: '(min-height: 700px)' },
 		},
 		colors: {
 			'blue-accent': '#023788',

@@ -51,7 +51,7 @@ const ScrollMarquee: React.FC<MarqueeProps> = props => {
 		data.current.val =
 			mod(
 				data.current.val +
-					(delta / 1000) * panSpeed +
+					delta * 0.001 * panSpeed +
 					smoothScroll.get() * scrollStrength +
 					100,
 				200

@@ -8,6 +8,7 @@ interface SliderProps {
 		| ((value: number) => void);
 	children: React.ReactNode;
 	purpose: string;
+	noMargin?: boolean;
 	className?: string;
 	inputClassName?: string;
 }
@@ -17,11 +18,12 @@ const Slider: React.FC<SliderProps> = ({
 	setter,
 	children,
 	purpose,
+	noMargin = false,
 	className = '',
 	inputClassName = '',
 }) => {
 	return (
-		<div className={'flex h-6 my-4 ' + className}>
+		<div className={`flex h-6 ${!noMargin && 'my-4'} ${className}`}>
 			{children}
 			<input
 				aria-label={purpose}

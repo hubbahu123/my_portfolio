@@ -25,13 +25,9 @@ export const SEO: React.FC<SEOProps> = memo(
 			twitterUsername,
 		};
 
-		useEffect(() => {
-			document.getElementsByTagName('title')[0].textContent = 'test';
-		});
-
 		return (
 			<>
-				<title>{seo.title}</title>
+				<title id="title">{seo.title}</title>
 				<meta name="description" content={seo.description} />
 				<meta name="image" content={seo.image} />
 				<meta name="twitter:card" content="summary_large_image" />

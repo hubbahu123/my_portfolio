@@ -13,21 +13,29 @@ const Loader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 	useEffect(() => {
 		const playAnim = async () => {
-			// Maybe add an actual load sequence sometime in the future
 			if (!logo.current) return;
 
+			// TODO: Maybe add an actual load sequence sometime in the future
 			logo.current.classList.add('transform-none');
 			const logoImg = logo.current.firstElementChild as HTMLElement;
 			logoImg.style.transform = `translateX(-${FRAMES * FRAME_WIDTH}px)`;
 
-			await animate(0, 100, {
-				duration: 6,
-				ease: 'circOut',
+			const oldTitle = document.title;
+			await animate(0, 3.99, {
+				repeat: 5,
+				duration: 1,
+				type: 'tween',
+				ease: 'linear',
+				onUpdate: latest =>
+					(document.title = `Booting${'.'.repeat(Math.floor(latest))}`),
 			});
+			document.title = oldTitle;
+
 			animate(scope.current, {
 				opacity: 0,
 				transitionEnd: { visibility: 'hidden' },
 			});
+
 			setLoaded(true);
 		};
 

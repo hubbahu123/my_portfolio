@@ -1,12 +1,22 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { randomChar } from '../utils';
 
+const APPROX_CHAR_W = 15;
+const APPROX_CHAR_H = 35;
+
 const GlitchWall: React.FC<{ duration?: number }> = ({ duration = 6000 }) => {
 	const mask = 'radial-gradient(circle, transparent 128px, white 256px)';
 	const textRef = useRef<HTMLParagraphElement>(null);
 
 	//Doesn't create a new array every frame now
-	const array = useMemo(() => Array.from(Array(4000)), []);
+	const array = useMemo(() => {
+		const charCount = Math.ceil(
+			(window.innerWidth / APPROX_CHAR_W) *
+				(window.innerHeight / APPROX_CHAR_H) +
+				100
+		);
+		return Array.from(Array(charCount));
+	}, []);
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (!textRef.current) return;

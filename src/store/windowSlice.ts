@@ -75,8 +75,13 @@ export const createWindowSlice: StateCreator<
 		get().playSound(true);
 		set(state => {
 			const windows = [...state.windows];
-			windows.splice(get().findWindow(windows, ref));
-			return { windows };
+			if (
+				(typeof ref === 'number' ? ref : ref.id) ===
+				useMobileStore.getState().windowOpen?.id
+			)
+				useMobileStore.setState({ windowOpen: undefined });
+			windows.splice(get().findWindow(windows, ref), 1);
+			return windows.length ? { windows } : { windows, lastId: 0 };
 		});
 	},
 	replaceWindow(oldWindow, newObj) {
@@ -86,6 +91,7 @@ export const createWindowSlice: StateCreator<
 		get().addWindow(newObj, idToReuse, true);
 	},
 	deleteWindows() {
-		set(_ => ({ windows: [] }));
+		useMobileStore.setState({ windowOpen: undefined });
+		set(_ => ({ windows: [], lastId: 0 }));
 	},
 });

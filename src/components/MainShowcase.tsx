@@ -156,7 +156,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 						project={file.name}
 					/>
 					<div
-						className={`absolute top-6 right-3 z-20 animate-bounce cursor-pointer transition delay-1000 md:top-auto md:bottom-3 ${!inTop && 'opacity-0 pointer-events-none !delay-0'}`}
+						className={`absolute top-6 right-6 z-20 animate-bounce cursor-pointer transition delay-1000 md:right-3 md:top-auto md:bottom-3 ${!inTop && 'opacity-0 pointer-events-none !delay-0'}`}
 						onClick={skipSection}
 					>
 						<StaticImage
@@ -164,7 +164,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 							alt="scroll down"
 							layout="fixed"
 							width={16}
-							className="scale-[300] origin-top-right md:origin-bottom-right md:scale-[4]"
+							className="scale-[3] origin-top-right md:origin-bottom-right md:scale-[4]"
 						/>
 					</div>
 				</motion.div>

@@ -15,9 +15,11 @@ tags:
 description:
     A construction of the famous enemy of Doctor Who, this accurate-to-size
     recreation built with my team at the Franklin Institute is driven by a universal
-    custom remote that also controls a WIP R2D2.
+    custom remote that also controls a WIP R2D2. Together, we also built other various robotics.
 showcases:
     - '../../images/dalek/dalek.mp4'
-    - '../../images/dalek/dalek.jpg'
-    - '../../images/dalek/dalek.mp4'
+    - '../../images/dalek/on_dalek.jpeg'
+    - '../../images/dalek/christmas_dalek.jpg'
+    - '../../images/dalek/r2d2.jpg'
+    - '../../images/dalek/battlebot.jpg'
 logo: '../../images/dalek/logo.png'

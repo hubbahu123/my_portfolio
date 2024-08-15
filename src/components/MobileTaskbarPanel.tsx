@@ -41,8 +41,8 @@ const MobileTaskbar = memo(() => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useAudio(bgMusic, 0.01, true);
-	const [playShutdown] = useAudio(exitSound, 0.2);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
+	const [playShutdown] = useAudio(exitSound, 0.3);
 
 	const settingsReveal = useMotionValue(0);
 

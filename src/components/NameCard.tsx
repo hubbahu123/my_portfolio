@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
 	easeIn,
 	motion,
@@ -11,11 +11,13 @@ import { easeSteps } from '../utils';
 import { lerp } from 'three/src/math/MathUtils';
 import triangleImg from '../images/triangle_outline_blue.png';
 import gridImg from '../images/floor_grid.png';
+import { MobileContext } from './OS';
 
 const FRAMES = 46;
 const FRAME_WIDTH = 256;
 const ANIMATION_TIME = 2;
 const NameCard = () => {
+	const isMobile = useContext(MobileContext);
 	const pos = useRef(0);
 	const lastRot = useRef(0);
 	const rotateY = useMotionValue(0);
@@ -23,6 +25,7 @@ const NameCard = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useAnimationFrame((_, delta) => {
+		if (isMobile) return;
 		lastRot.current = rotateY.get();
 		let newY = lerp(lastRot.current, pos.current * 45, delta * 0.01);
 		if (Math.abs(newY) < 0.001) newY = 0;
@@ -40,7 +43,7 @@ const NameCard = () => {
 			ref={containerRef}
 			className="w-full h-full overflow-hidden relative"
 			onPointerMove={e => {
-				if (!containerRef.current) return;
+				if (!containerRef.current || isMobile) return;
 				const bounds = containerRef.current.getBoundingClientRect();
 				pos.current = ((e.clientX - bounds.x) / bounds.width) * 2 - 1;
 			}}

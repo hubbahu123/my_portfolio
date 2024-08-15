@@ -39,7 +39,7 @@ export const FileExplorer = () => {
 		children.reduce((prev, current) => prev + current.name.length, 0) * 12; //Produces a suitably unspecific enough number
 
 	return (
-		<div className="relative md:mt-[34px] md:flex flex-1 flex-row overflow-y-auto overflow-x-hidden">
+		<div className="relative md:mt-[34px] md:grid grid-cols-3 flex-1 overflow-y-auto overflow-x-hidden">
 			<Marquee
 				className="!sticky md:!fixed md:top-10 z-20 overflow-hidden border-b-2 border-white-primary bg-yellow-accent"
 				innerClass="text-black-primary text-md py-1 px-20 text-center whitespace-pre"
@@ -80,7 +80,7 @@ export const FileExplorer = () => {
 					{sysObj.name}
 				</li>
 			</ul>
-			<ul className="col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around gap-4 p-12 px-4 md:p-4 md:content-around">
+			<ul className="col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around gap-6 p-12 px-4 md:p-4 md:content-around">
 				{children.length === 0 ? (
 					<p className="text-md my-auto text-center font-bold text-white-primary">
 						{isTrash
@@ -89,7 +89,7 @@ export const FileExplorer = () => {
 					</p>
 				) : (
 					children.map(child => (
-						<li key={child.name} className="w-24">
+						<li key={child.name} className="w-24 w-full">
 							<Shortcut
 								sysObj={child}
 								overrideClick={
@@ -97,6 +97,7 @@ export const FileExplorer = () => {
 										? undefined
 										: () => replaceWindow(id, child)
 								}
+								tile={false}
 							/>
 						</li>
 					))
@@ -123,12 +124,12 @@ export const FileExplorer = () => {
 };
 
 const TrashBtn: React.FC<{ onClick: Function }> = ({ onClick }) => {
-	const [playTrash] = useAudio(trashAudio);
+	const [playTrash] = useAudio(trashAudio, 0.25);
 
 	return (
 		<button
 			type="button"
-			className="ease-step bottom-20 fixed right-10 m-4 bg-gradient-to-r from-blue-accent to-pink-accent bg-double bg-left px-4 py-2 text-white-primary outline outline-2 outline-white-primary transition-all hover:bg-right active:scale-95 md:bottom-0"
+			className="ease-step z-10 bottom-20 fixed right-10 m-4 bg-gradient-to-r from-blue-accent to-pink-accent bg-double bg-left px-4 py-2 text-white-primary outline outline-2 outline-white-primary transition-all hover:bg-right active:scale-95 md:bottom-0"
 			onClick={() => {
 				playTrash();
 				onClick();

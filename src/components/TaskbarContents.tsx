@@ -70,8 +70,8 @@ const TaskbarContents = () => {
 		shutdown,
 	} = useSettingsStore(state => state);
 
-	const [playBg, pauseBg] = useAudio(bgMusic, 0.01, true);
-	const [playShutdown] = useAudio(exitSound, 0.2);
+	const [playBg, pauseBg] = useAudio(bgMusic, 0.5, true);
+	const [playShutdown] = useAudio(exitSound, 0.3);
 	const volumeRef = useRef(75);
 	const toggleMute = () => {
 		if (volume === 0) return setVolume(volumeRef.current);

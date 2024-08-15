@@ -50,6 +50,7 @@ body {
 	--retro-fancy-dlig: 'dlig' off;
 	--retro-fancy-ss01: 'ss01' off;
 	--retro-fancy-ss02: 'ss02' off;
+	overflow: hidden;
 }
 
 .ss01 {

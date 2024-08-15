@@ -81,7 +81,7 @@ export const useSettingsStore = create<
 			brightness: 100,
 			use3D: webGL,
 			useStatic: false,
-			scanlines: false,
+			scanlines: true,
 			useFlicker: false,
 			volume: 0,
 			fancyText: true,

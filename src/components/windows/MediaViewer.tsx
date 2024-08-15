@@ -183,7 +183,7 @@ export const MediaViewer = () => {
 					>
 						{title} ♦️♣♠♥
 					</ScrollMarquee>
-					<div className="relative overflow-hidden flex flex-wrap gap-4 border-2 border-white-primary bg-black-primary p-24 md:p-32 md:px-6 px-6 text-white-primary">
+					<div className="relative overflow-hidden flex-grow flex flex-wrap gap-4 border-2 border-white-primary bg-black-primary p-24 md:p-32 md:px-6 px-6 text-white-primary">
 						<GlitchText
 							onScroll
 							scrollRoot={scrollContainer}

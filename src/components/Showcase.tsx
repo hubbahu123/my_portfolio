@@ -22,6 +22,7 @@ const Showcase: React.FC<{
 				<video
 					muted
 					autoPlay
+					playsInline
 					loop
 					className={`${className} z-10 relative bg-black-primary object-cover`}
 				>

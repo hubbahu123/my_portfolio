@@ -8,6 +8,7 @@ import type {
 } from './types';
 import { useMobileStore, useSettingsStore } from '.';
 import windowOpenAudio from '../audio/open_window.mp3';
+import { randRange } from '../utils';
 
 const pickWindowType = (sysObj: SystemObject): WindowType => {
 	if (!('ext' in sysObj)) return 'FileExplorer';
@@ -38,16 +39,18 @@ export const createWindowSlice: StateCreator<
 	windows: [],
 	lastId: 0,
 	windowAudio: undefined,
-	playSound(reverse = false) {
+	playSound(lower = false) {
 		const globalVol = useSettingsStore.getState().volume * 0.01;
 		if (globalVol === 0) return;
 		let audioElement = get().windowAudio;
 		if (!audioElement) {
 			audioElement = new Audio(windowOpenAudio);
-			audioElement.playbackRate = reverse ? -1.5 : 1.5;
-			audioElement.preservesPitch = !reverse;
-			audioElement.volume = 0.02 * globalVol;
-			set({ windowAudio: audioElement });
+			audioElement.playbackRate = lower
+				? randRange(1, 1.05)
+				: randRange(1.1, 1.2);
+			audioElement.preservesPitch = false;
+			audioElement.volume = 0.2 * globalVol;
+			// set({ windowAudio: audioElement });
 		}
 		if (audioElement.readyState >= 3) return audioElement.play();
 		audioElement.addEventListener('canplay', audioElement.play);

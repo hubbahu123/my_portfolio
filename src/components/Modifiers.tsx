@@ -25,6 +25,7 @@ const Modifiers = () => {
 					muted
 					autoPlay
 					loop
+					playsInline
 				>
 					<source src={staticVid} type="video/mp4" />
 				</video>

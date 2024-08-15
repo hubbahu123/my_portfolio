@@ -25,6 +25,8 @@ const countWords = (str: string) => str.trim().split(/\s+/).length;
 
 const transition: Transition = {
 	ease: ease25Steps,
+	duration: 0.5,
+	type: 'tween',
 };
 
 const TextEditor = () => {
@@ -184,18 +186,21 @@ const TextEditor = () => {
 										},
 										mobileShown: {
 											clipPath: 'inset(0 0% 0 0)',
+											transition: {
+												duration: 0.5,
+												ease: ease5Steps,
+												type: 'tween',
+											},
 										},
 										mobileHidden: {
 											clipPath: 'inset(0 100% 0 0)',
 											transition: {
 												delay: 0.5,
+												duration: 0.5,
+												ease: ease5Steps,
+												type: 'tween',
 											},
 										},
-									}}
-									transition={{
-										duration: 0.5,
-										type: 'tween',
-										ease: ease5Steps,
 									}}
 									className={`transition darken-left bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
 								>

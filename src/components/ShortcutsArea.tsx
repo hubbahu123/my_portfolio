@@ -85,13 +85,21 @@ const ShortcutsArea = memo(() => {
 						const isVid =
 							typeof edge.node.showcases[0].childImageSharp ===
 							null;
-						// @ts-ignore
-						edge.node.showcases = edge.node.showcases.map(
-							showcase =>
-								showcase.childImageSharp === null
-									? (showcase.publicURL as string)
-									: showcase
-						);
+						try {
+							// @ts-ignore
+							edge.node.showcases = edge.node.showcases.map(
+								showcase =>
+									showcase.childImageSharp === null
+										? (showcase.publicURL as string)
+										: showcase
+							);
+						} catch {
+							console.error(
+								`Path for ${edge.node.parent?.name} showcases is likely wrong`
+							);
+							edge.node.showcases = [];
+						}
+
 						return {
 							name: edge.node?.parent?.name ?? 'Unnamed',
 							value: edge.node,

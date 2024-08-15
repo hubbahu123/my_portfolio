@@ -24,7 +24,9 @@ description:
     comes from the 3D used throughout such as raymarching, and shader algorithm that
     is an alternative to rasterized rendering.'
 showcases:
-    - '../../images/artistry_machine/mockup_1.jpg'
-    - '../../images/artistry_machine/mockup_2.jpg'
-    - '../../images/artistry_machine/mockup_3.jpg'
+    - '../../images/artistry_machine/showcase_1.jpg'
+    - '../../images/artistry_machine/showcase_2.jpg'
+    - '../../images/artistry_machine/showcase_3.jpg'
+    - '../../images/artistry_machine/showcase_4.jpg'
+    - '../../images/artistry_machine/showcase_5.jpg'
 logo: '../../images/artistry_machine/logo.png'

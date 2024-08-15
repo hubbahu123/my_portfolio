@@ -18,6 +18,14 @@ interface MainShowcaseProps {
 
 const transition: Transition = {
 	ease: ease25Steps,
+	duration: 0.75,
+	type: 'tween',
+};
+
+const mobileTransition: Transition = {
+	ease: ease5Steps,
+	duration: 0.75,
+	type: 'tween',
 };
 
 const MainShowcase: React.FC<MainShowcaseProps> = ({
@@ -96,6 +104,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 								'inset(0 0% 0 0)',
 							],
 							z: [0, 1],
+							transition: mobileTransition,
 						},
 						mobileBottom: {
 							clipPath: [
@@ -104,12 +113,8 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 								'inset(0 0% 0 0)',
 							],
 							z: [0, 1],
+							transition: mobileTransition,
 						},
-					}}
-					transition={{
-						duration: 0.75,
-						type: 'tween',
-						ease: ease5Steps,
 					}}
 					onUpdate={({ z }) => {
 						if (!mainShowcaseRef.current) return;
@@ -173,7 +178,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 				</h3>
 			</div>
 			<div className="w-full min-w-0 flex-1">
-				<div className="mb-4 w-full border-2 border-white-primary bg-black-primary p-4 py-6">
+				<div className="mb-4 w-full min-h-[55vh] border-2 border-white-primary bg-black-primary p-4 py-6">
 					<h3 className="mb-2 text-center font-display text-6xl">
 						<img
 							src={infoImg}

@@ -8,15 +8,20 @@ import { MobileContext } from './OS';
 interface ShortcutPros {
 	sysObj: SystemObject;
 	overrideClick?: React.MouseEventHandler<HTMLButtonElement>;
+	tile?: boolean;
 }
 
-const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
+const Shortcut: React.FC<ShortcutPros> = ({
+	sysObj,
+	overrideClick,
+	tile = true,
+}) => {
 	const [addWindow] = useBoundStore(state => [state.addWindow]);
 	const isMobile = useContext(MobileContext);
 
 	return (
 		<button
-			className="group flex flex-col items-center p-2 w-24 max-h-full h-auto outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px]"
+			className={`group flex items-center w-24 max-h-full h-auto outline-2 outline-transparent outline-offset-8 transition-all ease-steps md:p-4 md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px] ${tile ? 'p-2 flex-col gap-2' : 'p-0 xs:p-2 w-full gap-6 md:gap-4 md:py-2'}`}
 			type="button"
 			onDoubleClick={
 				overrideClick
@@ -46,10 +51,12 @@ const Shortcut: React.FC<ShortcutPros> = ({ sysObj, overrideClick }) => {
 			}
 		>
 			<Icon
-				className="w-16 h-16 mb-2 pointer-events-none md:mb-4"
+				className={`pointer-events-none ${tile ? 'md:mb-4 w-16 h-16' : 'w-10 h-10 xs:w-16 xs:h-16 shrink-0 md:w-10 md:h-10'}`}
 				sysObj={sysObj}
 			/>
-			<p className="p-2 text-center max-w-[175%] leading-none break-words select-none text-sm text-white-primary shadow-[inset_0_0_40px] transition-all ease-steps shadow-black-primary md:group-active:shadow-none">
+			<p
+				className={`p-2 max-w-[175%] leading-none break-words select-none text-white-primary transition-all ease-steps ${tile ? 'shadow-[inset_0_0_40px] shadow-black-primary md:group-active:shadow-none text-center text-sm' : 'flex-1 text-left overflow-hidden text-nowrap text-ellipsis text-sm xs:text-base md:text-sm'}`}
+			>
 				{sysObj.name}
 				{'ext' in sysObj && sysObj.ext !== 'exe'
 					? `.${sysObj.ext}`

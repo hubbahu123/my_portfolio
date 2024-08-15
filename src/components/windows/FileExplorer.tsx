@@ -8,6 +8,7 @@ import { useAudio } from '../../utils';
 import trashAudio from '../../audio/trash.mp3';
 import sunImg from '../../images/circle.png';
 import trashImg from '../../images/trash.png';
+import { StaticImage } from 'gatsby-plugin-image';
 
 export const FileExplorer = () => {
 	const { sysObj, id, setTitle, getWidth } = useContext(
@@ -20,6 +21,9 @@ export const FileExplorer = () => {
 
 	useEffect(() => setTitle(`File Explorer - ${sysObj.name}`), [sysObj]);
 	const isTrash = sysObj.name === 'Trash';
+
+	// Set view type
+	const [tileMode, setTileMode] = useState(true);
 
 	const [traverse, replaceWindow, emptyDir] = useBoundStore(state => [
 		state.traverse,
@@ -48,7 +52,7 @@ export const FileExplorer = () => {
 			>
 				{`${children.length} Items       ${stored}KB in ${sysObj.name}       175KB Available`}
 			</Marquee>
-			<ul className="z-20 flex-1 relative overflow-x-hidden md:bg-black-primary text-white-primary border-b-2 md:border-b-0 md:border-r-2 border-white-primary flex justify-end md:block">
+			<ul className="z-20 flex-1 relative overflow-x-hidden md:bg-black-primary text-white-primary border-b-2 border-white-primary flex justify-end md:border-b-0 md:border-r-2 md:flex-col md:justify-start">
 				{parentFolders &&
 					parentFolders.map((folder, i) => (
 						<li key={folder.name} className="text-nowrap">
@@ -79,8 +83,31 @@ export const FileExplorer = () => {
 				<li className="text-md w-full p-2 text-left md:p-4 md:bg-purple-watermark">
 					{sysObj.name}
 				</li>
+				<button
+					type="button"
+					onClick={() => setTileMode(tileMode => !tileMode)}
+					className="m-2 hidden self-start relative mt-auto border-white-primary border-2 whitespace-nowrap md:flex"
+				>
+					<StaticImage
+						src="../../images/tile_mode.png"
+						layout="fixed"
+						className="m-2"
+						alt="tile mode"
+					/>
+					<StaticImage
+						src="../../images/list_mode.png"
+						layout="fixed"
+						className="m-2"
+						alt="list mode"
+					/>
+					<div
+						className={`w-1/2 h-full bg-purple-watermark absolute -z-10 transition ease-out ${!tileMode && 'translate-x-full'}`}
+					/>
+				</button>
 			</ul>
-			<ul className="col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around gap-6 p-12 px-4 md:p-4 md:content-around">
+			<ul
+				className={`col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around p-12 px-4 md:p-4 ${tileMode ? 'gap-6 md:content-around' : 'gap-4 xs:gap-2'}`}
+			>
 				{children.length === 0 ? (
 					<p className="text-md my-auto text-center font-bold text-white-primary">
 						{isTrash
@@ -89,7 +116,10 @@ export const FileExplorer = () => {
 					</p>
 				) : (
 					children.map(child => (
-						<li key={child.name} className="w-24 w-full">
+						<li
+							key={child.name}
+							className={tileMode ? 'w-24' : 'w-full'}
+						>
 							<Shortcut
 								sysObj={child}
 								overrideClick={
@@ -97,7 +127,7 @@ export const FileExplorer = () => {
 										? undefined
 										: () => replaceWindow(id, child)
 								}
-								tile={false}
+								tile={tileMode}
 							/>
 						</li>
 					))

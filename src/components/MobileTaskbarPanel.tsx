@@ -287,7 +287,7 @@ const MobileTaskbar = memo(() => {
 						val == 1 ? 'none' : 'auto'
 					),
 				}}
-				className="fixed touch-none top-0 w-full p-4 text-white-primary z-40 cursor-grab flex gap-2 items-center"
+				className="fixed touch-none top-0 w-full px-4 p-2 text-white-primary z-40 cursor-grab flex gap-2 items-center short:p-4"
 				drag
 				dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
 				dragElastic={0}

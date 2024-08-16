@@ -4,10 +4,11 @@ import { AnimationScope, motion, Transition } from 'framer-motion';
 import { useContext, useMemo, useRef } from 'react';
 import { File } from '../store/types';
 import React from 'react';
-import Showcase from './Showcase';
 import { MobileContext } from './OS';
 import { ease25Steps, ease5Steps } from '../utils';
 import { StaticImage } from 'gatsby-plugin-image';
+import Showcase from './Showcase';
+import Follow from './Follow';
 
 interface MainShowcaseProps {
 	file: File;
@@ -82,7 +83,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 			<div className="z-10 basis-0 md:flex-1 min-w-0">
 				<motion.div
 					ref={mainShowcaseRef}
-					initial={'mobileTop'}
+					initial={`${isMobile || maskUnsupported ? 'mobile' : ''}Top`}
 					animate={`${isMobile || maskUnsupported ? 'mobile' : ''}${inTop ? 'Top' : 'Bottom'}`}
 					variants={{
 						Top: {
@@ -154,12 +155,9 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 					}}
 					className="pixel-mask darken-bottom group absolute h-full w-full cursor-none border-2 border-white-primary"
 				>
-					<Showcase
-						src={projectData.showcases[0]}
-						imgClassName="!transition ease-out group-hover:scale-110"
-						className="scale-by-height !h-full !w-full"
-						project={file.name}
-					/>
+					<div className="bg-black-primary w-full h-full absolute top-0" />
+					<Showcase src={projectData.showcases[0]} />
+					{!isMobile && <Follow />}
 					<div
 						className={`absolute top-6 right-6 z-20 animate-bounce cursor-pointer transition delay-1000 md:right-3 md:top-auto md:bottom-3 ${!inTop && 'opacity-0 pointer-events-none !delay-0'}`}
 						onClick={skipSection}

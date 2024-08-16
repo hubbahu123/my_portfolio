@@ -1,82 +1,34 @@
 import { GatsbyImage, IGatsbyImageData, getImage } from 'gatsby-plugin-image';
-import glassImg from '../images/glass.png';
-import throbber from '../images/throbber.gif';
-import Follow from './Follow';
 import React from 'react';
 
 const Showcase: React.FC<{
 	src: string | IGatsbyImageData;
-	project: string;
 	className?: string;
-	imgClassName?: string;
-	style?: React.CSSProperties;
-}> = ({ src, className, imgClassName, style, project }) => {
+	autoHeight?: boolean;
+}> = ({ src, className, autoHeight = false }) => {
+	const classes = `${className} flicker z-10 object scale-by-height object-cover !w-full ${autoHeight ? '!h-auto' : '!h-full'}`;
 	if (typeof src === 'string') {
 		return (
-			<>
-				<img
-					src={throbber}
-					alt="Throbber"
-					className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
-				/>
-				<video
-					muted
-					autoPlay
-					playsInline
-					loop
-					className={`${className} z-10 relative bg-black-primary object-cover`}
-				>
-					<source src={src} type="video/mp4" />
-					Your browser does not support the video tag.
-				</video>
-				<Follow>
-					<img
-						alt="magnifying glass"
-						src={glassImg}
-						width={75}
-						height={75}
-						className="pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2"
-					/>
-				</Follow>
-			</>
+			<video muted autoPlay playsInline loop className={classes}>
+				<source src={src} type="video/mp4" />
+				Your browser does not support the video tag.
+			</video>
 		);
 	}
 
 	const img = getImage(src);
-	if (!img)
-		return (
-			<img
-				src={throbber}
-				alt="Throbber"
-				className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
-			/>
-		);
-
+	if (!img) {
+		console.error('Not found', img);
+		return;
+	}
 	return (
-		<>
-			<img
-				src={throbber}
-				alt="Throbber"
-				className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
-			/>
-			<GatsbyImage
-				alt={`Showcase for ${project}`}
-				image={img}
-				className={`${className} flicker z-10 bg-black-primary`}
-				imgClassName={imgClassName}
-				style={{ ...style, animationDelay: `${-Math.random()}s` }}
-				objectFit="cover"
-			/>
-			<Follow>
-				<img
-					alt="magnifying glass"
-					src={glassImg}
-					width={75}
-					height={75}
-					className="pointer-events-none z-10 -translate-x-1/2 -translate-y-1/2"
-				/>
-			</Follow>
-		</>
+		<GatsbyImage
+			alt={`Showcase for project`}
+			image={img}
+			className={classes}
+			imgClassName="!transition-none !relative"
+			objectFit="cover"
+		/>
 	);
 };
 

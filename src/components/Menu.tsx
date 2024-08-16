@@ -79,7 +79,8 @@ const Menu: React.FC<MenuProps> = memo(({ windows, deleteWindows }) => {
 								>
 									<Icon
 										sysObj={window.sysObj}
-										className="absolute z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16"
+										style={{ zIndex: 999999999 }}
+										className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16"
 									/>
 									<WindowJSX
 										windowData={window}

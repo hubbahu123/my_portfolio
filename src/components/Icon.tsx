@@ -43,7 +43,7 @@ const Icon: React.FC<IconProps> = ({ sysObj, ...props }) => {
 		<GatsbyImage
 			className={props.className}
 			imgClassName="transition-none"
-			style={{ width: '', height: '' }}
+			style={{ width: '', height: '', ...props.style }}
 			alt=""
 			draggable={false}
 			image={image}

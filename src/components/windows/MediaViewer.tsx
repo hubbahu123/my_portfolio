@@ -8,7 +8,7 @@ import {
 	useTransform,
 } from 'framer-motion';
 import { MobileContext } from '../OS';
-import { ease25Steps, ease5Steps } from '../../utils';
+import { ease5Steps } from '../../utils';
 import { useBoundStore } from '../../store';
 import ScrollMarquee from '../ScrollMarquee';
 import GlitchText from '../GlitchText';
@@ -19,6 +19,25 @@ import handsGif from '../../images/hands.gif';
 import throbber from '../../images/throbber.gif';
 import Showcase from '../Showcase';
 import MainShowcase from '../MainShowcase';
+import Follow from '../Follow';
+import throbberGif from '../../images/throbber.gif';
+
+const anim = {
+	initial: {
+		clipPath: 'inset(0 0 100% 0)',
+		WebkitClipPath: 'inset(0 0 100% 0)',
+	},
+	whileInView: {
+		clipPath: 'inset(0 0 0% 0)',
+		WebkitClipPath: 'inset(0 0 0% 0)',
+	},
+	transition: {
+		duration: 0.75,
+		type: 'tween',
+		ease: ease5Steps,
+		delay: 0.25,
+	},
+};
 
 export const MediaViewer = () => {
 	const isMobile = useContext(MobileContext);
@@ -161,15 +180,17 @@ export const MediaViewer = () => {
 				</div>
 				<h3
 					ref={scrollToTitle}
-					className="text-center p-4 pb-1 xs:pb-0 mb-10 dlig ss02 font-display text-6xl xs:text-7xl uppercase leading-[0.95] bg-white-primary text-black-primary md:hidden"
+					className="text-center p-4 pb-1 xs:pb-0 mb-10 dlig ss02 font-display text-6xl xs:text-7xl uppercase leading-[0.95] bg-white-primary text-white-primary md:hidden"
 				>
 					<GlitchText
 						onScroll
 						scrollRoot={scrollContainer}
 						decayRate={0.5}
+						className="absolute text-black-primary w-full left-0 px-4 pb-1 xs:pb-0"
 					>
 						{title}
 					</GlitchText>
+					{title}
 				</h3>
 				<div className="mx-4 mb-4 flex gap-4">
 					<ScrollMarquee
@@ -204,34 +225,24 @@ export const MediaViewer = () => {
 				</div>
 				{intialShowcases.length && (
 					<div className="mx-4 mb-4 grid overflow-hidden h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
-						<motion.div
-							initial={{
-								maskPosition: '0% 100%',
-								WebkitMaskPosition: '0 100%',
-							}}
-							whileInView={{
-								maskPosition: '0% 0%',
-								WebkitMaskPosition: '0% 0%',
-							}}
-							transition={{
-								duration: isMobile ? 0 : 0.75,
-								type: 'tween',
-								ease: ease25Steps,
-							}}
-							viewport={{
-								root: scrollContainer,
-								once: true,
-								amount: 0.6,
-							}}
-							className="pixel-mask group min-h-0 relative cursor-none border-2 border-white-primary"
-						>
-							<Showcase
-								src={intialShowcases[1]}
-								imgClassName="!transition ease-out group-hover:scale-110"
-								className="scale-by-height !h-full !w-full"
-								project={title}
+						<div className="min-h-0 relative border-2 border-white-primary bg-black-primary">
+							<img
+								src={throbberGif}
+								alt="Throbber"
+								className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 							/>
-						</motion.div>
+							<motion.div
+								{...anim}
+								viewport={{
+									root: scrollContainer,
+									once: true,
+								}}
+								className="h-full relative cursor-none"
+							>
+								<Showcase src={intialShowcases[1]} />
+								{!isMobile && <Follow />}
+							</motion.div>
+						</div>
 						<div className="relative overflow-hidden border-2 border-white-primary bg-black-primary">
 							<img
 								src={mapImg}
@@ -252,68 +263,49 @@ export const MediaViewer = () => {
 						>
 							▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 						</Marquee>
-						<motion.div
-							initial={{
-								maskPosition: '0% 100%',
-								WebkitMaskPosition: '0 100%',
-							}}
-							whileInView={{
-								maskPosition: '0% 0%',
-								WebkitMaskPosition: '0% 0%',
-							}}
-							transition={{
-								duration: isMobile ? 0 : 0.75,
-								type: 'tween',
-								ease: ease25Steps,
-							}}
-							viewport={{
-								root: scrollContainer,
-								once: true,
-								amount: 0.27,
-							}}
-							className="pixel-mask min-h-0 group relative md:col-start-2 md:row-span-3 md:row-start-1 cursor-none border-2 border-white-primary"
-						>
-							<Showcase
-								src={intialShowcases[0]}
-								imgClassName="!transition ease-out group-hover:scale-110"
-								className="scale-by-height !h-full !w-full"
-								project={title}
+						<div className="min-h-0 relative border-2 border-white-primary bg-black-primary md:col-start-2 md:row-span-3 md:row-start-1">
+							<img
+								src={throbberGif}
+								alt="Throbber"
+								className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 							/>
-						</motion.div>
+							<motion.div
+								{...anim}
+								viewport={{
+									root: scrollContainer,
+									once: true,
+								}}
+								className="h-full relative cursor-none"
+							>
+								<Showcase src={intialShowcases[0]} />
+								{!isMobile && <Follow />}
+							</motion.div>
+						</div>
 					</div>
 				)}
-				<div className="mx-4">
-					{restShowcases.map((showcase, i) => (
+				{restShowcases.map((showcase, i) => (
+					<div
+						key={i}
+						className="relative m-4 mt-0 border-2 border-white-primary bg-black-primary"
+					>
+						<img
+							src={throbberGif}
+							alt="Throbber"
+							className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
+						/>
 						<motion.div
-							key={i}
-							initial={{
-								maskPosition: '0% 100%',
-								WebkitMaskPosition: '0 100%',
-							}}
-							whileInView={{
-								maskPosition: '0% 0%',
-								WebkitMaskPosition: '0% 0%',
-							}}
-							transition={{
-								duration: isMobile ? 0 : 0.75,
-								type: 'tween',
-								ease: ease25Steps,
-							}}
+							{...anim}
 							viewport={{
 								root: scrollContainer,
 								once: true,
 							}}
-							className="pixel-mask group relative mb-4 w-full cursor-none border-2 border-white-primary"
+							className="relative w-full h-full cursor-none"
 						>
-							<Showcase
-								src={showcase}
-								imgClassName="!relative !transition ease-out group-hover:scale-110"
-								className="scale-by-height !h-auto !w-full"
-								project={title}
-							/>
+							<Showcase src={showcase} autoHeight />
+							{!isMobile && <Follow />}
 						</motion.div>
-					))}
-				</div>
+					</div>
+				))}
 				<div className="mt-12 h-[300%]" ref={scrollTarget2}>
 					<div
 						className="sticky top-0 h-1/3 cursor-pointer bg-black-primary text-white-primary outline outline-2 outline-white-primary"
@@ -323,12 +315,7 @@ export const MediaViewer = () => {
 							className="h-full w-full"
 							style={{ clipPath }}
 						>
-							<Showcase
-								src={nextProject.value.showcases[0]}
-								imgClassName="!transition ease-out group-hover:scale-110"
-								className="scale-by-height !h-full !w-full"
-								project={nextProject.name}
-							/>
+							<Showcase src={nextProject.value.showcases[0]} />
 						</motion.div>
 						<div className="absolute top-0 flex h-full w-full flex-col justify-center gap-4 bg-black-primary/45 px-8 pb-12">
 							<GlitchText

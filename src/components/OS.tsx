@@ -53,6 +53,8 @@ const OS: React.FC = () => {
 		str => str === 'true'
 	);
 
+	console.log(notMobile);
+
 	return (
 		<MobileContext.Provider value={!notMobile}>
 			<main

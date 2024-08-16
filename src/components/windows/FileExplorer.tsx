@@ -52,7 +52,7 @@ export const FileExplorer = () => {
 			>
 				{`${children.length} Items       ${stored}KB in ${sysObj.name}       175KB Available`}
 			</Marquee>
-			<ul className="z-20 flex-1 relative overflow-x-hidden md:bg-black-primary text-white-primary border-b-2 border-white-primary flex justify-end md:border-b-0 md:border-r-2 md:flex-col md:justify-start">
+			<ul className="z-20 flex-1 hidden-scrollbar relative overflow-x-hidden md:bg-black-primary text-white-primary border-b-2 border-white-primary flex justify-end md:border-b-0 md:border-r-2 md:flex-col md:justify-start">
 				{parentFolders &&
 					parentFolders.map((folder, i) => (
 						<li key={folder.name} className="text-nowrap">
@@ -80,7 +80,7 @@ export const FileExplorer = () => {
 							</span>
 						</li>
 					))}
-				<li className="text-md w-full p-2 text-left md:p-4 md:bg-purple-watermark">
+				<li className="text-md w-full p-2 text-left md:p-4 md:bg-purple-watermark md:mb-2">
 					{sysObj.name}
 				</li>
 				<button

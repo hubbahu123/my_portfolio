@@ -43,9 +43,9 @@ const OS: React.FC = () => {
 
 		//I don't know why this is a bug
 		if (mainRef.current)
-			(notMobile
-				? mainRef.current.classList.remove
-				: mainRef.current.classList.add)('use-scrollbar');
+			notMobile
+				? mainRef.current.classList.remove('use-scrollbar')
+				: mainRef.current.classList.add('use-scrollbar');
 
 		return () => {
 			window.removeEventListener('resize', updateVH);
@@ -59,8 +59,6 @@ const OS: React.FC = () => {
 		!notMobile,
 		str => str === 'true'
 	);
-
-	console.log(notMobile);
 
 	return (
 		<MobileContext.Provider value={!notMobile}>

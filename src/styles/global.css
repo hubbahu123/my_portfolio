@@ -141,6 +141,14 @@ body {
 		@apply hidden;
 	}
 
+	.hidden-scrollbar::-webkit-scrollbar {
+		@apply hidden;
+	}
+	.hidden-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
 	::selection {
 		@apply bg-yellow-accent text-black-primary;
 	}

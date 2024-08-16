@@ -19,6 +19,7 @@ export const MobileContext = createContext(true);
 
 const OS: React.FC = () => {
 	const notMobile = useBreakpointMD();
+	const mainRef = React.useRef<HTMLDivElement>(null);
 
 	//Updates global css properties
 	useEffect(() => {
@@ -40,6 +41,12 @@ const OS: React.FC = () => {
 			`url("${arrowDownActive}")`
 		);
 
+		//I don't know why this is a bug
+		if (mainRef.current)
+			(notMobile
+				? mainRef.current.classList.remove
+				: mainRef.current.classList.add)('use-scrollbar');
+
 		return () => {
 			window.removeEventListener('resize', updateVH);
 			window.removeEventListener('orientationchange', updateVH);
@@ -60,6 +67,7 @@ const OS: React.FC = () => {
 			<main
 				className={`w-screen h-screen overflow-hidden relative bg-black ${!notMobile && 'use-scrollbar'}`}
 				style={{ height: 'var(--vh-full, 100vh)' }}
+				ref={mainRef}
 			>
 				{ready &&
 					(introDone ? (

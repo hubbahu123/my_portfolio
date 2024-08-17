@@ -106,7 +106,7 @@ export const FileExplorer = () => {
 				</button>
 			</ul>
 			<ul
-				className={`col-span-2 z-10 relative flex flex-wrap flex-[2] content-start justify-around p-12 px-4 md:p-4 ${tileMode ? 'gap-6 md:content-around' : 'gap-4 xs:gap-2'}`}
+				className={`relative z-10 col-span-2 p-12 px-4 md:p-4 xs:px-6 ${tileMode ? 'gap-2 grid justify-around grid-cols-[repeat(auto-fill,minmax(min-content,100px))]' : ''}`}
 			>
 				{children.length === 0 ? (
 					<p className="text-md my-auto text-center font-bold text-white-primary">

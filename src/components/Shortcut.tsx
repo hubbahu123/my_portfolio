@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import type { SystemObject } from '../store/types';
 import Icon from './Icon';
 import { useBoundStore } from '../store';
@@ -21,7 +21,7 @@ const Shortcut: React.FC<ShortcutPros> = ({
 
 	return (
 		<button
-			className={`group flex items-center w-24 max-h-full h-auto outline-2 outline-transparent outline-offset-8 transition-all ease-steps2 md:p-4 md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px] ${tile ? 'p-2 flex-col gap-2' : 'p-0 xs:p-2 w-full gap-6 md:gap-4 md:py-2'}`}
+			className={`group flex items-center w-24 max-h-full h-auto outline-2 outline-transparent outline-offset-8 transition-all ease-steps2 md:p-4 md:outline hover:outline-white-primary hover:outline-offset-0 md:active:outline-white-primary md:active:outline-offset-0 md:active:shadow-[inset_0_0_70px] p-2 ${tile ? 'flex-col gap-2' : 'w-full gap-6 md:gap-4 md:py-2'}`}
 			type="button"
 			onDoubleClick={
 				overrideClick

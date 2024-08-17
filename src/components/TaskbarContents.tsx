@@ -31,7 +31,7 @@ const TimeDropdown: React.FC<TimeDropdownProps> = ({
 
 	return (
 		<Dropdown
-			className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+			className="p-4 transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 			onPointerDown={() => setTimeSelected(true)}
 			onPointerOut={() => timeSelected && setTimeSelected(false)}
 			onPointerUp={() => setTimeSelected(false)}
@@ -110,7 +110,7 @@ const TaskbarContents = () => {
 	return (
 		<>
 			<Dropdown
-				className="group h-full px-4 transition-colors ease-steps hover:bg-white-primary"
+				className="group h-full px-4 transition-colors ease-steps2 hover:bg-white-primary"
 				dClassName="divide-y-2 divide-white-primary"
 				noPadding
 				dContent={
@@ -129,42 +129,42 @@ const TaskbarContents = () => {
 						<a
 							href="https://www.linkedin.com/in/reda-elmountassir"
 							target="_blank"
-							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 						>
 							<img
 								src={linkedInImg}
 								alt="LinkedIn Logo"
-								className="mr-4 inline-block h-6 transition ease-steps group-hover:invert"
+								className="mr-4 inline-block h-6 transition ease-steps2 group-hover:invert"
 							/>
 							LinkedIn
 						</a>
 						<a
 							href="https://github.com/redaelmountassir"
 							target="_blank"
-							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 						>
 							<img
 								src={gitHubImg}
 								alt="GitHub Logo"
-								className="mr-4 inline-block h-6 transition ease-steps group-hover:invert"
+								className="mr-4 inline-block h-6 transition ease-steps2 group-hover:invert"
 							/>
 							GitHub
 						</a>
 						<button
 							type="button"
-							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 							onClick={() => restart()}
 						>
 							<img
 								src={restartImg}
 								alt="restart symbol"
-								className="mr-4 inline-block h-6 transition ease-steps group-hover:invert"
+								className="mr-4 inline-block h-6 transition ease-steps2 group-hover:invert"
 							/>
 							Restart
 						</button>
 						<button
 							type="button"
-							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+							className="group block w-full whitespace-nowrap p-4 text-left transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 							onClick={() => {
 								shutdown();
 								pauseBg();
@@ -174,7 +174,7 @@ const TaskbarContents = () => {
 							<img
 								src={shutdownImg}
 								alt="shutdown symbol"
-								className="mr-4 inline-block h-6 transition ease-steps group-hover:invert"
+								className="mr-4 inline-block h-6 transition ease-steps2 group-hover:invert"
 							/>
 							Shut down
 						</button>
@@ -191,7 +191,7 @@ const TaskbarContents = () => {
 			</Dropdown>
 			<Dropdown
 				pClassName="ml-auto"
-				className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+				className="p-4 transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 				onPointerDown={() => setEffectsSelected(true)}
 				onPointerOut={() =>
 					effectsSelected && setEffectsSelected(false)
@@ -267,7 +267,7 @@ const TaskbarContents = () => {
 				<GlitchText animated={effectsSelected}>Visuals</GlitchText>
 			</Dropdown>
 			<Dropdown
-				className="p-4 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+				className="p-4 transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 				onPointerDown={() => setAudioSelected(true)}
 				onPointerOut={() => audioSelected && setAudioSelected(false)}
 				onPointerUp={() => setAudioSelected(false)}
@@ -328,7 +328,7 @@ const TaskbarContents = () => {
 				<GlitchText animated={audioSelected}>Audio</GlitchText>
 			</Dropdown>
 			<Dropdown
-				className="h-full px-3 transition-colors ease-steps hover:bg-white-primary hover:text-black-primary"
+				className="h-full px-3 transition-colors ease-steps2 hover:bg-white-primary hover:text-black-primary"
 				dClassName="whitespace-nowrap"
 				dContent={
 					<>

@@ -24,7 +24,7 @@ const Mail = () => {
 	return (
 		<div className="flex-1 flex text-white-primary border-white-primary overflow-hidden flex-col pb-20 md:pb-0 md:flex-row">
 			<ul
-				className={`overflow-hidden transition-all ease-steps flex md:block border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
+				className={`overflow-hidden transition-all ease-steps2 flex md:block border-white-primary md:border-r-2 md:hover:bg-black-primary md:max-w-14 md:hover:max-w-60 ${
 					width > 1200 && 'md:!max-w-60 md:!bg-black-primary'
 				} ${width < 400 && 'md:hidden'}`}
 			>
@@ -37,7 +37,7 @@ const Mail = () => {
 						<img
 							src={phoneImg}
 							alt="LinkedIn Logo"
-							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps2 group-hover:invert"
 						/>
 						<span className="mr-4 hidden xs:inline">
 							267-231-2928
@@ -53,7 +53,7 @@ const Mail = () => {
 						<img
 							src={linkedInImg}
 							alt="LinkedIn Logo"
-							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps2 group-hover:invert"
 						/>
 						<span className="mr-4 hidden xs:inline">LinkedIn</span>
 					</a>
@@ -67,7 +67,7 @@ const Mail = () => {
 						<img
 							src={gitHubImg}
 							alt="GitHub Logo"
-							className="inline-block xs:mr-4 h-6 transition-all ease-steps group-hover:invert"
+							className="inline-block xs:mr-4 h-6 transition-all ease-steps2 group-hover:invert"
 						/>
 						<span className="mr-4 hidden xs:inline">GitHub</span>
 					</a>
@@ -191,7 +191,7 @@ const Mail = () => {
 				</div>
 				<div
 					id="email-container"
-					className="flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[65px] to-burgundy-accent/20 whitespace-nowrap  transition-[outline] ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
+					className="flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[65px] to-burgundy-accent/20 whitespace-nowrap  transition-[outline] ease-steps2 outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
 				>
 					<label className="inline-block" htmlFor="email">
 						From:
@@ -212,13 +212,13 @@ const Mail = () => {
 							'redaelmountassir0@gmail.com'
 						)
 					}
-					className="group relative flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[50px] to-burgundy-accent/20 whitespace-nowrap transition-[outline] ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
+					className="group relative flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[50px] to-burgundy-accent/20 whitespace-nowrap transition-[outline] ease-steps2 outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
 				>
 					<p className="inline-block">To:</p>
 					<span className="flex-grow text-left pl-4 overflow-hidden overflow-ellipsis">
 						redaelmountassir0@gmail.com
 						<span
-							className={`absolute pl-2 opacity-0 transition-opacity ease-steps group-hover:opacity-100 group-focus:opacity-0 ${
+							className={`absolute pl-2 opacity-0 transition-opacity ease-steps2 group-hover:opacity-100 group-focus:opacity-0 ${
 								width < 350 &&
 								'top-0 p-2 right-0 h-full bg-white-primary text-black-primary'
 							}`}
@@ -226,7 +226,7 @@ const Mail = () => {
 							(Copy)
 						</span>
 						<span
-							className={`pl-2 opacity-0 transition-opacity ease-steps group-focus:opacity-100 ${
+							className={`pl-2 opacity-0 transition-opacity ease-steps2 group-focus:opacity-100 ${
 								width < 350 &&
 								'absolute top-0 p-2 right-0 h-full bg-white-primary text-black-primary'
 							}`}
@@ -237,7 +237,7 @@ const Mail = () => {
 				</button>
 				<div
 					id="subject-container"
-					className="flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[65px] to-burgundy-accent/20 whitespace-nowrap  transition-[outline] ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
+					className="flex items-center p-2 bg-gradient-to-r from-blue-accent/20 to-[65px] to-burgundy-accent/20 whitespace-nowrap  transition-[outline] ease-steps2 outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
 				>
 					<label className="inline-block" htmlFor="subject">
 						Subject:
@@ -254,7 +254,7 @@ const Mail = () => {
 					id="message-container"
 					name="message"
 					required
-					className="p-2 bg-transparent bg-gradient-to-r from-blue-accent/20 to-50% to-burgundy-accent/20 outline-none flex-grow resize-none transition-[outline] ease-steps outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
+					className="p-2 bg-transparent bg-gradient-to-r from-blue-accent/20 to-50% to-burgundy-accent/20 outline-none flex-grow resize-none transition-[outline] ease-steps2 outline outline-2 outline-transparent outline-offset-8 hover:outline-offset-0 hover:outline-white-primary focus:outline-offset-0 focus:outline-white-primary"
 				/>
 				{/* Honeypot */}
 				<input
@@ -269,7 +269,7 @@ const Mail = () => {
 					id="submit"
 					type="submit"
 					value="send"
-					className="flex justify-center items-center text-black-primary bg-white-primary p-2 transition-all ease-steps shadow-[0px_2px] shadow-light-primary hover:translate-y-[2px] hover:shadow-[0_0]"
+					className="flex justify-center items-center text-black-primary bg-white-primary p-2 transition-all ease-steps2 shadow-[0px_2px] shadow-light-primary hover:translate-y-[2px] hover:shadow-[0_0]"
 				>
 					<span className="text-left font-bold pr-4 hidden md:block">
 						Send Message

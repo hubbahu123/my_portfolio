@@ -49,7 +49,8 @@ export const theme = {
 			'purple-watermark': '#291632',
 		},
 		transitionTimingFunction: {
-			steps: 'steps(2, end)',
+			steps2: 'steps(2, end)',
+			steps10: 'steps(10, end)',
 		},
 		backgroundSize: {
 			double: '200%',

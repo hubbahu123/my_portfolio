@@ -164,7 +164,7 @@ const TextEditor = () => {
 						className={`w-auto cursor-pointer text-right relative sm:text-center ${
 							getWidth() <= 800
 								? 'mb-20 md:hidden md:mb-14'
-								: 'group md:block h-full transition relative flicker ease-steps w-2/5 md:float-right duration-1000 ml-8 mb-7'
+								: 'group md:block h-full transition relative flicker ease-steps2 w-2/5 md:float-right duration-1000 ml-8 mb-7'
 						}`}
 						onClick={updateImg}
 					>
@@ -202,7 +202,7 @@ const TextEditor = () => {
 											},
 										},
 									}}
-									className={`transition darken-left bg-black ease-steps top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
+									className={`transition darken-left bg-black ease-steps2 top-0 pixel-mask border-2 border-white-primary grayscale group-hover:grayscale-0 ${i === 0 ? 'inline-block' : 'absolute'}`}
 								>
 									{img}
 								</motion.div>

@@ -58,15 +58,15 @@ export const FileExplorer = () => {
 						<li key={folder.name} className="text-nowrap">
 							<button
 								type="button"
-								className="text-md group relative w-full p-2 text-left transition-colors ease-steps md:hover:bg-white-primary md:hover:text-black-primary md:p-4"
+								className="text-md group relative w-full p-2 text-left transition-colors ease-steps2 md:hover:bg-white-primary md:hover:text-black-primary md:p-4"
 								onPointerDown={() => setSelected(i)}
 								onClick={() => replaceWindow(id, folder)}
 							>
-								<span className="absolute opacity-0 transition-opacity ease-steps md:group-hover:opacity-100">
+								<span className="absolute opacity-0 transition-opacity ease-steps2 md:group-hover:opacity-100">
 									&gt;
 								</span>
 								<GlitchText
-									className="block whitespace-nowrap transition-transform ease-steps group-hover:underline md:!no-underline md:group-hover:translate-x-4"
+									className="block whitespace-nowrap transition-transform ease-steps2 group-hover:underline md:!no-underline md:group-hover:translate-x-4"
 									animated={i === selected}
 									onComplete={() =>
 										i === selected && setSelected(-1)

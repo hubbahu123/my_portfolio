@@ -12,7 +12,7 @@ interface ToggleProps {
 const ToggleBtn: React.FC<ToggleProps> = ({ state, setter, children }) => {
 	return (
 		<button
-			className={`w-full h-full border-2 border-white-primary transition-colors ease-steps bg-black-primary ${state && 'bg-white-primary text-black-primary'}`}
+			className={`w-full h-full border-2 border-white-primary transition-colors ease-steps2 bg-black-primary ${state && 'bg-white-primary text-black-primary'}`}
 			onClick={() => setter(!state)}
 			type="button"
 		>

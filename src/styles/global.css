@@ -111,7 +111,7 @@ body {
 	}
 
 	::-webkit-scrollbar-button:decrement {
-		@apply h-10 border-b-2 border-l-2 border-white-primary transition-colors ease-steps;
+		@apply h-10 border-b-2 border-l-2 border-white-primary transition-colors ease-steps2;
 		background: no-repeat center / 70% var(--arrow-up);
 	}
 
@@ -123,7 +123,7 @@ body {
 	}
 
 	::-webkit-scrollbar-button:increment {
-		@apply h-10 border-l-2 border-t-2 border-white-primary transition-colors ease-steps;
+		@apply h-10 border-l-2 border-t-2 border-white-primary transition-colors ease-steps2;
 		background: no-repeat center / 70% var(--arrow-down);
 	}
 

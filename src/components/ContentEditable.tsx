@@ -112,7 +112,7 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 				>
 					<motion.div className="-translate-x-1/2 -translate-y-[300%] border-2 border-white-primary divide-x-2 divide-white-primary bg-black-primary">
 						<button
-							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 font-bold"
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps2 text-center w-8 font-bold"
 							type="button"
 							onClick={e => {
 								if (!contentEditableRef.current) return;
@@ -127,7 +127,7 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 							B
 						</button>
 						<button
-							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 underline"
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps2 text-center w-8 underline"
 							type="button"
 							onClick={e => {
 								if (!contentEditableRef.current) return;
@@ -142,7 +142,7 @@ const ContentEditable: React.FC<ContentEditableProps> = memo(props => {
 							U
 						</button>
 						<button
-							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps text-center w-8 italic"
+							className="transition hover:bg-white-primary py-1 hover:text-black-primary ease-steps2 text-center w-8 italic"
 							type="button"
 							onClick={e => {
 								if (!contentEditableRef.current) return;

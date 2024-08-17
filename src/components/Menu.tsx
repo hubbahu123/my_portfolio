@@ -97,7 +97,7 @@ const Menu: React.FC<MenuProps> = memo(({ windows, deleteWindows }) => {
 				type="button"
 				className={`${
 					windows.length === 0 && 'opacity-50 cursor-not-allowed'
-				} p-2 outline outline-black-primary outline-2 text-black-primary transition-opacity ease-steps`}
+				} p-2 outline outline-black-primary outline-2 text-black-primary transition-opacity ease-steps2`}
 				onClick={() => deleteWindows()}
 			>
 				Close All

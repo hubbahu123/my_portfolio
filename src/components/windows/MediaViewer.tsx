@@ -22,23 +22,6 @@ import MainShowcase from '../MainShowcase';
 import Follow from '../Follow';
 import throbberGif from '../../images/throbber.gif';
 
-const anim = {
-	initial: {
-		clipPath: 'inset(0 0 100% 0)',
-		WebkitClipPath: 'inset(0 0 100% 0)',
-	},
-	whileInView: {
-		clipPath: 'inset(0 0 0% 0)',
-		WebkitClipPath: 'inset(0 0 0% 0)',
-	},
-	transition: {
-		duration: 0.75,
-		type: 'tween',
-		ease: ease5Steps,
-		delay: 0.25,
-	},
-};
-
 export const MediaViewer = () => {
 	const isMobile = useContext(MobileContext);
 	const { setTitle, sysObj, id } = useContext(WindowDataContext) ?? {};
@@ -71,6 +54,10 @@ export const MediaViewer = () => {
 		else if (inTop && latest > 0.45) setInTop(false);
 	});
 	const scrollToTitle = useRef<HTMLHeadingElement>(null);
+	const onViewportEnter = (e: IntersectionObserverEntry | null) => {
+		if (!e) return;
+		(e.target as HTMLDivElement).style.clipPath = 'inset(0 0 0% 0)';
+	};
 
 	const scrollTarget2 = useRef(null);
 	const { scrollYProgress: scrollYProgress2 } = useScroll({
@@ -85,6 +72,7 @@ export const MediaViewer = () => {
 			: ['inset(5rem 12rem)', 'inset(0rem 0rem)']
 	);
 
+	// Seperates showcases into the two sections (or less depending on quantity)
 	const intialShowcases =
 		projectData.showcases.length < 3
 			? []
@@ -232,12 +220,12 @@ export const MediaViewer = () => {
 								className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 							/>
 							<motion.div
-								{...anim}
+								onViewportEnter={onViewportEnter}
 								viewport={{
 									root: scrollContainer,
-									once: true,
 								}}
-								className="h-full relative cursor-none"
+								style={{ clipPath: 'inset(0 0 100% 0)' }}
+								className="h-full relative cursor-none transition-all duration-1000 ease-steps10"
 							>
 								<Showcase src={intialShowcases[1]} />
 								{!isMobile && <Follow />}
@@ -270,12 +258,12 @@ export const MediaViewer = () => {
 								className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 							/>
 							<motion.div
-								{...anim}
+								onViewportEnter={onViewportEnter}
 								viewport={{
 									root: scrollContainer,
-									once: true,
 								}}
-								className="h-full relative cursor-none"
+								style={{ clipPath: 'inset(0 0 100% 0)' }}
+								className="h-full relative cursor-none transition-all duration-1000 ease-steps10"
 							>
 								<Showcase src={intialShowcases[0]} />
 								{!isMobile && <Follow />}
@@ -294,12 +282,12 @@ export const MediaViewer = () => {
 							className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 						/>
 						<motion.div
-							{...anim}
+							onViewportEnter={onViewportEnter}
 							viewport={{
 								root: scrollContainer,
-								once: true,
 							}}
-							className="relative w-full h-full cursor-none"
+							style={{ clipPath: 'inset(0 0 100% 0)' }}
+							className="relative w-full h-full cursor-none transition-all duration-1000 ease-steps10"
 						>
 							<Showcase src={showcase} autoHeight />
 							{!isMobile && <Follow />}

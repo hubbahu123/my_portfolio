@@ -19,7 +19,7 @@ const Toggle: React.FC<ToggleProps> = memo(
 			>
 				{children}
 				<div
-					className={`w-14 h-6 p-1 ml-4 outline outline-2 outline-white-primary transition-colors ease-steps ${
+					className={`w-14 h-6 p-1 ml-4 outline outline-2 outline-white-primary transition-colors ease-steps2 ${
 						state &&
 						'bg-gradient-to-r from-pink-accent to-blue-accent'
 					}`}

@@ -49,7 +49,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 						initial={{ y: '100%' }}
 						whileInView={{ y: 0 }}
 						transition={{
-							delay: (i + 2) * 0.25,
+							delay: i * 0.25,
 							type: 'tween',
 							ease: 'circOut',
 							duration: 1,
@@ -153,7 +153,7 @@ const MainShowcase: React.FC<MainShowcaseProps> = ({
 						mainShowcaseRef.current.style.maskImage = 'none';
 						mainShowcaseRef.current.style.webkitMaskImage = 'none';
 					}}
-					className="pixel-mask darken-bottom group absolute h-full w-full cursor-none border-2 border-white-primary"
+					className="pixel-mask darken-bottom absolute h-full w-full cursor-none border-2 border-white-primary"
 				>
 					<div className="bg-black-primary w-full h-full absolute top-0" />
 					<Showcase src={projectData.showcases[0]} />

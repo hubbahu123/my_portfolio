@@ -1,10 +1,9 @@
-import * as THREE from 'three';
-import * as React from 'react';
-import { Bvh, Float, useGLTF, useTexture } from '@react-three/drei';
+import React, { startTransition } from 'react';
+import { Float, useGLTF } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 import { useBoundStore } from '../store';
 import { Throbber } from './Throbber';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Window } from '../store/types';
 import { useFrame } from '@react-three/fiber';
 import { createGlitchMat } from '../shaders/glitchMat';
@@ -99,7 +98,7 @@ export const Symbols: React.FC<
 			() => {
 				data.current.glitching = false;
 				data.current.timeout = undefined;
-				setCurrentNode(shouldBeVisible);
+				startTransition(() => setCurrentNode(shouldBeVisible));
 			},
 			randRange(500, 1250)
 		);

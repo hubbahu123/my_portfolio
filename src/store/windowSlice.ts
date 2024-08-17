@@ -39,6 +39,11 @@ export const createWindowSlice: StateCreator<
 	windows: [],
 	lastId: 0,
 	windowAudio: undefined,
+	windowMaximized: false,
+	setWindowMaximized(windowMaximized) {
+		// Only for three js optimization has no impact on the maximization of any window
+		set({ windowMaximized });
+	},
 	playSound(lower = false) {
 		const globalVol = useSettingsStore.getState().volume * 0.01;
 		if (globalVol === 0) return;
@@ -95,6 +100,6 @@ export const createWindowSlice: StateCreator<
 	},
 	deleteWindows() {
 		useMobileStore.setState({ windowOpen: undefined });
-		set(_ => ({ windows: [], lastId: 0 }));
+		set(_ => ({ windows: [], lastId: 0, windowMaximized: false }));
 	},
 });

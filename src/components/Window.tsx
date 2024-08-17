@@ -1,5 +1,5 @@
 import { Point, motion, useDragControls, useMotionValue } from 'framer-motion';
-import * as React from 'react';
+import React from 'react';
 import Resizers from './Resizers';
 import { useRef, useState, useEffect, useContext, createContext } from 'react';
 import WindowHeader from './WindowHeader';
@@ -68,7 +68,10 @@ export const Window: React.FC<WindowProps> = ({
 	const controls = useDragControls();
 	const windowRef = useRef<HTMLDivElement>(null);
 
-	const [deleteReq] = useBoundStore(state => [state.deleteWindow]);
+	const [deleteReq, setWindowMaximized] = useBoundStore(state => [
+		state.deleteWindow,
+		state.setWindowMaximized,
+	]);
 	const [windowTitle, setTitle] = useState(sysObj.name);
 
 	const isMobile = useContext(MobileContext);
@@ -166,9 +169,13 @@ export const Window: React.FC<WindowProps> = ({
 						onGrab={e => controls.start(e)}
 						onClose={() => {
 							setMaximized(false);
+							setWindowMaximized(false);
 							deleteReq(id);
 						}}
-						onMaximize={() => setMaximized(maximized => !maximized)}
+						onMaximize={() => {
+							setMaximized(maximized => !maximized);
+							setWindowMaximized(!maximized);
+						}}
 						maximized={maximized}
 						title={windowTitle}
 					/>

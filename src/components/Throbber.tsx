@@ -1,7 +1,7 @@
 import { Sphere } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { Colors } from '../utils';
-import * as React from 'react';
+import React from 'react';
 
 interface ThrobberProps {
 	position?: [x: number, y: number, z: number];

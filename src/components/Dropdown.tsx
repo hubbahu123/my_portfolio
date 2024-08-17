@@ -1,5 +1,5 @@
 import { MotionStyle, Variants, motion } from 'framer-motion';
-import * as React from 'react';
+import React from 'react';
 import { useRef, useState, useEffect, memo } from 'react';
 import { ease5Steps } from '../utils';
 

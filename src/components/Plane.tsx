@@ -1,5 +1,5 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import * as React from 'react';
+import React from 'react';
 import fragmentShader from '../shaders/grid.frag';
 import vertexShader from '../shaders/grid.vert';
 import { Colors } from '../utils';

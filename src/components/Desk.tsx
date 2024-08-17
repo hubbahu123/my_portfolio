@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 import { Colors } from '../utils';
-import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion-3d';
 import introImg from '../images/intro.jpg';
+import { MeshStandardMaterial, NearestFilter } from 'three';
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -17,7 +17,7 @@ type GLTFResult = GLTF & {
 	};
 };
 
-const mat = new THREE.MeshStandardMaterial({
+const mat = new MeshStandardMaterial({
 	color: Colors.blackPrimary,
 });
 export function Desk(props: JSX.IntrinsicElements['group']) {
@@ -25,7 +25,7 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 	const light = useRef<THREE.RectAreaLight>(null);
 	const screen = useRef<THREE.MeshPhongMaterial>(null);
 	const screenTex = useTexture(introImg) as THREE.Texture;
-	screenTex.minFilter = THREE.NearestFilter;
+	screenTex.minFilter = NearestFilter;
 
 	useFrame(state => {
 		if (!light.current || !screen.current) return;
@@ -102,5 +102,3 @@ export function Desk(props: JSX.IntrinsicElements['group']) {
 		</group>
 	);
 }
-
-// useGLTF.preload('/models/desk.glb');

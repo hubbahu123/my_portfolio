@@ -1,14 +1,11 @@
 import { Canvas } from '@react-three/fiber';
-import * as React from 'react';
+import React from 'react';
 import { Colors } from '../utils';
 import { BakeShadows } from '@react-three/drei';
 import { Desk } from './Desk';
 import { PerspectiveCamera } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import MouseControls from './MouseControls';
-import * as THREE from 'three';
-
-THREE.ColorManagement.enabled = true;
 
 const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 	return (
@@ -16,7 +13,6 @@ const Intro: React.FC<{ onFinish: Function }> = ({ onFinish }) => {
 			dpr={window.devicePixelRatio}
 			shadows
 			gl={{
-				powerPreference: 'high-performance',
 				alpha: false,
 			}}
 		>

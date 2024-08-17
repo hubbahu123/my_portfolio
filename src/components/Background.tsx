@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useSettingsStore } from '../store';
 import pixelatedHeadGif from '../images/pixelated_head.gif';
 import triangleImg from '../images/triangle_outline_blue.png';

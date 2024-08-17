@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import fragmentShader from '../shaders/sky.frag';
 import vertexShader from '../shaders/sky.vert';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Color, Vector3, ShaderMaterial, Mesh } from 'three';
-import * as THREE from 'three';
+import { Color, Vector3, ShaderMaterial, BackSide } from 'three';
 import { Colors } from '../utils';
 import { MobileContext } from './OS';
 
@@ -61,7 +60,7 @@ const Sky: React.FC<SkyProps> = ({ seed }) => {
 					vertexShader={vertexShader}
 					fragmentShader={fragmentShader}
 					uniforms={uniforms}
-					side={THREE.BackSide}
+					side={BackSide}
 				/>
 			</mesh>
 		</group>

@@ -3,25 +3,11 @@ import { motion } from "framer-motion-3d";
 import { Colors } from "../utils";
 import React from "react";
 
-interface ThrobberProps {
-  position?: [x: number, y: number, z: number];
-  rotation?: [x: number, y: number, z: number];
-}
-
 const DOTS = 10;
 const RADIUS = 0.75;
-export const Throbber: React.FC<ThrobberProps> = (props) => {
+export const Throbber = () => {
   return (
-    <motion.group
-      {...props}
-      animate={{ rotateY: 2 * Math.PI }}
-      transition={{
-        repeat: Infinity,
-        duration: 15,
-        type: "tween",
-        ease: "circInOut",
-      }}
-    >
+    <group>
       {Array(DOTS)
         .fill(0)
         .map((_, i) => {
@@ -52,6 +38,6 @@ export const Throbber: React.FC<ThrobberProps> = (props) => {
             </Sphere>
           );
         })}
-    </motion.group>
+    </group>
   );
 };

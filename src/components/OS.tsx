@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContext, useEffect } from 'react';
-import { useBreakpointMD } from '../utils';
+import { useBreakpointMD, useBreakpointShort } from '../utils';
 import arrowUp from '../images/arrow_up.png';
 import arrowUpActive from '../images/arrow_up_active.png';
 import arrowDown from '../images/arrow_down.png';
@@ -18,7 +18,9 @@ import Modifiers from './Modifiers';
 export const MobileContext = createContext(true);
 
 const OS: React.FC = () => {
-	const notMobile = useBreakpointMD();
+	const wide = useBreakpointMD();
+	const tall = useBreakpointShort();
+	const isMobile = !wide || !tall;
 	const mainRef = React.useRef<HTMLDivElement>(null);
 
 	//Updates global css properties
@@ -43,7 +45,7 @@ const OS: React.FC = () => {
 
 		//I don't know why this is a bug
 		if (mainRef.current)
-			notMobile
+			!isMobile
 				? mainRef.current.classList.remove('use-scrollbar')
 				: mainRef.current.classList.add('use-scrollbar');
 
@@ -56,14 +58,14 @@ const OS: React.FC = () => {
 
 	const [ready, introDone, setIntroDone] = usePersistent(
 		'introDone',
-		!notMobile,
+		isMobile,
 		str => str === 'true'
 	);
 
 	return (
-		<MobileContext.Provider value={!notMobile}>
+		<MobileContext.Provider value={isMobile}>
 			<main
-				className={`w-screen h-screen overflow-hidden relative bg-black ${!notMobile && 'use-scrollbar'}`}
+				className={`w-screen h-screen overflow-hidden relative bg-black ${isMobile && 'use-scrollbar'}`}
 				style={{ height: 'var(--vh-full, 100vh)' }}
 				ref={mainRef}
 			>
@@ -71,7 +73,7 @@ const OS: React.FC = () => {
 					(introDone ? (
 						<Loader>
 							<Background />
-							{!notMobile ? <MobileTaskbar /> : <Taskbar />}
+							{isMobile ? <MobileTaskbar /> : <Taskbar />}
 							<ShortcutsArea />
 							<WindowsArea />
 						</Loader>

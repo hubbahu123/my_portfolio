@@ -21,7 +21,7 @@ const MobileTaskbar = memo(() => {
 		<>
 			<MobileTaskbarPanel />
 			<motion.nav
-				className="fixed bottom-0 w-full px-4 py-2 font-bold md:top-0 md:bottom-auto md:p-0 z-30"
+				className="fixed bottom-0 w-full p-0 font-bold z-30 short:px-4 short:py-2"
 				variants={{
 					unloaded: { opacity: 0, y: '100%' },
 					loaded: {

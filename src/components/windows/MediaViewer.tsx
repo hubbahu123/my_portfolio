@@ -212,7 +212,7 @@ export const MediaViewer = () => {
 					</div>
 				</div>
 				{intialShowcases.length && (
-					<div className="mx-4 mb-4 grid overflow-hidden h-[150%] md:h-full grid-cols-1 grid-rows-[1fr_150px_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] gap-4">
+					<div className="mx-4 mb-4 grid overflow-hidden gap-4 grid-cols-1 h-[500px] grid-rows-[1fr_0_auto_2fr] md:grid-cols-2 md:grid-rows-[50%_1fr_auto] average:h-[150%] average:grid-rows-[1fr_150px_auto_2fr]">
 						<div className="min-h-0 relative border-2 border-white-primary bg-black-primary">
 							<img
 								src={throbberGif}
@@ -224,7 +224,7 @@ export const MediaViewer = () => {
 								viewport={{
 									root: scrollContainer,
 								}}
-								style={{ clipPath: 'inset(0 0 100% 0)' }}
+								style={{ clipPath: 'inset(0 100% 0 0)' }}
 								className="h-full relative cursor-none transition-all duration-1000 ease-steps10"
 							>
 								<Showcase src={intialShowcases[1]} />
@@ -262,7 +262,7 @@ export const MediaViewer = () => {
 								viewport={{
 									root: scrollContainer,
 								}}
-								style={{ clipPath: 'inset(0 0 100% 0)' }}
+								style={{ clipPath: 'inset(0 100% 0 0)' }}
 								className="h-full relative cursor-none transition-all duration-1000 ease-steps10"
 							>
 								<Showcase src={intialShowcases[0]} />
@@ -286,7 +286,7 @@ export const MediaViewer = () => {
 							viewport={{
 								root: scrollContainer,
 							}}
-							style={{ clipPath: 'inset(0 0 100% 0)' }}
+							style={{ clipPath: 'inset(0 100% 0 0)' }}
 							className="relative w-full h-full cursor-none transition-all duration-1000 ease-steps10"
 						>
 							<Showcase src={showcase} autoHeight />

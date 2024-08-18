@@ -44,10 +44,10 @@ const Menu: React.FC<MenuProps> = memo(({ windows, deleteWindows }) => {
 				WebkitBackdropFilter: 'blur(0px)',
 				opacity: 0,
 			}}
-			className="w-full h-full flex flex-col pb-28 gap-14 items-center pointer-events-auto select-none"
+			className="w-full h-full flex flex-col pb-20 gap-4 items-center pointer-events-auto select-none short:gap-14 short:pb-28"
 		>
 			<div
-				className="w-full grow overflow-x-auto pt-24 flex items-center gap-4 no-scrollbar snap-x snap-mandatory"
+				className="w-full grow overflow-x-auto pt-12 flex items-center gap-4 no-scrollbar snap-x snap-mandatory short:pt-24"
 				style={{ touchAction: 'pan-x', msTouchAction: 'pan-x' }}
 				ref={windowsArea}
 				onScroll={() => {

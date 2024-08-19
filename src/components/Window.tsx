@@ -93,6 +93,16 @@ export const Window: React.FC<WindowProps> = ({
 	};
 	useEffect(updateZ, [windowRef.current]);
 
+	// Prevent accidental clicks
+	const [clickProtection, setClickProtection] = useState(true);
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setClickProtection(false);
+		}, 500);
+		return () => clearTimeout(timeout);
+	}, []);
+	disableInteraction = disableInteraction || clickProtection;
+
 	return (
 		<WindowDataContext.Provider
 			value={{

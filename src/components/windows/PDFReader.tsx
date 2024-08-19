@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { WindowDataContext } from "../Window";
-import throbber from "../../images/throbber.gif";
+import throbberGif from "../../images/throbber.gif";
 import { motion } from "framer-motion";
 import { MobileContext } from "../OS";
 import { StaticImage } from "gatsby-plugin-image";
@@ -46,7 +46,7 @@ const PDFNoSupport = () => {
 				onClick={() => !dowloaded && setDowloaded(true)}
 			>
 				{dowloaded ? (
-					<img src={throbber} alt="Throbber" className="w-16" />
+					<img src={throbberGif} alt="Throbber" className="w-16" />
 				) : (
 					"Tap to download"
 				)}

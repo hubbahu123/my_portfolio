@@ -16,7 +16,6 @@ import Tag from "../Tag";
 import Marquee from "../Marquee";
 import mapImg from "../../images/map_watermark.png";
 import handsGif from "../../images/hands.gif";
-import throbber from "../../images/throbber.gif";
 import Showcase from "../Showcase";
 import MainShowcase from "../MainShowcase";
 import Follow from "../Follow";
@@ -128,7 +127,7 @@ export const MediaViewer = () => {
 				className="pointer-events-none absolute z-10 h-full w-full bg-black-primary opacity-0"
 			>
 				<img
-					src={throbber}
+					src={throbberGif}
 					alt="Throbber"
 					className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2"
 				/>
@@ -138,7 +137,7 @@ export const MediaViewer = () => {
 				className="relative flex-1 overflow-y-auto overflow-x-hidden"
 			>
 				<div
-					className="mx-4 h-[150%] min-h-[1250px] text-white-primary md:mt-12"
+					className="mx-4 h-[150%] min-h-[1000px] text-white-primary md:mt-12"
 					ref={scrollTarget}
 				>
 					<MainShowcase

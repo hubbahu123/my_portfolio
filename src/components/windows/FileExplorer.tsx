@@ -40,9 +40,9 @@ export const FileExplorer = () => {
 	);
 
 	return (
-		<div className="relative flex-1 grid-cols-3 overflow-y-auto overflow-x-hidden md:mt-[34px] md:grid">
+		<div className="relative flex-1 grid-cols-3 overflow-y-auto overflow-x-hidden md:grid md:short:mt-[34px]">
 			<Marquee
-				className="!sticky z-20 overflow-hidden border-b-2 border-white-primary bg-yellow-accent md:!fixed md:top-10"
+				className="!sticky z-20 hidden overflow-hidden border-b-2 border-white-primary bg-yellow-accent md:!fixed md:top-10 short:block"
 				innerClass="text-black-primary text-md py-1 px-20 text-center whitespace-pre"
 				panTime={getWidth() / 15}
 				steps={250}
@@ -104,7 +104,7 @@ export const FileExplorer = () => {
 				</p>
 			) : (
 				<ul
-					className={`relative z-10 col-span-2 p-12 px-4 md:p-4 xs:px-6 ${tileMode ? "grid grid-cols-[repeat(auto-fill,minmax(min-content,100px))] justify-around gap-2" : ""}`}
+					className={`relative z-10 col-span-2 p-4 pb-12 md:pt-4 xs:px-6 short:pb-20 md:short:pb-4 ${tileMode ? "grid grid-cols-[repeat(auto-fill,minmax(min-content,100px))] justify-around gap-2" : ""}`}
 				>
 					{children.map((child) => (
 						<li key={child.name} className={tileMode ? "w-24" : "w-full"}>

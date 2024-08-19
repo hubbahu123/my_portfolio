@@ -10,64 +10,64 @@ body {
 }
 
 @font-face {
-	font-family: 'Retro';
+	font-family: "Retro";
 	font-weight: normal;
 	font-display: swap;
 	font-style: normal;
-	font-named-instance: 'Regular';
+	font-named-instance: "Regular";
 	src:
-		url(/fonts/retro_font.woff2) format('woff2'),
-		url(/fonts/retro_font.woff) format('woff'),
-		url(/fonts/retro_font.ttf) format('truetype');
+		url(/fonts/retro_font.woff2) format("woff2"),
+		url(/fonts/retro_font.woff) format("woff"),
+		url(/fonts/retro_font.ttf) format("truetype");
 }
 
 @font-face {
-	font-family: 'Retro';
+	font-family: "Retro";
 	font-weight: bold;
 	font-display: swap;
 	font-style: normal;
-	font-named-instance: 'Regular';
+	font-named-instance: "Regular";
 	src:
-		url(/fonts/retro_font_bold.woff2) format('woff2'),
-		url(/fonts/retro_font_bold.woff) format('woff'),
-		url(/fonts/retro_font_bold.ttf) format('truetype');
+		url(/fonts/retro_font_bold.woff2) format("woff2"),
+		url(/fonts/retro_font_bold.woff) format("woff"),
+		url(/fonts/retro_font_bold.ttf) format("truetype");
 }
 
 @font-face {
-	font-family: 'Retro Fancy';
+	font-family: "Retro Fancy";
 	font-weight: normal;
 	font-display: swap;
 	font-style: normal;
-	font-named-instance: 'Regular';
+	font-named-instance: "Regular";
 	/* Allows for use of font features! */
 	src:
-		url(/fonts/retro_font_fancy.woff2) format('woff2'),
-		url(/fonts/retro_font_fancy.woff) format('woff'),
-		url(/fonts/retro_font_fancy.otf) format('opentype');
+		url(/fonts/retro_font_fancy.woff2) format("woff2"),
+		url(/fonts/retro_font_fancy.woff) format("woff"),
+		url(/fonts/retro_font_fancy.otf) format("opentype");
 }
 
 :root {
-	--retro-fancy-dlig: 'dlig' off;
-	--retro-fancy-ss01: 'ss01' off;
-	--retro-fancy-ss02: 'ss02' off;
+	--retro-fancy-dlig: "dlig" off;
+	--retro-fancy-ss01: "ss01" off;
+	--retro-fancy-ss02: "ss02" off;
 	overflow: hidden;
 }
 
 .ss01 {
-	--retro-fancy-ss01: 'ss01' on;
+	--retro-fancy-ss01: "ss01" on;
 }
 
 .ss02 {
-	--retro-fancy-ss02: 'ss02' on;
+	--retro-fancy-ss02: "ss02" on;
 }
 
 .dlig {
-	--retro-fancy-dlig: 'dlig' on;
+	--retro-fancy-dlig: "dlig" on;
 }
 
 @supports (font-variant-ligatures: discretionary-ligatures) {
 	.dlig {
-		--retro-fancy-dlig: '____';
+		--retro-fancy-dlig: "____";
 		font-variant-ligatures: discretionary-ligatures;
 	}
 }
@@ -208,22 +208,18 @@ body {
 	}
 
 	.backdrop-blur-parent::before {
-		content: '';
+		content: "";
 		@apply absolute -z-10 h-full w-full backdrop-blur;
 	}
 
-	.mask-up {
-		mask: linear-gradient(to top, white, transparent);
-	}
-
 	.darken-bottom::after {
-		content: '';
+		content: "";
 		@apply absolute top-0 h-full w-full bg-gradient-to-t from-black-primary/90 to-50%;
 	}
 
 	.darken-left::after {
-		content: '';
-		@apply absolute top-0 left-0 pointer-events-none h-full w-full xs:bg-gradient-to-r sm:!bg-none from-black-primary/75 to-25%;
+		content: "";
+		@apply pointer-events-none absolute left-0 top-0 h-full w-full from-black-primary/75 to-25% sm:!bg-none xs:bg-gradient-to-r;
 	}
 
 	.animate-pause {
@@ -240,11 +236,11 @@ body {
 		animation-play-state: paused !important;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
-		@apply !transition-none !pointer-events-none;
+		@apply !pointer-events-none !transition-none;
 	}
 
 	.disable-child-interaction::after {
-		content: '';
+		content: "";
 		@apply absolute h-full w-full;
 	}
 
@@ -265,7 +261,7 @@ body {
 	}
 
 	.clearfix::after {
-		content: '';
+		content: "";
 		@apply clear-both table;
 	}
 
@@ -279,8 +275,7 @@ body {
 		.pixel-mask {
 			mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
 			mask-size: 100% 2500%;
-			-webkit-mask: luminance
-				url(../../static/bg_imgs/fade_away_sheet.png);
+			-webkit-mask: luminance url(../../static/bg_imgs/fade_away_sheet.png);
 			-webkit-mask-size: 100% 2600%;
 		}
 	}

@@ -130,6 +130,14 @@ export const Window: React.FC<WindowProps> = ({
 					type: "tween",
 					ease: easeSteps(7),
 				}}
+				onClick={
+					disableInteraction
+						? (e) => {
+								e.preventDefault();
+								e.stopPropagation();
+							}
+						: undefined
+				}
 				onPointerDown={updateZ}
 				onPointerUp={
 					isMobile
@@ -142,7 +150,7 @@ export const Window: React.FC<WindowProps> = ({
 				ref={windowRef}
 				className={`pointer-events-auto absolute top-0 flex max-h-full max-w-full flex-col bg-black-primary from-black-primary/75 from-25% to-dark-primary/75 to-70% shadow-[10px_10px_0_0] shadow-black-primary/25 md:bg-transparent md:bg-gradient-to-r md:backdrop-blur ${
 					isMobile || maximized
-						? `!h-full !w-full !transform-none ${!disableNavCompensation && "border-t-[40px] border-t-black-primary md:!border-0 short:border-t-[56px]"}`
+						? `!h-full !w-full !transform-none ${!disableNavCompensation && "border-t-[40px] border-t-black-primary short:border-t-[56px] md:short:border-0"}`
 						: "touch-none"
 				} ${isMoving && "invisible md:backdrop-blur-none"} ${
 					disableInteraction && "disable-child-interaction"

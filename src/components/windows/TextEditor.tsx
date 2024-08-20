@@ -131,6 +131,7 @@ const TextEditor = () => {
 	const [currentImg, setCurrentImg] = useState(randInt(0, imgs.length - 1));
 	const updateImg = () => setCurrentImg((old) => (old + 1) % imgs.length);
 	useInterval(updateImg, 20000);
+	console.log(getWidth());
 
 	return (
 		<>

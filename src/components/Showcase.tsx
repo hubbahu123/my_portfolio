@@ -1,5 +1,5 @@
 import { GatsbyImage, IGatsbyImageData, getImage } from "gatsby-plugin-image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const Showcase: React.FC<{
 	src: string | IGatsbyImageData;
@@ -7,9 +7,13 @@ const Showcase: React.FC<{
 	autoHeight?: boolean;
 }> = ({ src, className, autoHeight = false }) => {
 	const classes = `${className} flicker relative z-10 object scale-by-height object-cover !w-full ${autoHeight ? "!h-auto" : "!h-full"}`;
+
+	const videoRef = useRef<HTMLVideoElement>(null);
+	useEffect(() => videoRef.current?.load(), [src]);
+
 	if (typeof src === "string") {
 		return (
-			<video muted autoPlay playsInline loop className={classes}>
+			<video ref={videoRef} muted autoPlay playsInline loop className={classes}>
 				<source src={src} type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>

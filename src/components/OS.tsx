@@ -14,73 +14,79 @@ import { usePersistent } from "../utils";
 import Loader from "./Loader";
 import WindowsArea from "./WindowsArea";
 import Modifiers from "./Modifiers";
+import Tippy from "./Tippy";
 
 export const MobileContext = createContext(true);
 
 const OS: React.FC = () => {
-  const wide = useBreakpointMD();
-  const tall = useBreakpointShort();
-  const isMobile = !wide || !tall;
-  const mainRef = React.useRef<HTMLDivElement>(null);
+	const wide = useBreakpointMD();
+	const tall = useBreakpointShort();
+	const isMobile = !wide || !tall;
+	const mainRef = React.useRef<HTMLDivElement>(null);
 
-  //Updates global css properties
-  useEffect(() => {
-    const documentStyle = document.documentElement.style;
-    const updateVH = () =>
-      documentStyle.setProperty("--vh-full", `${window.innerHeight}px`);
-    window.addEventListener("resize", updateVH);
-    window.addEventListener("orientationchange", updateVH);
-    updateVH();
+	//Updates global css properties
+	useEffect(() => {
+		const documentStyle = document.documentElement.style;
+		const updateVH = () =>
+			documentStyle.setProperty("--vh-full", `${window.innerHeight}px`);
+		window.addEventListener("resize", updateVH);
+		window.addEventListener("orientationchange", updateVH);
+		updateVH();
 
-    documentStyle.setProperty("--arrow-up", `url("${arrowUp}")`);
-    documentStyle.setProperty("--arrow-up-active", `url("${arrowUpActive}")`);
-    documentStyle.setProperty("--arrow-down", `url("${arrowDown}")`);
-    documentStyle.setProperty(
-      "--arrow-down-active",
-      `url("${arrowDownActive}")`,
-    );
+		documentStyle.setProperty("--arrow-up", `url("${arrowUp}")`);
+		documentStyle.setProperty("--arrow-up-active", `url("${arrowUpActive}")`);
+		documentStyle.setProperty("--arrow-down", `url("${arrowDown}")`);
+		documentStyle.setProperty(
+			"--arrow-down-active",
+			`url("${arrowDownActive}")`,
+		);
 
-    //I don't know why this is a bug
-    if (mainRef.current)
-      !isMobile
-        ? mainRef.current.classList.remove("use-scrollbar")
-        : mainRef.current.classList.add("use-scrollbar");
+		//I don't know why this is a bug
+		if (mainRef.current)
+			!isMobile
+				? mainRef.current.classList.remove("use-scrollbar")
+				: mainRef.current.classList.add("use-scrollbar");
 
-    return () => {
-      window.removeEventListener("resize", updateVH);
-      window.removeEventListener("orientationchange", updateVH);
-      documentStyle.removeProperty("--vh-full");
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("resize", updateVH);
+			window.removeEventListener("orientationchange", updateVH);
+			documentStyle.removeProperty("--vh-full");
+		};
+	}, []);
 
-  const [ready, introDone, setIntroDone] = usePersistent(
-    "introDone",
-    isMobile,
-    (str) => str === "true",
-  );
+	const [ready, introDone, setIntroDone] = usePersistent(
+		"introDone",
+		isMobile,
+		(str) => str === "true",
+	);
 
-  return (
-    <MobileContext.Provider value={isMobile}>
-      <main
-        className={`relative h-screen w-screen overflow-hidden bg-black ${isMobile && "use-scrollbar"}`}
-        style={{ height: "var(--vh-full, 100vh)" }}
-        ref={mainRef}
-      >
-        {ready &&
-          (introDone ? (
-            <Loader>
-              <Background />
-              {isMobile ? <MobileTaskbar /> : <Taskbar />}
-              <ShortcutsArea />
-              <WindowsArea />
-            </Loader>
-          ) : (
-            <Intro onFinish={() => setIntroDone(true)} />
-          ))}
-        <Modifiers />
-      </main>
-    </MobileContext.Provider>
-  );
+	return (
+		<MobileContext.Provider value={isMobile}>
+			<main
+				className={`relative h-screen w-screen overflow-hidden bg-black ${isMobile && "use-scrollbar"}`}
+				style={{ height: "var(--vh-full, 100vh)" }}
+				ref={mainRef}
+			>
+				{ready &&
+					(introDone ? (
+						<Loader>
+							<Background />
+							{isMobile ? <MobileTaskbar /> : <Taskbar />}
+							<ShortcutsArea />
+							<WindowsArea />
+							<Tippy>
+								{isMobile
+									? "Tippy recommends that for the best experience, consider using a desktop device."
+									: "Tippy wants you to know it's double click to open applications."}
+							</Tippy>
+						</Loader>
+					) : (
+						<Intro onFinish={() => setIntroDone(true)} />
+					))}
+				<Modifiers />
+			</main>
+		</MobileContext.Provider>
+	);
 };
 
 export default OS;

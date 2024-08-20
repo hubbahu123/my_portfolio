@@ -111,7 +111,7 @@ export const Window: React.FC<WindowProps> = ({
 				setTitle,
 				getWidth: useCallback(
 					() => (maximized ? window.innerWidth : width.get()),
-					[],
+					[maximized],
 				),
 			}}
 		>

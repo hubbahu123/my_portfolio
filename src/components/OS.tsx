@@ -14,7 +14,6 @@ import { usePersistent } from "../utils";
 import Loader from "./Loader";
 import WindowsArea from "./WindowsArea";
 import Modifiers from "./Modifiers";
-import Tippy from "./Tippy";
 
 export const MobileContext = createContext(true);
 
@@ -74,11 +73,6 @@ const OS: React.FC = () => {
 							{isMobile ? <MobileTaskbar /> : <Taskbar />}
 							<ShortcutsArea />
 							<WindowsArea />
-							<Tippy>
-								{isMobile
-									? "Tippy recommends that for the best experience, consider using a desktop device."
-									: "Tippy wants you to know it's double click to open applications."}
-							</Tippy>
 						</Loader>
 					) : (
 						<Intro onFinish={() => setIntroDone(true)} />

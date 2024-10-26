@@ -26,7 +26,7 @@ export const SEO: React.FC<SEOProps> = memo(
 
 		return (
 			<>
-				<title id="title">{seo.title}</title>
+				<title id="title">{seo.title ? seo.title : "RedaOS"}</title>
 				<meta name="description" content={seo.description} />
 				<meta name="image" content={seo.image} />
 				<meta name="twitter:card" content="summary_large_image" />

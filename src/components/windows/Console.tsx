@@ -249,17 +249,16 @@ cat: prints out the contents of a text file
 			get() {
 				const settings = useSettingsStore.getState();
 				if (
-					!settings.use3D &&
-					!settings.useStatic &&
-					!settings.scanlines &&
-					settings.fancyText &&
-					settings.useFlicker &&
-					!settings.lightMode &&
-					settings.fullscreen &&
+					!settings.use3D ||
+					!settings.useStatic ||
+					!settings.scanlines ||
+					settings.fancyText ||
+					settings.useFlicker ||
+					!settings.lightMode ||
+					settings.fullscreen ||
 					document.documentElement.style.cursor === ""
 				)
 					return "Not quite!";
-
 				setTimeout(
 					() =>
 						(window.location.href =

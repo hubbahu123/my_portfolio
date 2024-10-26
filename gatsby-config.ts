@@ -87,7 +87,7 @@ const config: GatsbyConfig = {
 				],
 				name: "RedaOS",
 				short_name: "RedaOS",
-				description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
+				description: `Philadelphia-based fullstack developer and engineer Reda Elmountassir offers bespoke software, graphic design, and full-stack development. Explore this OS-like portfolio experience!`,
 				start_url: `/`,
 				background_color: `#1f0728`,
 				theme_color: `#f9c80e`,

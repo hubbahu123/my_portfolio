@@ -135,7 +135,7 @@ const TextEditor = () => {
 
 	return (
 		<>
-			<div className="absolute h-full w-full bg-black bg-[url('/bg_imgs/stars.gif')] bg-cover bg-center md:-z-10" />
+			<div className="absolute h-full w-full bg-black bg-cover bg-center motion-safe:bg-[url('/bg_imgs/stars.gif')] md:-z-10" />
 			<p className="bottom-0 z-10 block w-full overflow-hidden whitespace-pre bg-white-primary p-1 text-center text-black-primary md:fixed">
 				{[
 					`${wordCount} word${wordCount > 1 ? "s" : ""}`,

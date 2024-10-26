@@ -1,55 +1,55 @@
-import type { GatsbyConfig } from 'gatsby';
+import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
 	headers: [
 		{
-			source: '/resume.pdf',
+			source: "/resume.pdf",
 			headers: [
 				{
-					key: 'X-Frame-Options',
-					value: 'SAMEORIGIN',
+					key: "X-Frame-Options",
+					value: "SAMEORIGIN",
 				},
 			],
 		},
 	],
 	siteMetadata: {
 		title: `Reda OS`,
-		siteUrl: `https://redaos.netlify.app`,
-		image: '/logo.png',
-		twitterUsername: '@RedaElmo',
+		siteUrl: `https://redaos.run`,
+		image: "/logo.png",
+		twitterUsername: "@RedaElmo",
 		description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
 	},
 	graphqlTypegen: false,
 	plugins: [
 		`gatsby-plugin-glslify`,
-		'gatsby-plugin-postcss',
-		'gatsby-plugin-image',
+		"gatsby-plugin-postcss",
+		"gatsby-plugin-image",
 		{
-			resolve: 'gatsby-plugin-manifest',
+			resolve: "gatsby-plugin-manifest",
 			options: {
-				icon: './src/images/logo/logo.png',
+				icon: "./src/images/logo/logo.png",
 			},
 		},
-		'gatsby-plugin-sharp',
-		'gatsby-transformer-sharp',
+		"gatsby-plugin-sharp",
+		"gatsby-transformer-sharp",
 		{
-			resolve: 'gatsby-source-filesystem',
+			resolve: "gatsby-source-filesystem",
 			options: {
-				name: 'images',
-				path: './src/images/',
+				name: "images",
+				path: "./src/images/",
 			},
-			__key: 'images',
+			__key: "images",
 		},
 		`gatsby-transformer-yaml`,
 		{
 			resolve: `gatsby-source-filesystem`,
 			options: {
-				name: 'projects',
+				name: "projects",
 				path: `./src/content/projects`,
 			},
 		},
 		{
-			resolve: 'gatsby-plugin-manifest',
+			resolve: "gatsby-plugin-manifest",
 			options: {
 				icon: `./src/images/logo/logo_512x512.png`,
 				icons: [
@@ -79,14 +79,14 @@ const config: GatsbyConfig = {
 						type: `image/png`,
 					},
 					{
-						src: './src/images/logo/maskable_logo.png',
-						sizes: '128x128',
-						type: 'image/png',
-						purpose: 'maskable',
+						src: "./src/images/logo/maskable_logo.png",
+						sizes: "128x128",
+						type: "image/png",
+						purpose: "maskable",
 					},
 				],
-				name: 'RedaOS',
-				short_name: 'RedaOS',
+				name: "RedaOS",
+				short_name: "RedaOS",
 				description: `An OS-like experience meant to provide a glimpse into my mind, Reda Elmountassir. I can't wait to get started on any technological project that comes my way.`,
 				start_url: `/`,
 				background_color: `#1f0728`,
@@ -95,16 +95,16 @@ const config: GatsbyConfig = {
 			},
 		},
 		{
-			resolve: 'gatsby-plugin-html-attributes',
+			resolve: "gatsby-plugin-html-attributes",
 			options: {
-				lang: 'en',
+				lang: "en",
 			},
 		},
 		{
-			resolve: 'gatsby-plugin-robots-txt',
+			resolve: "gatsby-plugin-robots-txt",
 			options: {
-				host: 'https://redaos.netlify.app',
-				policy: [{ userAgent: '*', allow: '/' }],
+				host: "https://redaos.netlify.app",
+				policy: [{ userAgent: "*", allow: "/" }],
 			},
 		},
 		{
@@ -115,7 +115,7 @@ const config: GatsbyConfig = {
 				tailwind: true, // Enable tailwindcss support
 				purgeCSSOptions: {
 					safelist: [
-						'safelist',
+						"safelist",
 						"bg-[url('/bg_imgs/rainbow.png')]",
 						"bg-[url('/bg_imgs/stars.gif')]",
 						"bg-[url('/bg_imgs/tile.png')]",
@@ -125,11 +125,11 @@ const config: GatsbyConfig = {
 				},
 			},
 		},
-		'gatsby-plugin-minify',
-		'gatsby-plugin-offline',
+		"gatsby-plugin-minify",
+		"gatsby-plugin-offline",
 		`gatsby-plugin-perf-budgets`,
 		{
-			resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
+			resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
 			options: {
 				openAnalyzer: false,
 			},

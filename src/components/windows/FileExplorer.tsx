@@ -104,7 +104,7 @@ export const FileExplorer = () => {
 				</p>
 			) : (
 				<ul
-					className={`relative z-10 col-span-2 p-4 pb-12 md:pt-4 xs:px-6 short:pb-20 md:short:pb-4 ${tileMode ? "grid grid-cols-[repeat(auto-fill,minmax(min-content,100px))] justify-around gap-2" : ""}`}
+					className={`relative z-10 col-span-2 p-4 pb-12 md:pt-4 xs:px-6 short:pb-20 md:short:pb-4 ${tileMode ? "grid grid-cols-[repeat(auto-fill,minmax(min-content,100px))] grid-rows-[max-content] justify-around gap-2" : ""}`}
 				>
 					{children.map((child) => (
 						<li key={child.name} className={tileMode ? "w-24" : "w-full"}>
